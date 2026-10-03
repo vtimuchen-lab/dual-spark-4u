@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="914" height="458" viewBox="0 0 914 458" style="background:#fff">
+<rect width="100%" height="100%" fill="#fff"/>
+<text x="70" y="30" font-size="18" font-family="sans-serif" font-weight="bold">ВИД СПЕРЕДИ — плоскость вентиляторов; MSI и holder показаны пунктиром за ними. Размеры в мм</text>
+<rect x="70.0" y="70.0" width="774.0" height="288.0" stroke="#000" fill="none" stroke-width="1.6"/>
+<rect x="145.6" y="88.0" width="270.0" height="270.0" stroke="#222" fill="#ddd" stroke-width="1.2"/>
+<rect x="154.6" y="97.0" width="252.0" height="252.0" stroke="#222" fill="#9cf" stroke-width="1.2"/>
+<circle cx="280.6" cy="223.0" r="124.2" stroke="#036" fill="none" stroke-width="1.2"/>
+<circle cx="280.6" cy="223.0" r="40.5" stroke="#036" fill="#9ab" stroke-width="1.2"/>
+<circle cx="168.6" cy="335.1" r="4.0" stroke="#036" fill="none" stroke-width="1.2"/>
+<circle cx="168.6" cy="111.0" r="4.0" stroke="#036" fill="none" stroke-width="1.2"/>
+<circle cx="392.7" cy="335.1" r="4.0" stroke="#036" fill="none" stroke-width="1.2"/>
+<circle cx="392.7" cy="111.0" r="4.0" stroke="#036" fill="none" stroke-width="1.2"/>
+<rect x="117.7" y="161.8" width="325.8" height="196.2" stroke="#555" fill="none" stroke-width="1.2" stroke-dasharray="3,2"/>
+<rect x="144.7" y="176.2" width="271.8" height="93.6" stroke="#e73" fill="none" stroke-width="1.2" stroke-dasharray="4,2"/>
+<rect x="150.1" y="181.6" width="261.0" height="102.6" stroke="#06c" fill="none" stroke-width="1.2" stroke-dasharray="2,2"/>
+<text x="280.6" y="295.0" font-size="9" font-family="sans-serif" text-anchor="middle" fill="#06c">выход duct 145×57</text>
+<text x="280.6" y="170.8" font-size="9" font-family="sans-serif" text-anchor="middle" fill="#e73">MSI 151×52</text>
+<rect x="498.4" y="88.0" width="270.0" height="270.0" stroke="#222" fill="#ddd" stroke-width="1.2"/>
+<rect x="507.4" y="97.0" width="252.0" height="252.0" stroke="#222" fill="#9cf" stroke-width="1.2"/>
+<circle cx="633.4" cy="223.0" r="124.2" stroke="#036" fill="none" stroke-width="1.2"/>
+<circle cx="633.4" cy="223.0" r="40.5" stroke="#036" fill="#9ab" stroke-width="1.2"/>
+<circle cx="521.4" cy="335.1" r="4.0" stroke="#036" fill="none" stroke-width="1.2"/>
+<circle cx="521.4" cy="111.0" r="4.0" stroke="#036" fill="none" stroke-width="1.2"/>
+<circle cx="745.5" cy="335.1" r="4.0" stroke="#036" fill="none" stroke-width="1.2"/>
+<circle cx="745.5" cy="111.0" r="4.0" stroke="#036" fill="none" stroke-width="1.2"/>
+<rect x="470.5" y="161.8" width="325.8" height="196.2" stroke="#555" fill="none" stroke-width="1.2" stroke-dasharray="3,2"/>
+<rect x="497.5" y="176.2" width="271.8" height="93.6" stroke="#e73" fill="none" stroke-width="1.2" stroke-dasharray="4,2"/>
+<rect x="502.9" y="181.6" width="261.0" height="102.6" stroke="#06c" fill="none" stroke-width="1.2" stroke-dasharray="2,2"/>
+<text x="633.4" y="295.0" font-size="9" font-family="sans-serif" text-anchor="middle" fill="#06c">выход duct 145×57</text>
+<text x="633.4" y="170.8" font-size="9" font-family="sans-serif" text-anchor="middle" fill="#e73">MSI 151×52</text>
+<line x1="70.0" y1="376.0" x2="844.0" y2="376.0" stroke="#b00" stroke-width="0.8"/>
+<line x1="70.0" y1="380.0" x2="70.0" y2="372.0" stroke="#b00" stroke-width="0.8"/>
+<line x1="844.0" y1="380.0" x2="844.0" y2="372.0" stroke="#b00" stroke-width="0.8"/>
+<text x="457.0" y="372.4" font-size="10" font-family="sans-serif" text-anchor="middle" fill="#b00">внутренняя ширина 430 TO_MEASURE</text>
+<line x1="117.7" y1="397.6" x2="443.5" y2="397.6" stroke="#b00" stroke-width="0.8"/>
+<line x1="117.7" y1="401.6" x2="117.7" y2="393.6" stroke="#b00" stroke-width="0.8"/>
+<line x1="443.5" y1="401.6" x2="443.5" y2="393.6" stroke="#b00" stroke-width="0.8"/>
+<text x="280.6" y="394.0" font-size="10" font-family="sans-serif" text-anchor="middle" fill="#b00">181</text>
+<line x1="443.5" y1="397.6" x2="470.5" y2="397.6" stroke="#b00" stroke-width="0.8"/>
+<line x1="443.5" y1="401.6" x2="443.5" y2="393.6" stroke="#b00" stroke-width="0.8"/>
+<line x1="470.5" y1="401.6" x2="470.5" y2="393.6" stroke="#b00" stroke-width="0.8"/>
+<text x="457.0" y="394.0" font-size="10" font-family="sans-serif" text-anchor="middle" fill="#b00">15</text>
+<line x1="470.5" y1="397.6" x2="796.3" y2="397.6" stroke="#b00" stroke-width="0.8"/>
+<line x1="470.5" y1="401.6" x2="470.5" y2="393.6" stroke="#b00" stroke-width="0.8"/>
+<line x1="796.3" y1="401.6" x2="796.3" y2="393.6" stroke="#b00" stroke-width="0.8"/>
+<text x="633.4" y="394.0" font-size="10" font-family="sans-serif" text-anchor="middle" fill="#b00">181</text>
+<line x1="168.6" y1="82.6" x2="392.7" y2="82.6" stroke="#b00" stroke-width="0.8"/>
+<line x1="168.6" y1="86.6" x2="168.6" y2="78.6" stroke="#b00" stroke-width="0.8"/>
+<line x1="392.7" y1="86.6" x2="392.7" y2="78.6" stroke="#b00" stroke-width="0.8"/>
+<text x="280.6" y="79.0" font-size="10" font-family="sans-serif" text-anchor="middle" fill="#b00">124.5</text>
+<line x1="854.8" y1="358.0" x2="854.8" y2="223.0" stroke="#b00" stroke-width="0.8"/>
+<line x1="851.2" y1="358.0" x2="858.4" y2="358.0" stroke="#b00" stroke-width="0.8"/>
+<line x1="851.2" y1="223.0" x2="858.4" y2="223.0" stroke="#b00" stroke-width="0.8"/>
+<text x="858.4" y="290.5" font-size="10" font-family="sans-serif" text-anchor="start" fill="#b00" transform="rotate(-90 858.4 290.5)">z=75</text>
+<line x1="883.6" y1="358.0" x2="883.6" y2="70.0" stroke="#b00" stroke-width="0.8"/>
+<line x1="880.0" y1="358.0" x2="887.2" y2="358.0" stroke="#b00" stroke-width="0.8"/>
+<line x1="880.0" y1="70.0" x2="887.2" y2="70.0" stroke="#b00" stroke-width="0.8"/>
+<text x="887.2" y="214.0" font-size="10" font-family="sans-serif" text-anchor="start" fill="#b00" transform="rotate(-90 887.2 214.0)">160 TO_MEASURE</text>
+</svg>
