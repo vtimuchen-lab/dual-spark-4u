@@ -1,92 +1,109 @@
 /*
- * assembly.scad — сборка: существующий 4U-корпус (макет, TO_MEASURE) +
- * два трака [кронштейн + 140-мм вентилятор + воздуховод + holder + MSI EdgeXpert].
+ * assembly.scad — 5U-модуль: панель ЦМО ФП-5 + 2 × (решётка, Arctic P14 Pro PST,
+ * воздуховод, holder, MSI EdgeXpert) + base_plate + 2 уголка + зона электроники.
  *
  * part:
- *   assembly  — оба трака в корпусе
- *   track     — один трак (локальные координаты)
- *   exploded  — один трак, детали раздвинуты по Y (explode_gap)
- *   printables— все печатные детали одного трака, разложенные на плоскости
+ *   module     — полная сборка (требует все TO_MEASURE: rack_checks)
+ *   exploded   — сборка с раздвинутыми по Y деталями одного трака
+ *   track      — один трак без панели/плиты (локальные координаты, без TO_MEASURE)
+ *   printables — печатные детали одного трака, разложенные на плоскости
+ *
+ * Координаты модуля: x=0 — ось; y=0 — задняя плоскость панели; z=0 — верх полки.
+ * Детали трака имеют локальный z от верха плиты → translate по hz0.
  */
 
 include <params.scad>
 use <lib/shapes.scad>
 use <edgexpert_holder.scad>
-use <fan_bracket.scad>
 use <duct.scad>
+use <front_panel.scad>
+use <base_plate.scad>
+use <ctrl_bezel.scad>
 
-part = "assembly"; // [assembly, track, exploded, printables]
+part = "module"; // [module, exploded, track, printables]
 explode_gap = 60;
-show_chassis = true;
 show_devices = true;
 show_fans = true;
 show_ducts = true;
-show_controller_zone = true;
+show_panel = true;
+show_grilles = true;
+show_baffles = true;
+show_bezels = true;
 
-fit_report();
+geo_report();
 
+// Один трак в локальных координатах (x=0 — левая грань holder'а, z=0 — верх плиты)
 module track(explode = 0) {
-    // Кронштейн
-    color([0.55, 0.58, 0.62]) translate([0, -2 * explode, 0]) bracket();
-    // Вентилятор
     if (show_fans)
-        translate([track_cx, y_fan_front - explode, fan_center_z])
+        translate([track_cx, y_fan_front - explode, fan_center_zl])
             fan_mockup(fan_size, fan_thickness, fan_hub_dia, fan_hole_pitch);
-    // Воздуховод
     if (show_ducts) color([0.75, 0.78, 0.82, 0.85]) duct_full();
-    // Holder (его локальный y=0 = y_holder_front)
     color([0.55, 0.58, 0.62]) translate([0, y_holder_front + explode, 0]) holder();
-    // Устройство
+    if (show_baffles) color([0.9, 0.5, 0.2]) translate([0, y_holder_front + explode, 0]) baffle();
     if (show_devices)
-        translate([device_x0, y_device_front + 2 * explode, device_base_z])
+        translate([device_x0, y_device_front + 2 * explode, device_base_zl])
             device_mockup(device_width, device_depth, device_height,
                           device_foot_dia, device_foot_inset, device_foot_height,
                           device_bottom_vent_w, device_bottom_vent_d, device_bottom_vent_front_offset,
                           device_intake_margin_x, device_intake_margin_top, device_intake_margin_bot);
-    // Зона свободного выхлопа (полупрозрачная)
-    %translate([device_x0, y_device_rear, device_base_z])
+    %translate([device_x0, y_device_rear, device_base_zl])
         color([1, 0.4, 0.2, 0.15]) cube([device_width, rear_free_zone, device_height]);
 }
 
-module chassis_mockup() {
-    // дно
-    color([0.6, 0.6, 0.62, 0.5]) translate([0, 0, -chassis_floor_t])
-        cube([chassis_inner_width, chassis_inner_depth, chassis_floor_t]);
-    // стенки (тонкие, прозрачные)
-    %color([0.6, 0.6, 0.62, 0.25]) {
-        translate([-1, 0, 0]) cube([1, chassis_inner_depth, chassis_inner_height]);
-        translate([chassis_inner_width, 0, 0]) cube([1, chassis_inner_depth, chassis_inner_height]);
-        translate([0, chassis_inner_depth, 0]) cube([chassis_inner_width, 1, chassis_inner_height]);
-        translate([0, -1, 0]) cube([chassis_inner_width, 1, chassis_inner_height]);
+module grille_mockup(cx) {
+    // проволочная решётка ARCTIC 140 перед панелью (условно — кольцо + спицы)
+    color([0.2, 0.2, 0.2])
+    translate([cx, -panel_t - grille_t, fan_center_z]) rotate([-90, 0, 0]) {
+        difference() { cylinder(h = grille_t, d = fan_size, $fn = 96); translate([0, 0, -1]) cylinder(h = grille_t + 2, d = fan_size - 4, $fn = 96); }
+        for (a = [0 : 30 : 150]) rotate([0, 0, a]) translate([-fan_size / 2, -1, 0]) cube([fan_size, 2, grille_t]);
+        for (d = [40, 80, 120]) difference() { cylinder(h = grille_t, d = d, $fn = 64); translate([0, 0, -1]) cylinder(h = grille_t + 2, d = d - 3, $fn = 64); }
     }
-    // мёртвые зоны передней панели / задней панели
-    %color([1, 0, 0, 0.12]) translate([0, 0, 0]) cube([chassis_inner_width, chassis_front_dead_zone, chassis_inner_height]);
-    %color([1, 0, 0, 0.12]) translate([0, chassis_inner_depth - chassis_rear_dead_zone, 0])
-        cube([chassis_inner_width, chassis_rear_dead_zone, chassis_inner_height]);
 }
 
-module controller_zone() {
-    // Рекомендуемое место PWM-контроллера/распределителя: в холодной зоне у
-    // передних углов, вне выхлопа. Размер условный 80×50.
-    %color([0.2, 0.8, 0.3, 0.3])
-        translate([2, y_track_origin + 5, 0]) cube([min(track_x0 - 4, 80), 60, 25]);
+module bezels() {
+    // рамки контроллеров на лицевой стороне панели, над каждым вентилятором
+    for (cx = fan_cx_from_center)
+        translate([cx - bezel_w / 2, -panel_t, fan_center_z + fan_size / 2 + bezel_fan_clearance])
+            mirror([0, 1, 0]) { color([0.55, 0.58, 0.62]) bezel(); ctrl_mockup(); }
 }
 
-module assembly() {
-    if (show_chassis) chassis_mockup();
-    translate([track_x0, y_track_origin, 0]) track();
-    translate([track_x1, y_track_origin, 0]) track();
-    if (show_controller_zone) controller_zone();
+module electronics_zone() {
+    // по одной полосе на сторону: слева WAGO 221-413, справа DC-гнездо (контроллеры — на панели)
+    for (sx = [-1, 1])
+        %color([0.2, 0.8, 0.3, 0.35])
+            translate([sx > 0 ? ctrl_zone_x_in : -(ctrl_zone_x_in + ctrl_zone_w), ctrl_zone_y0, base_plate_t])
+                cube([ctrl_zone_w, ctrl_zone_d, 25]);
+}
+
+module module_assembly(explode = 0) {
+    fit_report();
+    if (show_panel) panel();
+    if (show_grilles) for (cx = fan_cx_from_center) grille_mockup(cx);
+    if (show_bezels) bezels();
+    base_plate();
+    for (sx = [-1, 1])
+        translate([sx * bracket_cx - bracket_w / 2, base_plate_front_gap, base_plate_t])
+            color([0.55, 0.58, 0.62]) panel_bracket();
+    // стойка DC-гнезда: гнездо смотрит назад (штекер из горячей зоны шкафа)
+    translate([ctrl_zone_x_in + ctrl_zone_w / 2 + 15, ctrl_zone_y1 - 10 + 7, base_plate_t]) rotate([0, 0, 180])
+        color([0.55, 0.58, 0.62]) dc_jack_bracket();
+    electronics_zone();
+    for (cx = fan_cx_from_center)
+        translate([cx - track_cx, 0, hz0]) track(cx > 0 ? explode : 0);
+    // полка (условно) и ось шкафа
+    %color([0.5, 0.5, 0.5, 0.2]) translate([-rack_opening_w / 2, -panel_t, -3]) cube([rack_opening_w, shelf_depth, 3]);
 }
 
 module printables() {
-    // раскладка печатных деталей одного трака для обзора (не для слайсера)
-    translate([0, 0, 0]) holder();
-    translate([holder_outer_w + 30, -y_holder_front, 0]) rotate([0, 0, 0]) duct_full();
-    translate([holder_outer_w + 30, 0, 0]) translate([0, y_track_end - y_holder_front + 40, 0]) bracket();
+    holder();
+    translate([0, holder_outer_w + 40, 0]) color([0.9, 0.5, 0.2]) baffle();
+    translate([holder_outer_w + 30, -y_duct_in, 0]) duct_full();
+    translate([holder_outer_w + 30, y_track_end + 40, 0]) panel_bracket();
+    translate([holder_outer_w + 100, y_track_end + 40, 0]) dc_jack_bracket();
+    translate([holder_outer_w + 160, y_track_end + 40, 0]) bezel();
 }
 
 if (part == "track") track(0);
-else if (part == "exploded") track(explode_gap);
+else if (part == "exploded") module_assembly(explode_gap);
 else if (part == "printables") printables();
-else assembly();
+else module_assembly(0);

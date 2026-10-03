@@ -1,97 +1,92 @@
-# dual-spark-4u — 2 × MSI EdgeXpert AI (DGX Spark-class) в одном 4U с раздельным принудительным охлаждением
+# dual-spark-4u — 5U-модуль с 2 × MSI EdgeXpert AI (DGX Spark-class) и раздельным охлаждением для 18U шкафа
 
-Параметрический OpenSCAD-проект внутренней механики для **существующего**
-19" 4U-корпуса: два holder'а на дне, два 140-мм PWM-вентилятора, два
-независимых воздуховода 140 → передняя решётка MSI, свободная выхлопная зона
-сзади. Основа holder'а — `spark-rack-10/dgx_spark_rack_mount.scad` из
-[alexliesenfeld/dgx-spark-printables](https://github.com/alexliesenfeld/dgx-spark-printables)
-(CC BY-NC 4.0, автор Alexander Liesenfeld); передняя 10" панель, rack-ears и
-отверстия 2×80 не используются.
+Параметрический OpenSCAD-проект самостоятельного 5U-узла: фронтальная панель
+ЦМО ФП-5 с двумя вырезами под 140-мм вентиляторы, алюминиевая base_plate на
+полке шкафа, два holder'а (адаптация
+[alexliesenfeld/dgx-spark-printables](https://github.com/alexliesenfeld/dgx-spark-printables),
+CC BY-NC 4.0), два независимых воздуховода 140 → передняя решётка MSI, свободный
+выхлоп в горячую зону шкафа. Имя репозитория историческое: v1 проектировалась
+под 4U-корпус (`docs/TZ_v1_chassis.md`), v2 — модуль в шкафу (`docs/TZ.md`).
 
 ```
-[фасад 4U] → [рамка + 140 FAN] → [duct 120: plenum 50 + сопло 70] → [EPDM 5] → [MSI 151] → [≥ 90 выхлоп] → [задние 80-мм + проёмы]
-      ×2 рядом, в одном слое, оси x ≈ 117 и 313 от левой стенки
+[решётка ARCTIC 140] → [ФП-5] → [Arctic P14 Pro PST 27] → [duct 120] → [EPDM 5] → [MSI 151] → [выхлоп ≥ 90]
+                                   × 2 трака, оси x = ±98 от центра панели
 ```
 
-## Статус: предварительная модель (этапы 1–5 выполнены, финальная STL — после замеров)
+## Статус: PREVIEW — ждёт пять замеров шкафа
 
-| Этап | Результат | Где |
-|------|-----------|-----|
-| 1. Анализ | MSI EdgeXpert, исходник holder'а, 2 фото корпуса, опыт сообщества | `docs/01_analysis.md` |
-| 2. Размерная схема | вид сверху / сбоку / спереди с размерами, пресеты по глубине | `docs/02_layout.md`, `docs/drawings/` |
-| 3. Holder | адаптация под MSI и крепление к дну 4U | `scad/edgexpert_holder.scad` → `stl/edgexpert_holder.stl` |
-| 4. Воздуховод | 140 → 145×57, smoothstep-конфузор, разрезной вариант, рамка вентилятора | `scad/duct.scad`, `scad/fan_bracket.scad` → `stl/` |
-| 5. Файлы | сборка, exploded, рендеры, крепёж, таблица размеров | `scad/assembly.scad`, `docs/renders/`, `docs/05_bom_hardware.md`, `docs/06_dimensions.md` |
-| Аэродинамика | инженерная оценка расхода, сечений, потерь, проблемных мест | `docs/04_aero_estimate.md` |
-| **Замеры** | **26 пунктов TO_MEASURE — без них STL не финальные** | `docs/03_measure_checklist.md` |
+Сборка модуля, base_plate и вертикальная разметка панели **не собираются**, пока
+в `scad/params.scad` стоят `undef` для `rack_opening_w`, `shelf_top_z`,
+`shelf_depth`, `panel_t`, `panel_hole_pitch_v` (`docs/03_measure_checklist.md`,
+п.1–5). Детали, не зависящие от шкафа (holder, воздуховод, заслонка, уголок,
+стойка DC), собираются и лежат в `stl/*_PREVIEW.stl`; рендеры сборки сделаны на
+подстановочных значениях, перечисленных в `scripts/export_all.sh` и
+`docs/02_layout.md` §7.
 
-Что уже установлено (с источниками в `docs/01_analysis.md`): MSI 151×151×52,
-1.2 кг, вход — соты во всю переднюю грань, выход — зад и бока, ножки
-повышенные, низ почти глухой с полем щелей у переднего края; > 200 Вт под
-нагрузкой.
+| Документ | Что |
+|----------|-----|
+| `docs/TZ.md` | ТЗ v2 (принятые решения) |
+| `CLAUDE.md` | решения, открытые вопросы, журнал |
+| `docs/01_analysis.md` | MSI EdgeXpert, исходник holder'а, опыт сообщества (+архив анализа 4U) |
+| `docs/02_layout.md` | размерная схема модуля, координаты, проверки |
+| `docs/03_measure_checklist.md` | что измерить (шкаф, панель, MSI, покупные) |
+| `docs/04_aero_estimate.md` | расход, характеристика P14 Pro PST, рабочая точка, байпас, дверь шкафа |
+| `docs/05_bom_hardware.md` | печатные/покупные части, крепёж, длина болтов |
+| `docs/06_dimensions.md` | таблица размеров |
+| `docs/07_rack_layout.md` | раскладка 18U, холодная/горячая зона, датчики, установка/снятие |
+| `docs/drawings/` | `panel_fp5`, `base_plate`, `side_view`, `top_view` (SVG + PNG) |
+| `docs/renders/` | 3D-превью (`*_PREVIEW.png`) |
 
-Что видно по фото корпуса и подлежит демонтажу: HDD-корзина за дверцей,
-перфорированный кронштейн за щелевой решёткой, ATX-БП. Задние 2 × 80 мм
-остаются как вытяжка. Правый вентилятор оказывается за дверцей — нужно
-подтвердить, что её треугольные окна открыты (сетка), иначе переделка
-вставки (`docs/02_layout.md` §5).
-
-## Ключевые размеры (по умолчанию)
+## Ключевые размеры
 
 | | мм |
 |---|---|
-| Трак (ширина × длина) | 181 × 396 |
-| Пара траков | 377 (+ зазор 15 внутри) |
-| Нужная внутренняя глубина 4U: default / compact | 441 / 388 |
-| Нужная внутренняя высота | 150 |
-| Ось вентилятора / дно MSI / верх MSI | z = 75 / 49 / 101 |
-| Выход воздуховода | 145 × 57 (вход 135 × 135, отношение площадей 2.2) |
+| Трак / шаг / пара | 181 / 196 / 377 |
+| Длина модуля от задней плоскости панели | 393 (шкаф 600) |
+| Ось вентилятора над полкой / над плитой | 78 / 75 (= ось MSI) |
+| Вырезы панели | 2 × Ø138 на 143.3 и 339.3 от левого края; ось по вертикали = `shelf_top_z` + 78 ∈ [90; 131.5] |
+| Воздуховод | 135×135 → 145×57, plenum 50 + nozzle 70, стенка 2.4 |
+| Болт сэндвича | M4×40 при panel_t 1.0–2.0 |
+| Контроллеры | в рамках на лицевой стороне панели над вентиляторами; полоса = 221.5 − `shelf_top_z` − 150 |
 
 ## Файлы
 
 ```
-scad/params.scad          все параметры (секции 1–7) + производные + fit_report()
-scad/lib/shapes.scad      примитивы, лофт, макеты вентилятора и устройства
-scad/edgexpert_holder.scad  holder (part=holder | holder_with_device)
-scad/duct.scad            воздуховод (part=duct | duct_a | duct_b | duct_section)
-scad/fan_bracket.scad     рамка вентилятора (part=bracket | bracket_with_fan)
-scad/assembly.scad        сборка (part=assembly | track | exploded | printables)
-stl/                      экспорт: holder, duct, duct_part_a/b, fan_bracket
-docs/drawings/            top/side/front view (SVG + PNG), генерируются скриптом
-docs/renders/             PNG-превью из OpenSCAD
-scripts/export_all.sh     пересборка STL, рендеров и чертежей
-scripts/make_drawings.py  размерные схемы из params.scad
+scad/params.scad          все параметры [SRC]/[ASSM]/TO_MEASURE(undef), производные, part_checks()/rack_checks()
+scad/lib/shapes.scad      примитивы, лофт, макеты
+scad/edgexpert_holder.scad  holder (part=holder|holder_with_device|baffle|holder_with_baffle)
+scad/duct.scad            воздуховод (part=duct|duct_a|duct_b|duct_section)
+scad/front_panel.scad     ФП-5 с вырезами (part=panel|panel_2d) — требует TO_MEASURE
+scad/base_plate.scad      base_plate (требует TO_MEASURE), panel_bracket, dc_jack_bracket
+scad/ctrl_bezel.scad      рамка термоконтроллера на лицевой стороне ФП-5 (требует ctrl_w/h/d)
+scad/assembly.scad        модуль (part=module|exploded|track|printables)
+scad/fan_bracket.scad     ОПЦИЯ: рамка для настольного стенда
+stl/                      *_PREVIEW.stl до заполнения TO_MEASURE
+scripts/export_all.sh     пересборка STL, рендеров, чертежей (суффикс PREVIEW автоматически)
+scripts/make_drawings.py  чертежи из params.scad
 ```
 
 ## Как пользоваться
 
-1. Снять размеры по `docs/03_measure_checklist.md`, внести в `scad/params.scad`.
-2. `./scripts/export_all.sh` (OpenSCAD ≥ 2021.01, xvfb-run для PNG, python3).
-3. Проверить строки `[FIT] ... -> OK` в выводе `assembly.scad`.
-4. Печать: PETG для прототипа, ASA для постоянной версии; настройки и
-   ориентация — в `docs/05_bom_hardware.md`.
+1. Измерить п.1–5 (и по возможности B/C) из `docs/03_measure_checklist.md`,
+   вписать в `scad/params.scad` вместо `undef`.
+2. `./scripts/export_all.sh` — при полных параметрах суффикс `_PREVIEW`
+   исчезает, рендеры и чертежи пересчитываются на реальных размерах; в выводе не
+   должно быть `ERROR: Assertion`.
+3. Резать панель и сверлить плиту по `docs/drawings/panel_fp5.svg` и
+   `base_plate.svg`; печатать по `docs/05_bom_hardware.md` (PETG прототип, ASA
+   финал); собирать по `docs/07_rack_layout.md` §5.
 
-Экспорт отдельной детали вручную:
+Ручной экспорт одной детали:
 
 ```sh
 openscad -o stl/edgexpert_holder.stl scad/edgexpert_holder.scad
+openscad -o stl/bypass_baffle_050.stl -D 'part="baffle"' -D bypass_block=0.5 scad/edgexpert_holder.scad
 openscad -o stl/duct.stl scad/duct.scad
-openscad -o stl/duct_part_a_plenum.stl -D 'duct_split=true' -D 'part="duct_a"' scad/duct.scad
-openscad -o stl/fan_bracket.stl scad/fan_bracket.scad
+openscad -o stl/panel_bracket.stl -D 'part="panel_bracket"' scad/base_plate.scad
 ```
-
-Параметры корпуса можно переопределять без правки файла:
-`openscad -o /dev/null -D chassis_inner_depth=400 -D plenum_len=40 -D nozzle_len=60 -D rear_free_zone=70 -D chassis_front_dead_zone=12 scad/assembly.scad`.
-
-## Модульность и сервис
-
-Рамка вентилятора — вентилятор — воздуховод — holder соединяются болтами
-(M4 сэндвич, M3 в heat-set), holder и рамка — к дну на M4 (rivnut/гайки).
-Каждое устройство вынимается вверх независимо (верх открыт, стопоры низкие),
-вентилятор меняется без снятия воздуховода, воздуховод снимается с holder'а
-по 4 винтам M3.
 
 ## Лицензия
 
-Производная работа от dgx-spark-printables (CC BY-NC 4.0) — распространяется
+Производная работа от dgx-spark-printables (CC BY-NC 4.0, Alexander Liesenfeld) —
 на тех же условиях, некоммерчески, с указанием автора исходника.
