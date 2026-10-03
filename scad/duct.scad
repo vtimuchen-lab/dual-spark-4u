@@ -12,15 +12,18 @@
  * Опционально: разрез на 2 части по границе пленум/сопло (duct_split),
  * tongue-and-groove + 4 M3; направляющие лопатки (guide_vanes).
  *
- * Локальные координаты: x=0 — левая грань трака, y=0 — плоскость всасывания
- * вентилятора (как в params), z=0 — дно корпуса. Сам воздуховод начинается
- * на y = y_duct_in.
+ * Локальные координаты: x=0 — левая грань трака, y=0 — задняя плоскость панели
+ * ФП-5 (к ней прижат вентилятор 27 мм), z=0 — ВЕРХ base_plate. Воздуховод
+ * начинается на y = y_duct_in = fan_thickness. Входной фланец несёт гнёзда гаек
+ * M4 сэндвича: решётка → панель → вентилятор → фланец.
  */
 
 include <params.scad>
 use <lib/shapes.scad>
 
 part = "duct"; // [duct, duct_a, duct_b, duct_section]
+
+part_checks();
 
 y_in   = y_duct_in;                       // передняя плоскость входного фланца
 y_pl   = y_in + duct_flange_t;            // начало тонкостенного пленума
@@ -35,9 +38,8 @@ s_in_outer  = [track_cx, inlet_cz, inlet_w + 2 * w, inlet_h + 2 * w, duct_inlet_
 s_out_inner = [track_cx, outlet_cz, outlet_w, outlet_h, duct_outlet_corner_r];
 s_out_outer = [track_cx, outlet_cz, outlet_w + 2 * w, outlet_h + 2 * w, duct_outlet_corner_r + w];
 
-in_flange_w = fan_size + 2 * holder_wall;   // 150
-in_flange_h = fan_size + 2 * holder_wall;
-in_flange_z0 = fan_center_z - in_flange_h / 2;
+in_flange_h = in_flange_w;                 // 150 (in_flange_w из params)
+in_flange_z0 = fan_center_zl - in_flange_h / 2;
 
 module inlet_flange() {
     difference() {
@@ -46,7 +48,7 @@ module inlet_flange() {
         // Отверстия под болты сэндвича + гнёзда гаек M4 с задней стороны
         for (sx = [-1, 1], sz = [-1, 1]) {
             hx = track_cx + sx * fan_hole_pitch / 2;
-            hz = fan_center_z + sz * fan_hole_pitch / 2;
+            hz = fan_center_zl + sz * fan_hole_pitch / 2;
             hole_y(hx, hz, m4_clear_d, y_in - 1, duct_flange_t + 2);
             hex_pocket_y(hx, hz, m4_nut_af, m4_nut_h, y_in + duct_flange_t - m4_nut_h);
         }

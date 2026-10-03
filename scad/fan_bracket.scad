@@ -1,5 +1,6 @@
 /*
- * fan_bracket.scad — передняя рамка 140-мм вентилятора.
+ * fan_bracket.scad — ОПЦИЯ: рамка 140-мм вентилятора для настольного стенда
+ * (испытания тракта без панели ФП-5). В 5U-модуле роль рамки играет панель.
  *
  * Схема «сэндвич»: [рамка] – [вентилятор 25 мм] – [входной фланец воздуховода].
  * 4 болта M4×45 проходят через рамку и штатные угловые отверстия вентилятора
@@ -10,7 +11,7 @@
  * — покупная проволочная 140 мм под те же 4 болта.
  *
  * Локальные координаты: x=0 — левая грань трака, y=0 — передняя грань рамки
- * (плоскость всасывания), z=0 — дно корпуса.
+ * (плоскость всасывания), z=0 — верх плиты/стола стенда.
  */
 
 include <params.scad>
@@ -18,7 +19,12 @@ use <lib/shapes.scad>
 
 part = "bracket"; // [bracket, bracket_with_fan]
 
-hole_d = fan_mount_type == "rubber" ? fan_rubber_hole_dia : fan_hole_dia;
+fan_floor_clearance = fan_center_zl - fan_size / 2;   // 5 над плитой (стенд стоит на плите/столе)
+bracket_t = 5;
+bracket_foot_w = 25;
+bracket_foot_d = 30;
+hole_d = fan_hole_dia;
+
 frame_w = fan_size + 2 * holder_wall;   // 150
 frame_z0 = fan_floor_clearance - holder_wall;  // низ рамки (0 при зазоре 5 и стенке 5)
 frame_h  = fan_size + 2 * holder_wall;
@@ -42,10 +48,10 @@ module bracket() {
                             polygon([[0, 0], [bracket_foot_d - bracket_t, 0], [0, 30]]);
         }
         // Проём
-        hole_y(track_cx, fan_center_z, fan_open_dia, -1, bracket_t + 2, 96);
+        hole_y(track_cx, fan_center_zl, fan_open_dia, -1, bracket_t + 2, 96);
         // 4 отверстия вентилятора
         for (sx = [-1, 1], sz = [-1, 1])
-            hole_y(track_cx + sx * fan_hole_pitch / 2, fan_center_z + sz * fan_hole_pitch / 2,
+            hole_y(track_cx + sx * fan_hole_pitch / 2, fan_center_zl + sz * fan_hole_pitch / 2,
                    hole_d, -1, bracket_t + 2);
         // Пазы M4 в лапках
         for (sx = [-1, 1])
@@ -57,13 +63,13 @@ module bracket() {
 
 module bracket_with_fan() {
     bracket();
-    translate([track_cx, y_fan_front, fan_center_z])
+    translate([track_cx, y_fan_front, fan_center_zl])
         fan_mockup(fan_size, fan_thickness, fan_hub_dia, fan_hole_pitch);
 }
 
 echo(str("[BRACKET] frame ", frame_w, " x ", frame_h, " x ", bracket_t,
          " mm; opening ", fan_open_dia, "; holes ", hole_d, " @ ", fan_hole_pitch,
-         "; fan center z=", fan_center_z));
+         "; fan center z=", fan_center_zl));
 
 if (part == "bracket_with_fan") bracket_with_fan();
 else bracket();
