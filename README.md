@@ -47,6 +47,7 @@ CC BY-NC 4.0), два независимых воздуховода 140 → пе
 | Вырезы панели | 2 × Ø138 на 143.3 и 339.3 от левого края; ось по вертикали = `shelf_top_z` + 78 ∈ [90; 131.5] |
 | Воздуховод | 135×135 → 145×57, plenum 50 + nozzle 70, стенка 2.4 |
 | Болт сэндвича | M4×40 при panel_t 1.0–2.0 |
+| Контроллеры | в рамках на лицевой стороне панели над вентиляторами; полоса = 221.5 − `shelf_top_z` − 150 |
 
 ## Файлы
 
@@ -57,6 +58,7 @@ scad/edgexpert_holder.scad  holder (part=holder|holder_with_device|baffle|holder
 scad/duct.scad            воздуховод (part=duct|duct_a|duct_b|duct_section)
 scad/front_panel.scad     ФП-5 с вырезами (part=panel|panel_2d) — требует TO_MEASURE
 scad/base_plate.scad      base_plate (требует TO_MEASURE), panel_bracket, dc_jack_bracket
+scad/ctrl_bezel.scad      рамка термоконтроллера на лицевой стороне ФП-5 (требует ctrl_w/h/d)
 scad/assembly.scad        модуль (part=module|exploded|track|printables)
 scad/fan_bracket.scad     ОПЦИЯ: рамка для настольного стенда
 stl/                      *_PREVIEW.stl до заполнения TO_MEASURE

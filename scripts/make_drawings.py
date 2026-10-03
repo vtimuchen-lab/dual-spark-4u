@@ -22,7 +22,8 @@ ROOT = Path(__file__).resolve().parent.parent
 PARAMS = ROOT / "scad" / "params.scad"
 OUT = ROOT / "docs" / "drawings"
 # Условные значения ТОЛЬКО для масштаба картинки; на чертеже помечены как TO_MEASURE
-NOMINAL = {"rack_opening_w": 450.85, "shelf_depth": 400.0, "panel_t": 1.2}
+NOMINAL = {"rack_opening_w": 450.85, "shelf_depth": 400.0, "panel_t": 1.2, "shelf_top_z": 25.0,
+           "ctrl_w": 60.0, "ctrl_h": 35.0, "ctrl_d": 20.0}
 
 
 def load_params() -> dict:
@@ -74,6 +75,16 @@ def derive(p: dict) -> dict:
     d["shelf_top_z_max"] = d["axis_max"] - d["fan_center_z"]
     d["bracket_cx"] = d["track_pitch"] / 2 + d["in_flange_w"] / 2 + 5 + p["bracket_w"] / 2
     d["rail_setback"] = max(0, p["device_foot_inset"] - p["device_foot_dia"] / 2 - p["rail_setback_margin"]) if p["rails_follow_feet"] else 20
+    # рамка контроллера (условные габариты платы, если TO_MEASURE)
+    cw = p["ctrl_w"] if p["ctrl_w"] is not None else NOMINAL["ctrl_w"]
+    chh = p["ctrl_h"] if p["ctrl_h"] is not None else NOMINAL["ctrl_h"]
+    cd = p["ctrl_d"] if p["ctrl_d"] is not None else NOMINAL["ctrl_d"]
+    d["ctrl_known"] = p["ctrl_w"] is not None and p["ctrl_h"] is not None and p["ctrl_d"] is not None
+    d["bezel_w"] = cw + 2 * (p["bezel_wall"] + p["bezel_clear"])
+    d["bezel_h"] = chh + 2 * (p["bezel_wall"] + p["bezel_clear"])
+    d["bezel_d"] = p["bezel_back_t"] + cd + p["bezel_clear"] + p["bezel_front_t"]
+    d["bezel_lug_dx"] = d["bezel_w"] / 2 + p["bezel_lug_w"] / 2
+    d["cable_hole_dx"] = d["bezel_w"] / 2 + p["bezel_lug_w"] + p["cable_hole_gap"]
     d["ctrl_zone_x_in"] = d["track_pitch"] / 2 + d["in_flange_w"] / 2 + p["ctrl_zone_margin"]
     d["ctrl_zone_y0"] = p["base_plate_front_gap"] + p["bracket_d"] + 7
     d["ctrl_zone_y1"] = d["y_duct_out"] - 6
@@ -142,9 +153,9 @@ def fmt(v):
 def draw_panel(d):
     pw, ph = d["panel_w"], d["panel_h"]
     known = d["shelf_top_z"] is not None
-    axis = d["shelf_top_z"] + d["fan_center_z"] if known else (d["axis_min"] + d["axis_max"]) / 2
+    axis = (d["shelf_top_z"] if known else NOMINAL["shelf_top_z"]) + d["fan_center_z"]
     title = "РАЗМЕТКА ФП-5 (вид спереди, снаружи). Размеры в мм от краёв панели" + ("" if known else " — ВЕРТИКАЛЬ УСЛОВНА (shelf_top_z = TO_MEASURE)")
-    s = Svg(pw, ph, title, scale=2.2, extra_bottom=150)
+    s = Svg(pw, ph, title, scale=2.2, extra_bottom=190)
     s.rect(0, 0, pw, ph, stroke="#000", sw=1.8)
     # зона отбортовки / keep-out
     k = d["panel_edge_keepout"]
@@ -164,6 +175,24 @@ def draw_panel(d):
         s.text(cx, axis + 4, f"Ø{d['fan_open_dia']:g}", size=11, anchor="middle", bold=True)
         s.text(cx, axis - 12, f"4 × паз M4 {d['fan_hole_dia']:g}×{d['fan_hole_dia'] + 2 * d['fan_hole_tol']:g} на □{d['fan_hole_pitch']:g}", size=9, anchor="middle")
         s.text(cx, axis - 24, f"фланец duct {d['in_flange_w']:g}×{d['in_flange_w']:g} (сзади)", size=9, anchor="middle", color="#06c")
+    # рамки контроллеров над вентиляторами
+    bz0 = axis + d["fan_size"] / 2 + d["bezel_fan_clearance"]
+    bcz = bz0 + d["bezel_h"] / 2
+    for cx_rel in d["fan_cx"]:
+        cx = pw / 2 + cx_rel
+        sgn = 1 if cx_rel > 0 else -1
+        s.rect(cx - d["bezel_w"] / 2, bz0, d["bezel_w"], d["bezel_h"], stroke="#070", dash="4,2", sw=0.9)
+        s.text(cx, bcz - 3, "рамка контроллера" + ("" if d["ctrl_known"] else " (условно)"), size=8, anchor="middle", color="#070")
+        for sx in (-1, 1):
+            hx = cx + sx * d["bezel_lug_dx"]
+            s.circle(hx, bcz, d["m3_clear_d"] / 2, stroke="#000", sw=1.1)
+            s.line(hx - 3, bcz, hx + 3, bcz, sw=0.5); s.line(hx, bcz - 3, hx, bcz + 3, sw=0.5)
+        chx = cx + sgn * d["cable_hole_side"] * d["cable_hole_dx"]
+        s.circle(chx, bcz, d["cable_hole_d"] / 2, stroke="#000", sw=1.2)
+        s.text(chx, bcz - d["cable_hole_d"] / 2 - 4, f"Ø{d['cable_hole_d']:g} втулка", size=8, anchor="middle")
+        s.dim_h(cx - d["bezel_lug_dx"], cx + d["bezel_lug_dx"], bz0 + d["bezel_h"] + 5, f"лапки 2×Ø{d['m3_clear_d']:g}: {2 * d['bezel_lug_dx']:g}")
+        s.dim_h(cx, chx, bz0 - 8, f"{d['cable_hole_dx']:g}", above=False)
+    s.dim_v(0, bcz, pw / 2 + d["fan_cx"][1] + d["bezel_w"] / 2 + 4, f"{bcz:g}" if known else "ось + 72 + рамка/2")
     s.line(pw / 2, 0, pw / 2, ph, stroke="#06c", sw=0.5, dash="8,4")
     cx1, cx2 = pw / 2 + d["fan_cx"][0], pw / 2 + d["fan_cx"][1]
     # горизонтальные размеры
@@ -180,8 +209,12 @@ def draw_panel(d):
     # допуск по вертикали
     s.text(2, -34, f"Допустимая ось выреза: {d['axis_min']:g}…{d['axis_max']:g} мм от нижнего края (фланец 150 ≥ {k:g} мм от краёв) ⇒ shelf_top_z ∈ [{d['shelf_top_z_min']:g}; {d['shelf_top_z_max']:g}]", size=10, color="#b00")
     if not known:
-        s.text(2, -46, f"Вырезы нарисованы на оси {axis:g} — середина допуска, ТОЛЬКО для иллюстрации. Не резать до замера shelf_top_z.", size=10, color="#b00", bold=True)
+        s.text(2, -46, f"Вырезы нарисованы на оси {axis:g} (условный shelf_top_z = {NOMINAL['shelf_top_z']:g}, как в PREVIEW-рендерах) — ТОЛЬКО для иллюстрации. Не резать до замера shelf_top_z.", size=10, color="#b00", bold=True)
+    strip = d["panel_h"] - (axis + d["fan_size"] / 2 + d["bezel_fan_clearance"])
+    if d["bezel_h"] > strip:
+        s.text(2, -82, f"ВНИМАНИЕ: рамка {d['bezel_h']:g} мм выше полосы над вентилятором {strip:g} мм при этой вертикали — опустить полку (shelf_top_z) или уменьшить контроллер.", size=10, color="#b00", bold=True)
     s.text(2, -58, "Толщина листа panel_t = " + fmt(d["panel_t"]) + "; крепёжные уши ФП-5 без изменений (шаг panel_hole_pitch_v = " + fmt(d["panel_hole_pitch_v"]) + ")", size=10)
+    s.text(2, -70, f"Полоса над вентилятором под рамку = 221.5 − shelf_top_z − 150 = {d['panel_h'] - 150:g} − shelf_top_z; рамка {d['bezel_w']:g}×{d['bezel_h']:g}×{d['bezel_d']:g}" + ("" if d["ctrl_known"] else " (габарит контроллера УСЛОВЕН, TO_MEASURE п.23)"), size=10, color="#070")
     s.save(OUT / "panel_fp5.svg")
 
 
@@ -267,6 +300,9 @@ def draw_side(d):
     s.rect(X(-pt), -d.get("shelf_top_z") if d.get("shelf_top_z") else -20, pt, d["panel_h"], fill="#bbb")
     s.text(X(-pt) - 2, 80, "ФП-5", size=9, anchor="end", rotate=-90)
     s.rect(X(-pt - d["grille_t"]), d["fan_center_z"] - d["fan_size"] / 2, d["grille_t"], d["fan_size"], fill="#777")
+    bz0 = d["fan_center_z"] + d["fan_size"] / 2 + d["bezel_fan_clearance"]
+    s.rect(X(-pt - d["bezel_d"]), bz0, d["bezel_d"], d["bezel_h"], fill="#cfc", stroke="#070")
+    s.text(X(-pt - d["bezel_d"]) - 2, bz0 + d["bezel_h"] / 2, "контроллер" + ("" if d["ctrl_known"] else " (условно)"), size=8, anchor="end", color="#070")
     fz0 = d["fan_center_z"] - d["fan_size"] / 2
     s.rect(X(0), fz0, d["fan_thickness"], d["fan_size"], fill="#9cf")
     s.text(X(d["fan_thickness"] / 2), d["fan_center_z"], "FAN", size=9, anchor="middle")
@@ -328,6 +364,8 @@ def draw_top(d):
         cx = pw / 2 + cx_rel
         s.rect(cx - d["fan_size"] / 2, Y(0), d["fan_size"], d["fan_thickness"], fill="#9cf")
         s.text(cx, Y(d["fan_thickness"] / 2), "P14 Pro 140×27", size=9, anchor="middle")
+        s.rect(cx - d["bezel_w"] / 2, Y(-15 - d["bezel_d"]), d["bezel_w"], d["bezel_d"], fill="#cfc", stroke="#070")
+        s.text(cx, Y(-15 - d["bezel_d"] / 2), "контроллер (над вентилятором)", size=7, anchor="middle", color="#070")
         s.rect(cx - d["in_flange_w"] / 2, Y(d["y_duct_in"]), d["in_flange_w"], d["plenum_len"], fill="#eef")
         ow = d["outlet_w"] + 2 * d["duct_wall"]
         yn0, yn1 = d["y_duct_in"] + d["plenum_len"], d["y_duct_out"] - d["duct_flange_t"]
@@ -341,7 +379,7 @@ def draw_top(d):
     for sx in (-1, 1):
         bx = pw / 2 + sx * d["bracket_cx"]
         s.rect(bx - d["bracket_w"] / 2, Y(d["base_plate_front_gap"]), d["bracket_w"], d["bracket_d"], fill="#ccc", stroke="#555")
-    for sx, lbl in ((-1, "PWM 1 + WAGO"), (1, "PWM 2 + DC")):
+    for sx, lbl in ((-1, "WAGO +/−"), (1, "DC-гнездо")):
         x_in = pw / 2 + sx * d["ctrl_zone_x_in"]
         x0 = min(x_in, x_in + sx * d["ctrl_zone_w"])
         s.rect(x0, Y(d["ctrl_zone_y0"]), d["ctrl_zone_w"], d["ctrl_zone_d"], fill="#cfc", stroke="#2a2", dash="3,2")
