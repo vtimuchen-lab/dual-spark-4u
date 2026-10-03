@@ -24,7 +24,8 @@ holder_hole_list = concat(holder_holes(track_cxs[0]), holder_holes(track_cxs[1])
 // Уголки: 2 отверстия M4 в горизонтальной полке каждого
 bracket_hole_list = [for (sx = [-1, 1], k = [0, 1])
     [sx * bracket_cx, base_plate_y0 + bracket_t + 12 + k * (bracket_d - bracket_t - 24)]];
-// Зоны электроники: две полосы (x = ±(ctrl_zone_x_in … +ctrl_zone_w)), сетка M3
+// Полосы электроники: две полосы (x = ±(ctrl_zone_x_in … +ctrl_zone_w)), сетка M3.
+// Слева — WAGO 221-413 («+» и «−»), справа — стойка DC-гнезда. Контроллеры — на панели.
 // (списки считаются только при известной ширине плиты — иначе undef-предупреждения)
 ctrl_hole_list = known(ctrl_zone_w)
     ? [for (sx = [-1, 1], i = [0 : floor((ctrl_zone_w - 4) / ctrl_hole_grid)],

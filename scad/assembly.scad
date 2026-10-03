@@ -18,6 +18,7 @@ use <edgexpert_holder.scad>
 use <duct.scad>
 use <front_panel.scad>
 use <base_plate.scad>
+use <ctrl_bezel.scad>
 
 part = "module"; // [module, exploded, track, printables]
 explode_gap = 60;
@@ -27,6 +28,7 @@ show_ducts = true;
 show_panel = true;
 show_grilles = true;
 show_baffles = true;
+show_bezels = true;
 
 geo_report();
 
@@ -58,8 +60,15 @@ module grille_mockup(cx) {
     }
 }
 
+module bezels() {
+    // рамки контроллеров на лицевой стороне панели, над каждым вентилятором
+    for (cx = fan_cx_from_center)
+        translate([cx - bezel_w / 2, -panel_t, fan_center_z + fan_size / 2 + bezel_fan_clearance])
+            mirror([0, 1, 0]) { color([0.55, 0.58, 0.62]) bezel(); ctrl_mockup(); }
+}
+
 module electronics_zone() {
-    // по одной полосе на сторону: PWM-контроллер трака + WAGO 221-413 / DC-гнездо
+    // по одной полосе на сторону: слева WAGO 221-413, справа DC-гнездо (контроллеры — на панели)
     for (sx = [-1, 1])
         %color([0.2, 0.8, 0.3, 0.35])
             translate([sx > 0 ? ctrl_zone_x_in : -(ctrl_zone_x_in + ctrl_zone_w), ctrl_zone_y0, base_plate_t])
@@ -70,6 +79,7 @@ module module_assembly(explode = 0) {
     fit_report();
     if (show_panel) panel();
     if (show_grilles) for (cx = fan_cx_from_center) grille_mockup(cx);
+    if (show_bezels) bezels();
     base_plate();
     for (sx = [-1, 1])
         translate([sx * bracket_cx - bracket_w / 2, base_plate_front_gap, base_plate_t])
@@ -90,6 +100,7 @@ module printables() {
     translate([holder_outer_w + 30, -y_duct_in, 0]) duct_full();
     translate([holder_outer_w + 30, y_track_end + 40, 0]) panel_bracket();
     translate([holder_outer_w + 100, y_track_end + 40, 0]) dc_jack_bracket();
+    translate([holder_outer_w + 160, y_track_end + 40, 0]) bezel();
 }
 
 if (part == "track") track(0);
