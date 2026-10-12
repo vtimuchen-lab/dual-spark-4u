@@ -68,6 +68,8 @@ scad/ctrl_bezel.scad      рамка термоконтроллера на ли�
 scad/assembly.scad        модуль (part=module|exploded|track|printables)
 scad/fan_bracket.scad     ОПЦИЯ: рамка для настольного стенда
 stl/                      печатные детали (экспорт по зависимостям каждой детали)
+stl/kit/                  тестовый комплект на один тракт: 2 стола 330 × 320
+scad/print_plates.scad    раскладка тестового комплекта (part=kit_1|kit_2)
 stl/assembly_*_VIEW_ONLY.stl  весь модуль одним файлом и разнесённый вид — только для просмотра
 scripts/export_assembly_view.py  склейка сборки по группам деталей
 scripts/export_all.sh     STL, DXF, рендеры, чертежи; OK/SKIP по каждой детали

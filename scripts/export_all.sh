@@ -42,6 +42,11 @@ echo "== Сборка для просмотра (не для печати) =="
 python3 ../scripts/export_assembly_view.py ../stl/assembly_module_VIEW_ONLY.stl module
 python3 ../scripts/export_assembly_view.py ../stl/assembly_exploded_VIEW_ONLY.stl exploded
 
+echo "== Тестовый комплект на один тракт, стол ${PRINT_BED:-330x320} (stl/kit) =="
+mkdir -p ../stl/kit
+export_part ../stl/kit/kit_1_duct_fanstand.stl print_plates.scad -D 'part="kit_1"'
+export_part ../stl/kit/kit_2_holder_baffles.stl print_plates.scad -D 'part="kit_2"'
+
 echo "== 2D для резки/сверловки (DXF) =="
 mkdir -p ../docs/drawings
 openscad -o ../docs/drawings/panel_fp5.dxf -D 'part="panel_2d"' front_panel.scad 2>/dev/null && echo "  OK    panel_fp5.dxf"
