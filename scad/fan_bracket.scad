@@ -49,10 +49,10 @@ module bracket() {
         }
         // Проём
         hole_y(track_cx, fan_center_zl, fan_open_dia, -1, bracket_t + 2, 96);
-        // 4 отверстия вентилятора
+        // 4 паза вентилятора (межцентровое 124.5…126)
         for (sx = [-1, 1], sz = [-1, 1])
-            hole_y(track_cx + sx * fan_hole_pitch / 2, fan_center_zl + sz * fan_hole_pitch / 2,
-                   hole_d, -1, bracket_t + 2);
+            hull() for (pt = [fan_hole_pitch_min, fan_hole_pitch_max])
+                hole_y(track_cx + sx * pt / 2, fan_center_zl + sz * pt / 2, hole_d, -1, bracket_t + 2);
         // Пазы M4 в лапках
         for (sx = [-1, 1])
             translate([track_cx + sx * (frame_w / 2 - bracket_foot_w / 2), bracket_t + (bracket_foot_d - bracket_t) / 2, -0.01])
@@ -68,7 +68,7 @@ module bracket_with_fan() {
 }
 
 echo(str("[BRACKET] frame ", frame_w, " x ", frame_h, " x ", bracket_t,
-         " mm; opening ", fan_open_dia, "; holes ", hole_d, " @ ", fan_hole_pitch,
+         " mm; opening ", fan_open_dia, "; slots ", hole_d, " @ ", fan_hole_pitch_min, "…", fan_hole_pitch_max,
          "; fan center z=", fan_center_zl));
 
 if (part == "bracket_with_fan") bracket_with_fan();

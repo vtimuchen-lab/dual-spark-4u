@@ -1,191 +1,100 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="961" height="990" viewBox="0 0 961 990">
+<svg xmlns="http://www.w3.org/2000/svg" width="1019" height="1157" viewBox="0 0 1019 1157">
 <rect width="100%" height="100%" fill="#fff"/>
-<text x="80" y="50" font-size="18" font-family="sans-serif" font-weight="bold">СВЕРЛОВКА BASE_PLATE (вид сверху, перед внизу). Размеры в мм от оси X=0 и от переднего края — ГАБАРИТ УСЛОВЕН (TO_MEASURE)</text>
-<rect x="80.0" y="110.0" width="800.7" height="720.0" stroke="#000" fill="none" stroke-width="1.8" stroke-dasharray="6,4"/>
-<line x1="480.4" y1="830.0" x2="480.4" y2="110.0" stroke="#06c" stroke-width="0.6" stroke-dasharray="8,4"/>
-<text x="484.0" y="124.4" font-size="9" font-family="sans-serif" text-anchor="start" fill="#06c">ось модуля X=0</text>
-<rect x="141.1" y="281.0" width="325.8" height="288.0" stroke="#888" fill="none" stroke-width="0.8" stroke-dasharray="3,2"/>
-<rect x="169.0" y="569.0" width="270.0" height="264.6" stroke="#aaa" fill="none" stroke-width="0.6" stroke-dasharray="2,2"/>
-<text x="304.0" y="452.0" font-size="9" font-family="sans-serif" text-anchor="middle" fill="#888">holder (контур)</text>
-<circle cx="178.0" cy="532.1" r="4.0" stroke="#000" fill="none" stroke-width="1.2"/>
-<line x1="170.8" y1="532.1" x2="185.2" y2="532.1" stroke="#222" stroke-width="0.5"/>
-<line x1="178.0" y1="539.3" x2="178.0" y2="524.9" stroke="#222" stroke-width="0.5"/>
-<circle cx="178.0" cy="316.1" r="4.0" stroke="#000" fill="none" stroke-width="1.2"/>
-<line x1="170.8" y1="316.1" x2="185.2" y2="316.1" stroke="#222" stroke-width="0.5"/>
-<line x1="178.0" y1="323.3" x2="178.0" y2="308.9" stroke="#222" stroke-width="0.5"/>
-<circle cx="430.0" cy="532.1" r="4.0" stroke="#000" fill="none" stroke-width="1.2"/>
-<line x1="422.8" y1="532.1" x2="437.2" y2="532.1" stroke="#222" stroke-width="0.5"/>
-<line x1="430.0" y1="539.3" x2="430.0" y2="524.9" stroke="#222" stroke-width="0.5"/>
-<circle cx="430.0" cy="316.1" r="4.0" stroke="#000" fill="none" stroke-width="1.2"/>
-<line x1="422.8" y1="316.1" x2="437.2" y2="316.1" stroke="#222" stroke-width="0.5"/>
-<line x1="430.0" y1="323.3" x2="430.0" y2="308.9" stroke="#222" stroke-width="0.5"/>
-<text x="304.0" y="431.3" font-size="9" font-family="sans-serif" text-anchor="middle" fill="#111">4 × Ø4.5 на 140 × 120</text>
-<line x1="178.0" y1="301.7" x2="430.0" y2="301.7" stroke="#b00" stroke-width="0.8"/>
-<line x1="178.0" y1="305.3" x2="178.0" y2="298.1" stroke="#b00" stroke-width="0.8"/>
-<line x1="430.0" y1="305.3" x2="430.0" y2="298.1" stroke="#b00" stroke-width="0.8"/>
-<text x="304.0" y="298.1" font-size="10" font-family="sans-serif" text-anchor="middle" fill="#b00">140</text>
-<line x1="444.4" y1="532.1" x2="444.4" y2="316.1" stroke="#b00" stroke-width="0.8"/>
-<line x1="440.8" y1="532.1" x2="448.0" y2="532.1" stroke="#b00" stroke-width="0.8"/>
-<line x1="440.8" y1="316.1" x2="448.0" y2="316.1" stroke="#b00" stroke-width="0.8"/>
-<text x="448.0" y="424.1" font-size="10" font-family="sans-serif" text-anchor="middle" fill="#b00" transform="rotate(-90 448.0 424.1)">120</text>
-<rect x="493.9" y="281.0" width="325.8" height="288.0" stroke="#888" fill="none" stroke-width="0.8" stroke-dasharray="3,2"/>
-<rect x="521.8" y="569.0" width="270.0" height="264.6" stroke="#aaa" fill="none" stroke-width="0.6" stroke-dasharray="2,2"/>
-<text x="656.8" y="452.0" font-size="9" font-family="sans-serif" text-anchor="middle" fill="#888">holder (контур)</text>
-<circle cx="530.8" cy="532.1" r="4.0" stroke="#000" fill="none" stroke-width="1.2"/>
-<line x1="523.6" y1="532.1" x2="538.0" y2="532.1" stroke="#222" stroke-width="0.5"/>
-<line x1="530.8" y1="539.3" x2="530.8" y2="524.9" stroke="#222" stroke-width="0.5"/>
-<circle cx="530.8" cy="316.1" r="4.0" stroke="#000" fill="none" stroke-width="1.2"/>
-<line x1="523.6" y1="316.1" x2="538.0" y2="316.1" stroke="#222" stroke-width="0.5"/>
-<line x1="530.8" y1="323.3" x2="530.8" y2="308.9" stroke="#222" stroke-width="0.5"/>
-<circle cx="782.8" cy="532.1" r="4.0" stroke="#000" fill="none" stroke-width="1.2"/>
-<line x1="775.6" y1="532.1" x2="790.0" y2="532.1" stroke="#222" stroke-width="0.5"/>
-<line x1="782.8" y1="539.3" x2="782.8" y2="524.9" stroke="#222" stroke-width="0.5"/>
-<circle cx="782.8" cy="316.1" r="4.0" stroke="#000" fill="none" stroke-width="1.2"/>
-<line x1="775.6" y1="316.1" x2="790.0" y2="316.1" stroke="#222" stroke-width="0.5"/>
-<line x1="782.8" y1="323.3" x2="782.8" y2="308.9" stroke="#222" stroke-width="0.5"/>
-<text x="656.8" y="431.3" font-size="9" font-family="sans-serif" text-anchor="middle" fill="#111">4 × Ø4.5 на 140 × 120</text>
-<line x1="530.8" y1="301.7" x2="782.8" y2="301.7" stroke="#b00" stroke-width="0.8"/>
-<line x1="530.8" y1="305.3" x2="530.8" y2="298.1" stroke="#b00" stroke-width="0.8"/>
-<line x1="782.8" y1="305.3" x2="782.8" y2="298.1" stroke="#b00" stroke-width="0.8"/>
-<text x="656.8" y="298.1" font-size="10" font-family="sans-serif" text-anchor="middle" fill="#b00">140</text>
-<line x1="797.2" y1="532.1" x2="797.2" y2="316.1" stroke="#b00" stroke-width="0.8"/>
-<line x1="793.6" y1="532.1" x2="800.8" y2="532.1" stroke="#b00" stroke-width="0.8"/>
-<line x1="793.6" y1="316.1" x2="800.8" y2="316.1" stroke="#b00" stroke-width="0.8"/>
-<text x="800.8" y="424.1" font-size="10" font-family="sans-serif" text-anchor="middle" fill="#b00" transform="rotate(-90 800.8 424.1)">120</text>
-<rect x="106.0" y="740.0" width="54.0" height="90.0" stroke="#555" fill="none" stroke-width="0.8" stroke-dasharray="3,2"/>
-<circle cx="133.0" cy="799.4" r="4.0" stroke="#000" fill="none" stroke-width="1.2"/>
-<circle cx="133.0" cy="761.6" r="4.0" stroke="#000" fill="none" stroke-width="1.2"/>
-<text x="133.0" y="732.8" font-size="9" font-family="sans-serif" text-anchor="middle" fill="#555">уголок 2×M4</text>
-<rect x="800.8" y="740.0" width="54.0" height="90.0" stroke="#555" fill="none" stroke-width="0.8" stroke-dasharray="3,2"/>
-<circle cx="827.8" cy="799.4" r="4.0" stroke="#000" fill="none" stroke-width="1.2"/>
-<circle cx="827.8" cy="761.6" r="4.0" stroke="#000" fill="none" stroke-width="1.2"/>
-<text x="827.8" y="732.8" font-size="9" font-family="sans-serif" text-anchor="middle" fill="#555">уголок 2×M4</text>
-<rect x="83.6" y="579.8" width="81.8" height="147.6" stroke="#2a2" fill="none" stroke-width="0.8" stroke-dasharray="3,2"/>
-<circle cx="161.8" cy="727.4" r="1.4" stroke="#2a2" fill="none" stroke-width="0.5"/>
-<circle cx="161.8" cy="709.4" r="1.4" stroke="#2a2" fill="none" stroke-width="0.5"/>
-<circle cx="161.8" cy="691.4" r="1.4" stroke="#2a2" fill="none" stroke-width="0.5"/>
-<circle cx="161.8" cy="673.4" r="1.4" stroke="#2a2" fill="none" stroke-width="0.5"/>
-<circle cx="161.8" cy="655.4" r="1.4" stroke="#2a2" fill="none" stroke-width="0.5"/>
-<circle cx="161.8" cy="637.4" r="1.4" stroke="#2a2" fill="none" stroke-width="0.5"/>
-<circle cx="161.8" cy="619.4" r="1.4" stroke="#2a2" fill="none" stroke-width="0.5"/>
-<circle cx="161.8" cy="601.4" r="1.4" stroke="#2a2" fill="none" stroke-width="0.5"/>
-<circle cx="161.8" cy="583.4" r="1.4" stroke="#2a2" fill="none" stroke-width="0.5"/>
-<circle cx="143.8" cy="727.4" r="1.4" stroke="#2a2" fill="none" stroke-width="0.5"/>
-<circle cx="143.8" cy="709.4" r="1.4" stroke="#2a2" fill="none" stroke-width="0.5"/>
-<circle cx="143.8" cy="691.4" r="1.4" stroke="#2a2" fill="none" stroke-width="0.5"/>
-<circle cx="143.8" cy="673.4" r="1.4" stroke="#2a2" fill="none" stroke-width="0.5"/>
-<circle cx="143.8" cy="655.4" r="1.4" stroke="#2a2" fill="none" stroke-width="0.5"/>
-<circle cx="143.8" cy="637.4" r="1.4" stroke="#2a2" fill="none" stroke-width="0.5"/>
-<circle cx="143.8" cy="619.4" r="1.4" stroke="#2a2" fill="none" stroke-width="0.5"/>
-<circle cx="143.8" cy="601.4" r="1.4" stroke="#2a2" fill="none" stroke-width="0.5"/>
-<circle cx="143.8" cy="583.4" r="1.4" stroke="#2a2" fill="none" stroke-width="0.5"/>
-<circle cx="125.8" cy="727.4" r="1.4" stroke="#2a2" fill="none" stroke-width="0.5"/>
-<circle cx="125.8" cy="709.4" r="1.4" stroke="#2a2" fill="none" stroke-width="0.5"/>
-<circle cx="125.8" cy="691.4" r="1.4" stroke="#2a2" fill="none" stroke-width="0.5"/>
-<circle cx="125.8" cy="673.4" r="1.4" stroke="#2a2" fill="none" stroke-width="0.5"/>
-<circle cx="125.8" cy="655.4" r="1.4" stroke="#2a2" fill="none" stroke-width="0.5"/>
-<circle cx="125.8" cy="637.4" r="1.4" stroke="#2a2" fill="none" stroke-width="0.5"/>
-<circle cx="125.8" cy="619.4" r="1.4" stroke="#2a2" fill="none" stroke-width="0.5"/>
-<circle cx="125.8" cy="601.4" r="1.4" stroke="#2a2" fill="none" stroke-width="0.5"/>
-<circle cx="125.8" cy="583.4" r="1.4" stroke="#2a2" fill="none" stroke-width="0.5"/>
-<circle cx="107.8" cy="727.4" r="1.4" stroke="#2a2" fill="none" stroke-width="0.5"/>
-<circle cx="107.8" cy="709.4" r="1.4" stroke="#2a2" fill="none" stroke-width="0.5"/>
-<circle cx="107.8" cy="691.4" r="1.4" stroke="#2a2" fill="none" stroke-width="0.5"/>
-<circle cx="107.8" cy="673.4" r="1.4" stroke="#2a2" fill="none" stroke-width="0.5"/>
-<circle cx="107.8" cy="655.4" r="1.4" stroke="#2a2" fill="none" stroke-width="0.5"/>
-<circle cx="107.8" cy="637.4" r="1.4" stroke="#2a2" fill="none" stroke-width="0.5"/>
-<circle cx="107.8" cy="619.4" r="1.4" stroke="#2a2" fill="none" stroke-width="0.5"/>
-<circle cx="107.8" cy="601.4" r="1.4" stroke="#2a2" fill="none" stroke-width="0.5"/>
-<circle cx="107.8" cy="583.4" r="1.4" stroke="#2a2" fill="none" stroke-width="0.5"/>
-<circle cx="89.8" cy="727.4" r="1.4" stroke="#2a2" fill="none" stroke-width="0.5"/>
-<circle cx="89.8" cy="709.4" r="1.4" stroke="#2a2" fill="none" stroke-width="0.5"/>
-<circle cx="89.8" cy="691.4" r="1.4" stroke="#2a2" fill="none" stroke-width="0.5"/>
-<circle cx="89.8" cy="673.4" r="1.4" stroke="#2a2" fill="none" stroke-width="0.5"/>
-<circle cx="89.8" cy="655.4" r="1.4" stroke="#2a2" fill="none" stroke-width="0.5"/>
-<circle cx="89.8" cy="637.4" r="1.4" stroke="#2a2" fill="none" stroke-width="0.5"/>
-<circle cx="89.8" cy="619.4" r="1.4" stroke="#2a2" fill="none" stroke-width="0.5"/>
-<circle cx="89.8" cy="601.4" r="1.4" stroke="#2a2" fill="none" stroke-width="0.5"/>
-<circle cx="89.8" cy="583.4" r="1.4" stroke="#2a2" fill="none" stroke-width="0.5"/>
-<text x="85.4" y="574.4" font-size="8" font-family="sans-serif" text-anchor="start" fill="#2a2">M3 сетка 10</text>
-<rect x="795.4" y="579.8" width="81.8" height="147.6" stroke="#2a2" fill="none" stroke-width="0.8" stroke-dasharray="3,2"/>
-<circle cx="799.0" cy="727.4" r="1.4" stroke="#2a2" fill="none" stroke-width="0.5"/>
-<circle cx="799.0" cy="709.4" r="1.4" stroke="#2a2" fill="none" stroke-width="0.5"/>
-<circle cx="799.0" cy="691.4" r="1.4" stroke="#2a2" fill="none" stroke-width="0.5"/>
-<circle cx="799.0" cy="673.4" r="1.4" stroke="#2a2" fill="none" stroke-width="0.5"/>
-<circle cx="799.0" cy="655.4" r="1.4" stroke="#2a2" fill="none" stroke-width="0.5"/>
-<circle cx="799.0" cy="637.4" r="1.4" stroke="#2a2" fill="none" stroke-width="0.5"/>
-<circle cx="799.0" cy="619.4" r="1.4" stroke="#2a2" fill="none" stroke-width="0.5"/>
-<circle cx="799.0" cy="601.4" r="1.4" stroke="#2a2" fill="none" stroke-width="0.5"/>
-<circle cx="799.0" cy="583.4" r="1.4" stroke="#2a2" fill="none" stroke-width="0.5"/>
-<circle cx="817.0" cy="727.4" r="1.4" stroke="#2a2" fill="none" stroke-width="0.5"/>
-<circle cx="817.0" cy="709.4" r="1.4" stroke="#2a2" fill="none" stroke-width="0.5"/>
-<circle cx="817.0" cy="691.4" r="1.4" stroke="#2a2" fill="none" stroke-width="0.5"/>
-<circle cx="817.0" cy="673.4" r="1.4" stroke="#2a2" fill="none" stroke-width="0.5"/>
-<circle cx="817.0" cy="655.4" r="1.4" stroke="#2a2" fill="none" stroke-width="0.5"/>
-<circle cx="817.0" cy="637.4" r="1.4" stroke="#2a2" fill="none" stroke-width="0.5"/>
-<circle cx="817.0" cy="619.4" r="1.4" stroke="#2a2" fill="none" stroke-width="0.5"/>
-<circle cx="817.0" cy="601.4" r="1.4" stroke="#2a2" fill="none" stroke-width="0.5"/>
-<circle cx="817.0" cy="583.4" r="1.4" stroke="#2a2" fill="none" stroke-width="0.5"/>
-<circle cx="835.0" cy="727.4" r="1.4" stroke="#2a2" fill="none" stroke-width="0.5"/>
-<circle cx="835.0" cy="709.4" r="1.4" stroke="#2a2" fill="none" stroke-width="0.5"/>
-<circle cx="835.0" cy="691.4" r="1.4" stroke="#2a2" fill="none" stroke-width="0.5"/>
-<circle cx="835.0" cy="673.4" r="1.4" stroke="#2a2" fill="none" stroke-width="0.5"/>
-<circle cx="835.0" cy="655.4" r="1.4" stroke="#2a2" fill="none" stroke-width="0.5"/>
-<circle cx="835.0" cy="637.4" r="1.4" stroke="#2a2" fill="none" stroke-width="0.5"/>
-<circle cx="835.0" cy="619.4" r="1.4" stroke="#2a2" fill="none" stroke-width="0.5"/>
-<circle cx="835.0" cy="601.4" r="1.4" stroke="#2a2" fill="none" stroke-width="0.5"/>
-<circle cx="835.0" cy="583.4" r="1.4" stroke="#2a2" fill="none" stroke-width="0.5"/>
-<circle cx="853.0" cy="727.4" r="1.4" stroke="#2a2" fill="none" stroke-width="0.5"/>
-<circle cx="853.0" cy="709.4" r="1.4" stroke="#2a2" fill="none" stroke-width="0.5"/>
-<circle cx="853.0" cy="691.4" r="1.4" stroke="#2a2" fill="none" stroke-width="0.5"/>
-<circle cx="853.0" cy="673.4" r="1.4" stroke="#2a2" fill="none" stroke-width="0.5"/>
-<circle cx="853.0" cy="655.4" r="1.4" stroke="#2a2" fill="none" stroke-width="0.5"/>
-<circle cx="853.0" cy="637.4" r="1.4" stroke="#2a2" fill="none" stroke-width="0.5"/>
-<circle cx="853.0" cy="619.4" r="1.4" stroke="#2a2" fill="none" stroke-width="0.5"/>
-<circle cx="853.0" cy="601.4" r="1.4" stroke="#2a2" fill="none" stroke-width="0.5"/>
-<circle cx="853.0" cy="583.4" r="1.4" stroke="#2a2" fill="none" stroke-width="0.5"/>
-<circle cx="871.0" cy="727.4" r="1.4" stroke="#2a2" fill="none" stroke-width="0.5"/>
-<circle cx="871.0" cy="709.4" r="1.4" stroke="#2a2" fill="none" stroke-width="0.5"/>
-<circle cx="871.0" cy="691.4" r="1.4" stroke="#2a2" fill="none" stroke-width="0.5"/>
-<circle cx="871.0" cy="673.4" r="1.4" stroke="#2a2" fill="none" stroke-width="0.5"/>
-<circle cx="871.0" cy="655.4" r="1.4" stroke="#2a2" fill="none" stroke-width="0.5"/>
-<circle cx="871.0" cy="637.4" r="1.4" stroke="#2a2" fill="none" stroke-width="0.5"/>
-<circle cx="871.0" cy="619.4" r="1.4" stroke="#2a2" fill="none" stroke-width="0.5"/>
-<circle cx="871.0" cy="601.4" r="1.4" stroke="#2a2" fill="none" stroke-width="0.5"/>
-<circle cx="871.0" cy="583.4" r="1.4" stroke="#2a2" fill="none" stroke-width="0.5"/>
-<text x="797.2" y="574.4" font-size="8" font-family="sans-serif" text-anchor="start" fill="#2a2">M3 сетка 10</text>
-<text x="480.4" y="745.4" font-size="9" font-family="sans-serif" text-anchor="middle" fill="#2a2">полосы электроники: x = ±(175…220.425*), y = 57…139  (* при условной ширине)</text>
-<circle cx="818.2" cy="597.8" r="3.1" stroke="#000" fill="none" stroke-width="1"/>
-<circle cx="854.2" cy="597.8" r="3.1" stroke="#000" fill="none" stroke-width="1"/>
-<text x="836.2" y="612.2" font-size="8" font-family="sans-serif" text-anchor="middle" fill="#111">DC-гнездо 2×M3</text>
-<line x1="480.4" y1="848.0" x2="656.8" y2="848.0" stroke="#b00" stroke-width="0.8"/>
-<line x1="480.4" y1="851.6" x2="480.4" y2="844.4" stroke="#b00" stroke-width="0.8"/>
-<line x1="656.8" y1="851.6" x2="656.8" y2="844.4" stroke="#b00" stroke-width="0.8"/>
-<text x="568.6" y="844.4" font-size="10" font-family="sans-serif" text-anchor="middle" fill="#b00">98 (ось трака от X=0)</text>
-<line x1="304.0" y1="848.0" x2="480.4" y2="848.0" stroke="#b00" stroke-width="0.8"/>
-<line x1="304.0" y1="851.6" x2="304.0" y2="844.4" stroke="#b00" stroke-width="0.8"/>
-<line x1="480.4" y1="851.6" x2="480.4" y2="844.4" stroke="#b00" stroke-width="0.8"/>
-<text x="392.2" y="844.4" font-size="10" font-family="sans-serif" text-anchor="middle" fill="#b00">98</text>
-<line x1="480.4" y1="869.6" x2="827.8" y2="869.6" stroke="#b00" stroke-width="0.8"/>
-<line x1="480.4" y1="873.2" x2="480.4" y2="866.0" stroke="#b00" stroke-width="0.8"/>
-<line x1="827.8" y1="873.2" x2="827.8" y2="866.0" stroke="#b00" stroke-width="0.8"/>
-<text x="654.1" y="866.0" font-size="10" font-family="sans-serif" text-anchor="middle" fill="#b00">193 (уголок)</text>
-<line x1="80.0" y1="894.8" x2="880.7" y2="894.8" stroke="#b00" stroke-width="0.8"/>
-<line x1="80.0" y1="898.4" x2="80.0" y2="891.2" stroke="#b00" stroke-width="0.8"/>
-<line x1="880.7" y1="898.4" x2="880.7" y2="891.2" stroke="#b00" stroke-width="0.8"/>
-<text x="480.4" y="891.2" font-size="10" font-family="sans-serif" text-anchor="middle" fill="#b00">ширина = rack_opening_w − 6 = TO_MEASURE</text>
-<line x1="891.5" y1="830.0" x2="891.5" y2="424.1" stroke="#b00" stroke-width="0.8"/>
-<line x1="887.9" y1="830.0" x2="895.1" y2="830.0" stroke="#b00" stroke-width="0.8"/>
-<line x1="887.9" y1="424.1" x2="895.1" y2="424.1" stroke="#b00" stroke-width="0.8"/>
-<text x="895.1" y="627.1" font-size="10" font-family="sans-serif" text-anchor="middle" fill="#b00" transform="rotate(-90 895.1 627.1)">225.5 (центр MSI)</text>
-<line x1="920.3" y1="830.0" x2="920.3" y2="799.4" stroke="#b00" stroke-width="0.8"/>
-<line x1="916.7" y1="830.0" x2="923.9" y2="830.0" stroke="#b00" stroke-width="0.8"/>
-<line x1="916.7" y1="799.4" x2="923.9" y2="799.4" stroke="#b00" stroke-width="0.8"/>
-<text x="923.9" y="814.7" font-size="10" font-family="sans-serif" text-anchor="middle" fill="#b00" transform="rotate(-90 923.9 814.7)">17</text>
-<line x1="949.1" y1="830.0" x2="949.1" y2="110.0" stroke="#b00" stroke-width="0.8"/>
-<line x1="945.5" y1="830.0" x2="952.7" y2="830.0" stroke="#b00" stroke-width="0.8"/>
-<line x1="945.5" y1="110.0" x2="952.7" y2="110.0" stroke="#b00" stroke-width="0.8"/>
-<text x="952.7" y="470.0" font-size="10" font-family="sans-serif" text-anchor="middle" fill="#b00" transform="rotate(-90 952.7 470.0)">глубина ≥ 330; = TO_MEASURE</text>
-<text x="83.6" y="920.0" font-size="10" font-family="sans-serif" text-anchor="start" fill="#111">Передний край плиты на 2 мм за задней плоскостью панели. Толщина 3 мм, алюминий. Отверстия Ø4.5 (M4) и Ø3.4 (M3).</text>
-<text x="83.6" y="941.6" font-size="10" font-family="sans-serif" text-anchor="start" fill="#b00" font-weight="bold">Габарит плиты условный — только расположение отверстий относительно оси и переднего края окончательно.</text>
+<text x="110" y="80" font-size="18" font-family="sans-serif" font-weight="bold">BASE_PLATE 444 × 443 × 3 Al — сверловка (вид сверху, перед внизу)</text>
+<rect x="110.0" y="140.0" width="799.2" height="797.4" stroke="#000" fill="none" stroke-width="1.8"/>
+<line x1="509.6" y1="937.4" x2="509.6" y2="140.0" stroke="#06c" stroke-width="0.6" stroke-dasharray="8,4"/>
+<rect x="170.3" y="141.8" width="325.8" height="390.6" stroke="#888" fill="none" stroke-width="0.8" stroke-dasharray="3,2"/>
+<rect x="198.2" y="536.0" width="270.0" height="405.0" stroke="#aaa" fill="none" stroke-width="0.6" stroke-dasharray="2,2"/>
+<text x="333.2" y="352.4" font-size="9" font-family="sans-serif" text-anchor="middle" fill="#888">holder (контур)</text>
+<text x="333.2" y="736.7" font-size="9" font-family="sans-serif" text-anchor="middle" fill="#aaa">воздуховод (контур)</text>
+<rect x="523.1" y="141.8" width="325.8" height="390.6" stroke="#888" fill="none" stroke-width="0.8" stroke-dasharray="3,2"/>
+<rect x="551.0" y="536.0" width="270.0" height="405.0" stroke="#aaa" fill="none" stroke-width="0.6" stroke-dasharray="2,2"/>
+<text x="686.0" y="352.4" font-size="9" font-family="sans-serif" text-anchor="middle" fill="#888">holder (контур)</text>
+<text x="686.0" y="736.7" font-size="9" font-family="sans-serif" text-anchor="middle" fill="#aaa">воздуховод (контур)</text>
+<circle cx="261.2" cy="496.4" r="4.0" stroke="#000" fill="none" stroke-width="1.2"/>
+<line x1="254.0" y1="496.4" x2="268.4" y2="496.4" stroke="#222" stroke-width="0.5"/>
+<line x1="261.2" y1="503.6" x2="261.2" y2="489.2" stroke="#222" stroke-width="0.5"/>
+<circle cx="261.2" cy="280.4" r="4.0" stroke="#000" fill="none" stroke-width="1.2"/>
+<line x1="254.0" y1="280.4" x2="268.4" y2="280.4" stroke="#222" stroke-width="0.5"/>
+<line x1="261.2" y1="287.6" x2="261.2" y2="273.2" stroke="#222" stroke-width="0.5"/>
+<circle cx="405.2" cy="496.4" r="4.0" stroke="#000" fill="none" stroke-width="1.2"/>
+<line x1="398.0" y1="496.4" x2="412.4" y2="496.4" stroke="#222" stroke-width="0.5"/>
+<line x1="405.2" y1="503.6" x2="405.2" y2="489.2" stroke="#222" stroke-width="0.5"/>
+<circle cx="405.2" cy="280.4" r="4.0" stroke="#000" fill="none" stroke-width="1.2"/>
+<line x1="398.0" y1="280.4" x2="412.4" y2="280.4" stroke="#222" stroke-width="0.5"/>
+<line x1="405.2" y1="287.6" x2="405.2" y2="273.2" stroke="#222" stroke-width="0.5"/>
+<circle cx="614.0" cy="496.4" r="4.0" stroke="#000" fill="none" stroke-width="1.2"/>
+<line x1="606.8" y1="496.4" x2="621.2" y2="496.4" stroke="#222" stroke-width="0.5"/>
+<line x1="614.0" y1="503.6" x2="614.0" y2="489.2" stroke="#222" stroke-width="0.5"/>
+<circle cx="614.0" cy="280.4" r="4.0" stroke="#000" fill="none" stroke-width="1.2"/>
+<line x1="606.8" y1="280.4" x2="621.2" y2="280.4" stroke="#222" stroke-width="0.5"/>
+<line x1="614.0" y1="287.6" x2="614.0" y2="273.2" stroke="#222" stroke-width="0.5"/>
+<circle cx="758.0" cy="496.4" r="4.0" stroke="#000" fill="none" stroke-width="1.2"/>
+<line x1="750.8" y1="496.4" x2="765.2" y2="496.4" stroke="#222" stroke-width="0.5"/>
+<line x1="758.0" y1="503.6" x2="758.0" y2="489.2" stroke="#222" stroke-width="0.5"/>
+<circle cx="758.0" cy="280.4" r="4.0" stroke="#000" fill="none" stroke-width="1.2"/>
+<line x1="750.8" y1="280.4" x2="765.2" y2="280.4" stroke="#222" stroke-width="0.5"/>
+<line x1="758.0" y1="287.6" x2="758.0" y2="273.2" stroke="#222" stroke-width="0.5"/>
+<circle cx="162.2" cy="906.8" r="4.0" stroke="#000" fill="none" stroke-width="1.2"/>
+<line x1="155.0" y1="906.8" x2="169.4" y2="906.8" stroke="#222" stroke-width="0.5"/>
+<line x1="162.2" y1="914.0" x2="162.2" y2="899.6" stroke="#222" stroke-width="0.5"/>
+<circle cx="162.2" cy="869.0" r="4.0" stroke="#000" fill="none" stroke-width="1.2"/>
+<line x1="155.0" y1="869.0" x2="169.4" y2="869.0" stroke="#222" stroke-width="0.5"/>
+<line x1="162.2" y1="876.2" x2="162.2" y2="861.8" stroke="#222" stroke-width="0.5"/>
+<circle cx="857.0" cy="906.8" r="4.0" stroke="#000" fill="none" stroke-width="1.2"/>
+<line x1="849.8" y1="906.8" x2="864.2" y2="906.8" stroke="#222" stroke-width="0.5"/>
+<line x1="857.0" y1="914.0" x2="857.0" y2="899.6" stroke="#222" stroke-width="0.5"/>
+<circle cx="857.0" cy="869.0" r="4.0" stroke="#000" fill="none" stroke-width="1.2"/>
+<line x1="849.8" y1="869.0" x2="864.2" y2="869.0" stroke="#222" stroke-width="0.5"/>
+<line x1="857.0" y1="876.2" x2="857.0" y2="861.8" stroke="#222" stroke-width="0.5"/>
+<circle cx="172.1" cy="816.8" r="3.1" stroke="#000" fill="none" stroke-width="1.0"/>
+<line x1="166.7" y1="816.8" x2="177.5" y2="816.8" stroke="#222" stroke-width="0.5"/>
+<line x1="172.1" y1="822.2" x2="172.1" y2="811.4" stroke="#222" stroke-width="0.5"/>
+<circle cx="172.1" cy="762.8" r="3.1" stroke="#000" fill="none" stroke-width="1.0"/>
+<line x1="166.7" y1="762.8" x2="177.5" y2="762.8" stroke="#222" stroke-width="0.5"/>
+<line x1="172.1" y1="768.2" x2="172.1" y2="757.4" stroke="#222" stroke-width="0.5"/>
+<circle cx="136.1" cy="816.8" r="3.1" stroke="#000" fill="none" stroke-width="1.0"/>
+<line x1="130.7" y1="816.8" x2="141.5" y2="816.8" stroke="#222" stroke-width="0.5"/>
+<line x1="136.1" y1="822.2" x2="136.1" y2="811.4" stroke="#222" stroke-width="0.5"/>
+<circle cx="136.1" cy="762.8" r="3.1" stroke="#000" fill="none" stroke-width="1.0"/>
+<line x1="130.7" y1="762.8" x2="141.5" y2="762.8" stroke="#222" stroke-width="0.5"/>
+<line x1="136.1" y1="768.2" x2="136.1" y2="757.4" stroke="#222" stroke-width="0.5"/>
+<circle cx="847.1" cy="816.8" r="3.1" stroke="#000" fill="none" stroke-width="1.0"/>
+<line x1="841.7" y1="816.8" x2="852.5" y2="816.8" stroke="#222" stroke-width="0.5"/>
+<line x1="847.1" y1="822.2" x2="847.1" y2="811.4" stroke="#222" stroke-width="0.5"/>
+<circle cx="847.1" cy="762.8" r="3.1" stroke="#000" fill="none" stroke-width="1.0"/>
+<line x1="841.7" y1="762.8" x2="852.5" y2="762.8" stroke="#222" stroke-width="0.5"/>
+<line x1="847.1" y1="768.2" x2="847.1" y2="757.4" stroke="#222" stroke-width="0.5"/>
+<circle cx="883.1" cy="816.8" r="3.1" stroke="#000" fill="none" stroke-width="1.0"/>
+<line x1="877.7" y1="816.8" x2="888.5" y2="816.8" stroke="#222" stroke-width="0.5"/>
+<line x1="883.1" y1="822.2" x2="883.1" y2="811.4" stroke="#222" stroke-width="0.5"/>
+<circle cx="883.1" cy="762.8" r="3.1" stroke="#000" fill="none" stroke-width="1.0"/>
+<line x1="877.7" y1="762.8" x2="888.5" y2="762.8" stroke="#222" stroke-width="0.5"/>
+<line x1="883.1" y1="768.2" x2="883.1" y2="757.4" stroke="#222" stroke-width="0.5"/>
+<circle cx="847.1" cy="561.2" r="3.1" stroke="#000" fill="none" stroke-width="1.0"/>
+<circle cx="883.1" cy="561.2" r="3.1" stroke="#000" fill="none" stroke-width="1.0"/>
+<rect x="135.2" y="847.4" width="54.0" height="90.0" stroke="#555" fill="none" stroke-width="0.8" stroke-dasharray="3,2"/>
+<rect x="113.6" y="543.2" width="81.0" height="291.6" stroke="#2a2" fill="none" stroke-width="0.8" stroke-dasharray="3,2"/>
+<text x="154.1" y="537.8" font-size="9" font-family="sans-serif" text-anchor="middle" fill="#2a2">WAGO</text>
+<rect x="830.0" y="847.4" width="54.0" height="90.0" stroke="#555" fill="none" stroke-width="0.8" stroke-dasharray="3,2"/>
+<rect x="824.6" y="543.2" width="81.0" height="291.6" stroke="#2a2" fill="none" stroke-width="0.8" stroke-dasharray="3,2"/>
+<text x="865.1" y="537.8" font-size="9" font-family="sans-serif" text-anchor="middle" fill="#2a2">DC</text>
+<line x1="110.0" y1="955.4" x2="261.2" y2="955.4" stroke="#b00" stroke-width="0.8"/>
+<line x1="110.0" y1="959.0" x2="110.0" y2="951.8" stroke="#b00" stroke-width="0.8"/>
+<line x1="261.2" y1="959.0" x2="261.2" y2="951.8" stroke="#b00" stroke-width="0.8"/>
+<text x="185.6" y="951.8" font-size="10" font-family="sans-serif" text-anchor="middle" fill="#b00">84</text>
+<line x1="99.2" y1="937.4" x2="99.2" y2="496.4" stroke="#b00" stroke-width="0.8"/>
+<line x1="95.6" y1="937.4" x2="102.8" y2="937.4" stroke="#b00" stroke-width="0.8"/>
+<line x1="95.6" y1="496.4" x2="102.8" y2="496.4" stroke="#b00" stroke-width="0.8"/>
+<text x="102.8" y="716.9" font-size="10" font-family="sans-serif" text-anchor="middle" fill="#b00" transform="rotate(-90 102.8 716.9)">245</text>
+<line x1="110.0" y1="980.6" x2="909.2" y2="980.6" stroke="#b00" stroke-width="0.8"/>
+<line x1="110.0" y1="984.2" x2="110.0" y2="977.0" stroke="#b00" stroke-width="0.8"/>
+<line x1="909.2" y1="984.2" x2="909.2" y2="977.0" stroke="#b00" stroke-width="0.8"/>
+<text x="509.6" y="977.0" font-size="10" font-family="sans-serif" text-anchor="middle" fill="#b00">444 = проём 450 − 2×3</text>
+<line x1="920.0" y1="937.4" x2="920.0" y2="140.0" stroke="#b00" stroke-width="0.8"/>
+<line x1="916.4" y1="937.4" x2="923.6" y2="937.4" stroke="#b00" stroke-width="0.8"/>
+<line x1="916.4" y1="140.0" x2="923.6" y2="140.0" stroke="#b00" stroke-width="0.8"/>
+<text x="923.6" y="538.7" font-size="10" font-family="sans-serif" text-anchor="middle" fill="#b00" transform="rotate(-90 923.6 538.7)">443 (полка 445 − 2)</text>
+<text x="113.6" y="1009.4" font-size="10" font-family="sans-serif" text-anchor="start" fill="#111">Передний край плиты — на 2 мм за задней плоскостью панели. M4: Ø4.5 (12 шт.), M3: Ø3.4 (10 шт.).</text>
+<text x="113.6" y="1032.8" font-size="10" font-family="sans-serif" text-anchor="start" fill="#111">X — от левого края, Y — от переднего края. Координаты всех центров — base_plate_holes.csv; контур — base_plate.dxf.</text>
 </svg>

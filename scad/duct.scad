@@ -1,21 +1,23 @@
 /*
- * duct.scad — воздуховод 140×140 → передняя решётка MSI EdgeXpert.
+ * duct.scad — воздуховод 140×140 → сотовая полоса MSI EdgeXpert (v3, по замерам).
  *
  * Тракт по Y:
- *   [входной фланец 150×150, 4 гнезда гаек M4 под болты сэндвича вентилятора]
- *   [пленум: постоянное сечение 135×135 внутр., длина plenum_len]
- *   [сопло: плавное (smoothstep) сужение к проёму outlet_w × outlet_h, длина nozzle_len]
- *   [выходной фланец по габариту holder'а, 4 отверстия M3 → heat-set в стойках holder'а]
+ *   [входной фланец 150×150: 4 паза M4 124.5…126 + гнёзда гаек — болты сэндвича
+ *    решётка → панель → вентилятор → фланец]
+ *   [пленум 135.2×135.2, R20, длина plenum_len = 50]
+ *   [сопло smoothstep 135.2×135.2 → outlet_w × outlet_h, длина nozzle_len = 150;
+ *    сужение ≈5:1 к полосе сот 138.2×22.4 у НИЗА передней грани MSI;
+ *    минимальный радиус кривизны стенки проверяется (≥ R20)]
+ *   [выходной фланец 181 × до base_plate, 4 отверстия M3 → heat-set в стойках
+ *    holder'а; при under_feed вырез опускается под дно MSI — подача холодного
+ *    воздуха под днище; иначе снизу уплотнение EPDM 5×5]
+ *   [порт T_in: Ø4 в левой стенке сопла в 12 мм перед выходным фланцем]
  *
- * Стенка 2.4 мм (аэродинамическая оболочка), фланцы 6 мм.
- * Нет ступенек: внутренний контур — единый лофт от пленума до проёма.
- * Опционально: разрез на 2 части по границе пленум/сопло (duct_split),
- * tongue-and-groove + 4 M3; направляющие лопатки (guide_vanes).
+ * Стенка 2.4, фланцы 6. Внутренний контур — единый лофт без ступенек.
+ * Опции: duct_split (2 части по границе пленум/сопло), guide_vanes.
  *
- * Локальные координаты: x=0 — левая грань трака, y=0 — задняя плоскость панели
- * ФП-5 (к ней прижат вентилятор 27 мм), z=0 — ВЕРХ base_plate. Воздуховод
- * начинается на y = y_duct_in = fan_thickness. Входной фланец несёт гнёзда гаек
- * M4 сэндвича: решётка → панель → вентилятор → фланец.
+ * Локальные координаты: x=0 — левая грань трака, y=0 — задняя плоскость панели,
+ * z=0 — верх base_plate.
  */
 
 include <params.scad>
@@ -45,12 +47,13 @@ module inlet_flange() {
     difference() {
         translate([track_cx - in_flange_w / 2, y_in, in_flange_z0])
             cube([in_flange_w, duct_flange_t, in_flange_h]);
-        // Отверстия под болты сэндвича + гнёзда гаек M4 с задней стороны
+        // Пазы под болты сэндвича (межцентровое 124.5…126) + удлинённые гнёзда гаек M4
         for (sx = [-1, 1], sz = [-1, 1]) {
-            hx = track_cx + sx * fan_hole_pitch / 2;
-            hz = fan_center_zl + sz * fan_hole_pitch / 2;
-            hole_y(hx, hz, m4_clear_d, y_in - 1, duct_flange_t + 2);
-            hex_pocket_y(hx, hz, m4_nut_af, m4_nut_h, y_in + duct_flange_t - m4_nut_h);
+            hull() for (pt = [fan_hole_pitch_min, fan_hole_pitch_max])
+                hole_y(track_cx + sx * pt / 2, fan_center_zl + sz * pt / 2, m4_clear_d, y_in - 1, duct_flange_t + 2);
+            hull() for (pt = [fan_hole_pitch_min, fan_hole_pitch_max])
+                hex_pocket_y(track_cx + sx * pt / 2, fan_center_zl + sz * pt / 2, m4_nut_af, m4_nut_h + 0.01,
+                             y_in + duct_flange_t - m4_nut_h);
         }
     }
 }
@@ -61,9 +64,15 @@ module outlet_flange() {
             cube([out_flange_w, duct_flange_t, out_flange_h]);
         for (bx = duct_bolt_xs, bz = duct_bolt_zs)
             hole_y(bx, bz, m3_clear_d, y_outf - 1, duct_flange_t + 2);
-        // Гнездо датчика температуры ВХОДА (сквозь фланец сбоку от проёма)
-        hole_y(track_cx - outlet_w / 2 - 4, outlet_cz, 3, y_outf - 1, duct_flange_t + 2, 16);
     }
+}
+
+// Порт датчика T_in: горизонтальное отверстие через левую стенку сопла у выхода
+t_in_y = y_outf - 12;
+t_in_z = (outlet_seal_z0 + outlet_z1) / 2;
+module t_in_port_cut() {
+    translate([track_cx - outlet_w / 2 - 10, t_in_y, t_in_z]) rotate([0, 90, 0])
+        cylinder(h = 14, d = 4, $fn = 24);
 }
 
 // Наружная оболочка: пленум (призма) + сопло (лофт)
@@ -115,12 +124,15 @@ module vanes() {
 module shell_inner_solid() { shell_inner(); }
 
 module duct_full() {
-    union() {
-        difference() {
-            union() { shell_outer(); inlet_flange(); outlet_flange(); }
-            shell_inner();
+    difference() {
+        union() {
+            difference() {
+                union() { shell_outer(); inlet_flange(); outlet_flange(); }
+                shell_inner();
+            }
+            vanes();
         }
-        vanes();
+        t_in_port_cut();
     }
 }
 
@@ -189,9 +201,10 @@ module duct_section() {
 }
 
 echo(str("[DUCT] y_in=", y_in, " plenum→", y_noz, " nozzle→", y_outf, " flange→", y_out,
-         "; inlet inner ", inlet_w, "x", inlet_h, " @z", inlet_cz,
-         "; outlet ", outlet_w, "x", outlet_h, " @z", outlet_cz,
-         "; outlet flange ", out_flange_w, "x", out_flange_h));
+         "; inlet inner ", inlet_w, "x", inlet_h, " R", duct_inlet_corner_r, " @z", inlet_cz,
+         "; outlet ", outlet_w, "x", outlet_h, " z ", outlet_z0, "..", outlet_z1,
+         "; min bend R", duct_bend_r_min, "; outlet flange ", out_flange_w, "x", out_flange_h,
+         "; T_in port y=", t_in_y, " z=", t_in_z));
 echo(str("[DUCT] print envelope approx ", max(out_flange_w, in_flange_w), " x ",
          max(in_flange_h, out_flange_h), " x ", duct_len, " mm (bed ", print_bed_x, "x", print_bed_y, ")"));
 

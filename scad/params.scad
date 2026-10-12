@@ -1,150 +1,178 @@
 /*
- * dual-spark-4u — общие параметры проекта (v2: 5U-модуль в 18U шкафу).
+ * dual-spark-4u — общие параметры проекта (v3: замеры раундов 1+2 внесены).
  *
  * ВСЕ размеры в миллиметрах. Оси модуля:
  *   X = ширина, 0 = ось симметрии модуля (= ось панели ФП-5 и base_plate)
- *   Y = глубина, 0 = ЗАДНЯЯ плоскость панели ФП-5 (к ней прижат вентилятор);
- *       панель и решётка лежат в y < 0, тракт растёт в +Y
+ *   Y = глубина, 0 = ЗАДНЯЯ плоскость панели ФП-5 (= передняя грань стоек);
+ *       панель, решётки и рамки контроллеров лежат в y < 0, тракт растёт в +Y
  *   Z = высота, 0 = верх полки шкафа (= низ base_plate)
+ * Детали трака (holder, duct) строятся в локальных координатах:
+ *   x = 0 — левая наружная грань holder'а, z = 0 — ВЕРХ base_plate.
  *
  * Статус параметра:
- *   [SRC]  — есть источник (см. docs/01_analysis.md, docs/TZ.md)
- *   [ASSM] — инженерное допущение, обосновано в документации
- *   TO_MEASURE — реальное значение неизвестно → значение undef.
- *                Детали, которым оно не нужно, рендерятся; сборка,
- *                base_plate и вертикальная разметка панели — нет
- *                (assert), пока параметр не измерен и не внесён.
- *
- * Файл подключается через include <params.scad> во всех остальных .scad.
+ *   [MEAS п.N] — замер (docs/08_measurements.md, пункт N сводки)
+ *   [SRC]      — источник (паспорт, стандарт, ТЗ)
+ *   [ASSM]     — инженерное допущение, обосновано в документации
+ *   TO_MEASURE — неизвестно → undef. Деталь, которой оно нужно, не собирается
+ *                (assert) и не экспортируется; остальные детали не блокируются.
  */
 
 // ---------------------------------------------------------------------------
-// 1. УСТРОЙСТВО: MSI EdgeXpert AI (MS-C931), класс DGX Spark / GB10
+// 1. УСТРОЙСТВО: MSI EdgeXpert AI (MS-C931)
 // ---------------------------------------------------------------------------
-device_width  = 151;   // [SRC] карточки MS-C931: 151 x 151 x 52
-device_depth  = 151;   // [SRC]
-device_height = 52;    // [SRC] (с ножками или без — TO_MEASURE п.13)
+device_width  = 151;   // [MEAS п.6]
+device_depth  = 150;   // [MEAS п.6]
+device_height = 51;    // [MEAS п.6] корпус без ножек (с ножками 56.3)
 device_mass_kg = 1.2;  // [SRC]
 
-// Зона сот на передней грани: внешний габарит минус рамка. TO_MEASURE п.15.
-device_intake_margin_x   = 3;  // [ASSM]
-device_intake_margin_top = 3;  // [ASSM]
-device_intake_margin_bot = 3;  // [ASSM]
+device_foot_dia     = 14.2; // [MEAS п.7]
+device_foot_height  = 5.3;  // [MEAS п.7]
+device_foot_inset_x = 16.3; // [MEAS п.7] центр ножки от боковой грани
+device_foot_inset_y = 22;   // [MEAS п.7] центр ножки от передней/задней грани
 
-// Ножки: 4 круглые по углам (msi.png в dgx-spark-printables). TO_MEASURE п.14.
-device_foot_dia    = 16;  // [ASSM]
-device_foot_inset  = 20;  // [ASSM] центр ножки от бокового и переднего/заднего края
-device_foot_height = 4;   // [ASSM] «elevated stacking footpads»
+// Передняя сотовая решётка — полоса у НИЗА передней грани
+honeycomb_w  = 138.2;  // [MEAS п.8] (по бокам 6.2)
+honeycomb_h  = 22.4;   // [MEAS п.8]
+honeycomb_z0 = 6.0;    // [MEAS п.8] низ полосы над низом корпуса. Привязка от низа:
+                       // 6.0 + 22.4 + 23.5 (от верха) = 51.9 ≠ 51 → расхождение 0.9 мм,
+                       // покрыто полями выхода воздуховода (outlet_margin_*)
 
-// Нижняя щелевая решётка у переднего края по центру (msi.png). TO_MEASURE п.16.
-device_bottom_vent_w = 40;  // [ASSM]
-device_bottom_vent_d = 55;  // [ASSM]
-device_bottom_vent_front_offset = 12; // [ASSM]
+// Нижняя решётка (в днище), вид спереди: у ЛЕВОГО края, середина глубины
+bottom_vent_w  = 50.1; // [MEAS п.9]
+bottom_vent_d  = 38.2; // [MEAS п.9]
+bottom_vent_x0 = 11;   // [MEAS п.9] от левого края (справа 87.2: сумма 148.3 ≠ 151, ±2)
+bottom_vent_y0 = 59.7; // [MEAS п.9] от передней грани (сзади 54.5: сумма 152.4 ≠ 150, ±2)
+
+// Задний выхлоп — полоса у ВЕРХА задней грани (привязка от верха)
+rear_exhaust_w   = 143.6; // [MEAS п.10] (по бокам 5.4)
+rear_exhaust_h   = 24.4;  // [MEAS п.10]
+rear_exhaust_top = 4.4;   // [MEAS п.10] верх полосы ниже верха корпуса
+
+// Датчик T_out: центр выхлопа
+t_out_below_top = 17;  // [MEAS вывод] ниже верха корпуса
+t_out_behind    = 15;  // [MEAS вывод] за задней гранью
+
+rear_port_z0 = undef;  // TO_MEASURE п.14 низ портов/кнопки над низом корпуса (справочно;
+                       // задние упоры по умолчанию ≤ 4 мм, у углов)
 
 // ---------------------------------------------------------------------------
-// 2. ВЕНТИЛЯТОР: Arctic P14 Pro PST (ACFAN00314A)  [SRC: Arctic datasheet]
+// 2. ВЕНТИЛЯТОР: Arctic P14 Pro PST (ACFAN00314A)
 // ---------------------------------------------------------------------------
 fan_model      = "Arctic P14 Pro PST";
-fan_size       = 140;
-fan_thickness  = 27;     // [SRC] 140 x 140 x 27
+fan_size       = 140;    // [SRC]
+fan_thickness  = 27;     // [SRC]
 fan_mass_g     = 242;    // [SRC]
-fan_hole_pitch = 124.5;  // [SRC] стандарт; у Arctic встречается «125» → пазы ±0.5; TO_MEASURE п.16
-fan_hole_tol   = 0.5;    // допуск межцентрового → отверстия выполнены пазами ±tol
-fan_hole_dia   = 4.5;    // под болт M4
-fan_open_dia   = 138;    // [ASSM] вырез в панели и проём фланца (без решётки)
-fan_hub_dia    = 45;     // [ASSM] для оценки мёртвой зоны
+fan_hole_pitch_min = 124.5; // [SRC] стандарт 140 мм
+fan_hole_pitch_max = 126;   // [MEAS п.13] замер на P14 Pro → все отверстия = пазы 124.5…126
+fan_hole_dia   = 4.5;    // под M4
+fan_open_dia   = 138;    // [ASSM] вырез в панели (без решётки)
+fan_hub_dia    = 45;     // [ASSM]
 fan_rpm_min    = 400;    // [SRC]
 fan_rpm_max    = 2500;   // [SRC]
 fan_q_max_m3h  = 186;    // [SRC]
 fan_p_max_mmH2O = 5.2;   // [SRC]
 fan_i_a        = 0.35;   // [SRC]
-pwm_min_percent = 20;    // [SRC] P14 Pro: 0 об/мин при PWM < 5 % → контроллер не ниже 15–20 %, автостоп запрещён
+pwm_min_percent = 20;    // [SRC] 0 об/мин при PWM < 5 % → минимум 15–20 %, автостоп запрещён
 
-grille_t       = 3;      // [ASSM] ARCTIC Fan Grill 140, проволочная; TO_MEASURE п.17
-
-// ---------------------------------------------------------------------------
-// 3. ШКАФ 18U И ПОЛКА — ВСЁ TO_MEASURE (undef)
-// ---------------------------------------------------------------------------
-rack_opening_w     = undef; // TO_MEASURE п.1  проём между внутренними гранями передних стоек (EIA-310 номинал 450.85)
-shelf_top_z        = undef; // TO_MEASURE п.2  верх полки относительно НИЖНЕГО края ФП-5 (вверх +)
-shelf_depth        = undef; // TO_MEASURE п.3  глубина полки
-panel_t            = undef; // TO_MEASURE п.4  толщина листа ФП-5
-panel_hole_pitch_v = undef; // TO_MEASURE п.5  вертикальный шаг крепёжных отверстий в ушах ФП-5
-rack_depth         = 600;   // [SRC] глубина шкафа (ТЗ v2 п.1)
+grille_stack_t = 1.3;    // [MEAS п.14] толщина решётки ARCTIC в углу (в пакете болта)
+grille_depth   = 3.8;    // [MEAS п.14] общая высота решётки (выступ перед панелью)
 
 // ---------------------------------------------------------------------------
-// 4. ФРОНТАЛЬНАЯ ПАНЕЛЬ ЦМО ФП-5 (сталь, RAL 7035)
+// 3. ШКАФ 18U, ПОЛКА, ПАНЕЛЬ ФП-5
 // ---------------------------------------------------------------------------
-panel_w        = 482.6;  // [SRC]
+rack_opening_w = 450;    // [MEAS п.1] между внутренними гранями передних стоек
+shelf_top_z    = 40;     // [MEAS п.2] верх полки над нижним краем ФП-5
+shelf_depth    = 445;    // [MEAS п.3] (передний край полки принят на y = 0 — [ASSM])
+door_gap       = 65;     // [MEAS п.12] стекло двери ↔ передняя грань стойки (= y 0)
+air_inlet_h    = 60;     // [MEAS п.16] щель по низу передней стенки (между ИБП и полом)
+rack_depth     = 600;    // [SRC]
+
+panel_w        = 482.6;  // [SRC] карточка ЦМО
 panel_h        = 221.5;  // [SRC]
-panel_fold     = 10;     // [SRC] отбортовка внутрь (в −Y… т.е. назад, в модуль)
-panel_edge_keepout = 15; // [SRC ТЗ v2] вырезы и фланцы не ближе 15 мм к краям панели
-panel_color    = [0.78, 0.78, 0.76]; // RAL 7035 (визуально)
+panel_fold     = 10;     // [SRC] отбортовка внутрь
+panel_edge_keepout = 15; // [SRC ТЗ v2] вырезы, фланцы и отверстия ≥ 15 мм от краёв
+panel_t        = 3.5;    // [MEAS п.4] лист + пылевой фильтр (временно) — входит в пакет болта
+panel_sheet_t  = undef;  // TO_MEASURE п.4a лист без фильтра (справочно)
+panel_color    = [0.78, 0.78, 0.76]; // RAL 7035
+
+// Уши ФП-5 — справочно, на геометрию модуля не влияют (рисуются на чертеже, если заданы)
+ear_hole_low   = undef;  // TO_MEASURE п.5a низ панели → центр нижнего отверстия
+ear_hole_high  = undef;  // TO_MEASURE п.5b низ панели → центр верхнего отверстия
+ear_hole_count = undef;  // TO_MEASURE п.5c
+rack_ear_hole_spacing = 465.1; // [SRC EIA-310] между центрами отверстий ушей по горизонтали
 
 // ---------------------------------------------------------------------------
-// 5. BASE PLATE (алюминий 3 мм) И УГОЛКИ
+// 4. BASE PLATE (алюминий 3 мм) И УГОЛКИ
 // ---------------------------------------------------------------------------
-base_plate_t        = 3;    // [SRC ТЗ v2]
-base_plate_side_gap = 3;    // [SRC ТЗ v2] ширина = rack_opening_w − 2×3
-base_plate_depth_min = 330; // [SRC ТЗ v2] ≥ 330; фактическая = по полке (TO_MEASURE п.3)
-base_plate_front_gap = 2;   // [ASSM] зазор от задней плоскости панели до переднего края плиты
+base_plate_t         = 3;    // [SRC ТЗ v2]
+base_plate_side_gap  = 3;    // [SRC ТЗ v2] ширина = rack_opening_w − 2×3
+base_plate_depth_min = 330;  // [SRC ТЗ v2]
+base_plate_front_gap = 2;    // [ASSM] от задней плоскости панели до переднего края плиты
 
-bracket_w      = 30;   // [ASSM] ширина уголка panel↔base_plate
-bracket_h      = 60;   // [ASSM] высота вертикальной полки (по панели)
-bracket_d      = 50;   // [ASSM] глубина горизонтальной полки (по плите)
-bracket_t      = 5;    // [ASSM] толщина полок
+bracket_w      = 30;   // [ASSM]
+bracket_h      = 60;   // [ASSM]
+bracket_d      = 50;   // [ASSM]
+bracket_t      = 5;    // [ASSM]
 bracket_hole_d = 4.5;  // M4
-bracket_x_from_center = 0; // 0 → автоматически: снаружи от фланца воздуховода + 5 мм
 
 // ---------------------------------------------------------------------------
-// 6. ТРАКТ: решётка → панель → вентилятор → воздуховод → holder → MSI → выхлоп
+// 5. ТРАКТ: решётка → панель → вентилятор → воздуховод → MSI → выхлоп
 // ---------------------------------------------------------------------------
-fan_axis_above_plate = 75;  // [SRC ТЗ v2] ось вентилятора = верх base_plate + 75
+fan_axis_above_plate = 75;  // [SRC ТЗ v2] = центр полосы сот MSI (MSI поднят под ось)
 
 plenum_len   = 50;   // [ASSM] (ТЗ 40–80), включая входной фланец
-nozzle_len   = 70;   // [ASSM] включая выходной фланец; duct = 120 (ТЗ 100–180)
-duct_wall    = 2.4;  // [ASSM] (ТЗ 2–3)
+nozzle_len   = 150;  // [MEAS вывод] сужение ~5:1 → длинное сопло; включая выходной фланец
+duct_wall    = 2.4;  // [ASSM]
 duct_flange_t = 6;   // [ASSM]
-duct_inlet_corner_r  = 12;
-duct_outlet_corner_r = 6;
-duct_slices  = 28;
-duct_split   = false; // true → две части по границе plenum/nozzle
+duct_inlet_corner_r  = 20;  // [MEAS вывод] ≥ R20
+duct_outlet_corner_r = 6;   // ограничено высотой выхода
+duct_min_bend_r = 20;       // [MEAS вывод] минимальный радиус кривизны стенки сопла (assert)
+duct_slices  = 36;
+duct_split   = false;       // true → две части по границе plenum/nozzle
 duct_tongue  = 2;
-guide_vanes  = 0;     // 0 = нет; 2 = две вертикальные лопатки
+guide_vanes  = 0;
 vane_t       = 1.6;
 
-gasket_t     = 5;    // [ASSM] EPDM между выходным фланцем и передней гранью MSI
-outlet_under_device = 8;  // [ASSM] выход заходит ниже дна MSI (подача под ножки / к нижней решётке)
-outlet_over_device  = 0;
+// Выход воздуховода = полоса сот + поля
+outlet_margin_side = 1;   // [ASSM]
+outlet_margin_top  = 3;   // [ASSM]
+outlet_margin_bot  = 1;   // [ASSM] (покрывает расхождение 0.9 мм привязки сот)
+// Подача холодного воздуха под днище (к нижней решётке и стенкам корпуса):
+// вырез выхода опускается ниже дна корпуса на under_feed_h. false → снизу
+// уплотнение EPDM 5 мм на полосе 5 мм под сотами (герметичный вариант).
+under_feed   = true;  // [ASSM] предмет испытаний (docs/04 §7)
+under_feed_h = 3;     // [ASSM]
 
-rear_free_zone = 90;  // [SRC ТЗ v2] свободный выхлоп ≥ 90
+gasket_t     = 5;    // [ASSM] EPDM 5×5 между выходным фланцем и MSI
+gasket_w     = 5;    // [ASSM] ширина ленты (снизу под сотами всего 5 мм полосы)
+
+rear_free_zone = 90; // [SRC ТЗ v2]
 
 // ---------------------------------------------------------------------------
-// 7. HOLDER (адаптация spark-rack-10 holder)
+// 6. HOLDER (адаптация spark-rack-10 holder): опоры под ножки вместо рельсов
 // ---------------------------------------------------------------------------
 holder_side_clearance = 10;
 holder_rear_clearance = 1;
 holder_wall      = 5;
 holder_floor_t   = 5;
-rail_w           = 20;
-channel_w        = 20;         // используется, если rails_follow_feet = false
-rails_follow_feet = true;      // внешние рельсы центрируются под ножками MSI (device_foot_inset)
-rail_setback_margin = 3;       // рельс выходит за край ножки на столько мм
+pedestal_size    = 24;   // [ASSM] квадратная опора под ножку
+pedestal_r       = 3;
+foot_pocket_clear = 0.5; // [ASSM] радиальный зазор гнезда ножки
+foot_pocket_depth = 2;   // [ASSM]
 back_stop_t      = 3;
-back_stop_w      = 10;
-back_stop_extra_h = 10;
-back_stop_r      = 2;
-guide_wall_extra_h = 15;
+back_stop_h_above_body = 4;  // [ASSM] упор выше низа корпуса (не доходит до портов)
+back_stop_overlap = 3;       // [ASSM] заход упора за угол корпуса
+guide_wall_extra_h = 15;     // низкие боковые направляющие над низом корпуса
 front_post_len   = 25;
 front_post_w     = 10;
 step_r           = 5;
 
-holder_mount_slot_l   = 10;    // пазы M4 → base_plate
+holder_mount_slot_l   = 10;
 holder_mount_slot_w   = 4.5;
 holder_mount_cbore_d  = 9;
 holder_mount_cbore_h  = 2.5;
-holder_mount_pitch_x  = 140;   // [ASSM] сверловка base_plate делается ПО ЭТИМ значениям
-holder_mount_pitch_y  = 120;   // [ASSM]
+holder_mount_pitch_x  = 80;   // [ASSM] вне опор; сверловка base_plate — по этим значениям
+holder_mount_pitch_y  = 120;  // [ASSM]
 
 strap_slots      = true;
 strap_slot_w     = 22;
@@ -152,246 +180,339 @@ strap_slot_h     = 3;
 
 sensor_pocket_d  = 6.2;
 sensor_pocket_h  = 10;
+// Стойка T_out: тонкое ребро за вилками кабелей + консоль к точке замера
+t_out_post_behind = 50;  // [ASSM] ребро стоит на 50 мм за задней гранью (за вилками USB-C/HDMI/QSFP)
+t_out_fin_t       = 3;
+t_out_fin_len     = 12;
+t_out_arm_h       = 6;
 
-// Байпас под устройством: заслонка-гребёнка в каналах у заднего края.
-// 0 = каналы открыты назад (нет заслонки), 1 = каналы перекрыты полностью.
-bypass_block     = 0.5;        // [ASSM] предмет испытаний (docs/04 §7)
+// Заслонка под днищем (сзади): закрывает выход подаваемого под днище воздуха назад.
+// 0 = открыто, 1 = закрыто до днища. Вставляется сверху в пазы боковых стенок.
+bypass_block     = 0.5;   // [ASSM] предмет испытаний
 baffle_t         = 3;
-baffle_finger_len = 15;
 baffle_clearance = 0.3;
+baffle_groove_depth = 2;
+baffle_y_body    = 145;   // [ASSM] от передней грани MSI (за задними опорами, до упоров)
 
 // ---------------------------------------------------------------------------
-// 8. ЭЛЕКТРИКА (места на base_plate)
+// 7. ЭЛЕКТРИКА (base_plate) — только WAGO и DC-гнездо
 // ---------------------------------------------------------------------------
-dc_jack_hole_d   = 12;   // [ASSM] панельное гнездо 5.5×2.5 (резьба M12/ø11.5) — TO_MEASURE п.18
-// Полосы base_plate снаружи от воздуховодов, по одной на сторону: ТОЛЬКО WAGO 221-413
-// (левая) и DC-гнездо (правая). Контроллеры — на лицевой стороне панели (секция 8a).
-// Полосы лежат между уголком и выходным фланцем воздуховода; ширина зависит от rack_opening_w.
-ctrl_zone_margin = 2;    // [ASSM] зазор зоны от воздуховода и от края плиты
-ctrl_hole_grid   = 10;   // сетка M3 в зоне электроники
+dc_jack_d        = undef; // TO_MEASURE п.15 посадочный диаметр панельного гнезда 5.5×2.5
+ctrl_zone_margin = 2;
+strip_holes_pitch = [20, 30];  // [ASSM] 2×2 отверстия M3 в каждой полосе: печатный держатель WAGO /
+                               // площадки стяжек (WAGO 221-500 — по месту)
 
 // ---------------------------------------------------------------------------
-// 8a. ТЕРМОКОНТРОЛЛЕРЫ (2 шт.) — НА ЛИЦЕВОЙ СТОРОНЕ ФП-5, НАД КАЖДЫМ ВЕНТИЛЯТОРОМ
+// 8. ТЕРМОКОНТРОЛЛЕРЫ — на лицевой стороне ФП-5 над вентиляторами (TZ §4.1)
 // ---------------------------------------------------------------------------
-// Контроллер стоит в холодной зоне (между стеклом и стойками) в печатной рамке
-// part="bezel" (ctrl_bezel.scad) по оси своего трака, над решёткой вентилятора.
-// Дисплей виден через стекло. Кабели (вентилятор, 12 В, датчик T_out) уходят
-// внутрь через отверстие Ø cable_hole_d с резиновой втулкой рядом с рамкой.
-ctrl_w     = undef;  // TO_MEASURE п.23 ширина платы контроллера (по X)
-ctrl_h     = undef;  // TO_MEASURE п.23 высота платы (по Z)
-ctrl_d     = undef;  // TO_MEASURE п.23 толщина: от выступов пайки сзади до верха кнопок/дисплея
-ctrl_win_w = undef;  // TO_MEASURE п.24 окно под дисплей+кнопки; undef → плата минус bezel_win_margin
+ctrl_w     = undef;  // TO_MEASURE п.11 ширина платы
+ctrl_h     = undef;  // TO_MEASURE п.11 высота платы
+ctrl_d     = undef;  // TO_MEASURE п.11 толщина (пайка сзади … верх кнопок/дисплея)
+ctrl_win_w = undef;  // TO_MEASURE п.11 окно; undef → плата минус bezel_win_margin
 ctrl_win_h = undef;
-ctrl_win_dx = 0;     // смещение центра окна от центра платы
+ctrl_win_dx = 0;
 ctrl_win_dz = 0;
-door_gap   = undef;  // TO_MEASURE п.25 зазор стекло двери ↔ лицевая плоскость ФП-5
 
-bezel_wall      = 3;    // [ASSM] боковые стенки рамки
-bezel_front_t   = 2.5;  // [ASSM] лицевая стенка с окном
-bezel_back_t    = 1.5;  // [ASSM] задняя стенка — изолирует пайку платы от стальной панели
-bezel_clear     = 0.4;  // [ASSM] зазор платы в кармане (на сторону)
-bezel_win_margin = 3;   // [ASSM] лип окна по умолчанию
-bezel_lug_w     = 10;   // [ASSM] лапки крепления (слева/справа), heat-set M3, винт сзади панели
+bezel_wall      = 3;
+bezel_front_t   = 2.5;
+bezel_back_t    = 1.5;
+bezel_clear     = 0.4;
+bezel_win_margin = 3;
+bezel_lug_w     = 10;
 bezel_lug_t     = 7;
 bezel_lug_h     = 14;
-bezel_fan_clearance = 2; // [ASSM] от верха решётки/рамки вентилятора до низа рамки
-bezel_door_margin   = 3; // [SRC ТЗ п.8] рамка ≤ door_gap − 3
-cable_hole_d    = 12;   // [SRC ТЗ п.8] под резиновую втулку
-cable_hole_gap  = 8;    // [ASSM] от наружного края лапки до центра отверстия
-cable_hole_side = 1;    // +1 → отверстие снаружи от оси трака (к краю панели), −1 → к центру
+bezel_fan_clearance = 2;
+door_margin     = 3;    // [SRC ТЗ п.8] всё перед панелью ≤ door_gap − 3
+cable_hole_d    = 12;   // [SRC ТЗ п.8]
+cable_hole_gap  = 8;
+cable_hole_side = 1;
 
 // ---------------------------------------------------------------------------
 // 9. КРЕПЁЖ И ПЕЧАТЬ
 // ---------------------------------------------------------------------------
-m3_insert_hole_d = 4.0;  // TO_MEASURE п.19
+m3_insert_hole_d = 4.0;  // [ASSM] по вашим вставкам
 m3_insert_depth  = 6;
 m3_clear_d       = 3.4;
 m4_clear_d       = 4.5;
 m4_nut_af        = 7.0;
 m4_nut_h         = 3.2;
 m4_head_d        = 8.5;
+m4_lengths       = [25, 30, 35, 40, 45, 50];  // стандартный ряд DIN 912
+bolt_min_protrusion = 1.5;   // за гайкой
 print_bed_x = 250;
 print_bed_y = 250;
 print_bed_z = 250;
 $fn = 48;
 
-// ---------------------------------------------------------------------------
+// ===========================================================================
 // ПРОИЗВОДНЫЕ ВЕЛИЧИНЫ (не редактировать)
-// ---------------------------------------------------------------------------
+// ===========================================================================
 function known(v) = !is_undef(v);
+function first_ge(list, v) = [for (x = list) if (x >= v) x][0];
 
-// Вертикаль (z от низа base_plate = верх полки)
-fan_center_z    = base_plate_t + fan_axis_above_plate;          // 78
-device_base_z   = fan_center_z - device_height / 2;             // 52 (ось MSI = ось вентилятора)
-device_center_z = fan_center_z;
-// Локальные координаты holder'а и воздуховода: z от ВЕРХА base_plate
-hz0 = base_plate_t;                      // смещение локального z=0 деталей
-fan_center_zl   = fan_axis_above_plate;  // 75
-device_base_zl  = fan_center_zl - device_height / 2;  // 49
+// --- вертикаль (локально: над верхом base_plate) ---------------------------
+hz0 = base_plate_t;
+fan_center_zl     = fan_axis_above_plate;                         // 75
+fan_center_z      = base_plate_t + fan_center_zl;                 // 78 над полкой
+honeycomb_cz_body = honeycomb_z0 + honeycomb_h / 2;               // 17.2
+device_base_zl    = fan_center_zl - honeycomb_cz_body;            // 57.8 — низ корпуса MSI
+foot_seat_zl      = device_base_zl - device_foot_height;          // 52.5 — опора ножек
+pedestal_top_zl   = foot_seat_zl + foot_pocket_depth;             // 54.5
+device_top_zl     = device_base_zl + device_height;               // 108.8
+t_out_zl          = device_top_zl - t_out_below_top;              // 91.8
 
-// Трак (локально: x=0 — левая наружная грань holder'а, y=0 — задняя плоскость панели)
+// --- трак: ширина ------------------------------------------------------------
 holder_outer_w = device_width + 2 * holder_side_clearance + 2 * holder_wall;   // 181
 track_w        = max(holder_outer_w, fan_size + 2 * holder_wall);
 track_cx       = track_w / 2;
 device_x0      = track_cx - device_width / 2;
-track_gap      = 15;                       // [ASSM] кабель-канал между траками
+dev_x          = holder_wall + holder_side_clearance;   // в координатах holder'а
+track_gap      = 15;
 track_pitch    = track_w + track_gap;      // 196
 pair_w         = 2 * track_w + track_gap;  // 377
+in_flange_w    = fan_size + 2 * holder_wall;   // 150
 
-y_fan_front    = 0;                               // вентилятор прижат к задней плоскости панели
+// --- трак: глубина (y от задней плоскости панели) ---------------------------
+y_fan_front    = 0;
 y_duct_in      = y_fan_front + fan_thickness;     // 27
-duct_len       = plenum_len + nozzle_len;
-y_duct_out     = y_duct_in + duct_len;            // 147
+duct_len       = plenum_len + nozzle_len;         // 200
+y_duct_out     = y_duct_in + duct_len;            // 227
 y_holder_front = y_duct_out;
-y_device_front = y_holder_front + gasket_t;
-y_device_rear  = y_device_front + device_depth;
+y_device_front = y_holder_front + gasket_t;       // 232
+y_device_rear  = y_device_front + device_depth;   // 382
 y_back_stop    = y_device_rear + holder_rear_clearance;
-y_holder_rear  = y_back_stop + back_stop_t;
-y_track_end    = y_device_rear + rear_free_zone;
+y_t_out        = y_device_rear + t_out_behind;
+y_t_out_post   = y_device_rear + t_out_post_behind;
+y_holder_rear  = y_t_out_post + t_out_fin_len / 2 + 6;
+holder_depth   = y_holder_rear - y_holder_front;
+y_track_end    = y_device_rear + rear_free_zone;  // 472
 track_len      = y_track_end;
 
-outlet_w   = device_width - 2 * device_intake_margin_x;
-outlet_z0  = device_base_zl - outlet_under_device;
-outlet_z1  = device_base_zl + device_height - device_intake_margin_top + outlet_over_device;
+// --- воздуховод -------------------------------------------------------------
+inlet_w    = fan_size - 2 * duct_wall;   // 135.2
+inlet_h    = inlet_w;
+inlet_cz   = fan_center_zl;
+outlet_w   = honeycomb_w + 2 * outlet_margin_side;                                    // 140.2
+outlet_z1  = device_base_zl + honeycomb_z0 + honeycomb_h + outlet_margin_top;        // 89.2
+outlet_seal_z0 = device_base_zl + honeycomb_z0 - outlet_margin_bot;                  // 62.8
+outlet_z0  = under_feed ? device_base_zl - under_feed_h : outlet_seal_z0;            // 54.8
 outlet_h   = outlet_z1 - outlet_z0;
 outlet_cz  = (outlet_z0 + outlet_z1) / 2;
-inlet_w    = fan_size - 2 * duct_wall;
-inlet_h    = fan_size - 2 * duct_wall;
-inlet_cz   = fan_center_zl;
-
-rail_top_z      = device_base_zl;
-guide_top_z     = device_base_zl + guide_wall_extra_h;
-post_top_z      = device_base_zl + device_height + 8;
-back_stop_top_z = device_base_zl + back_stop_extra_h;
-rail_front_setback = rails_follow_feet
-    ? max(0, device_foot_inset - device_foot_dia / 2 - rail_setback_margin) : 20;
-rail_rear_setback  = rail_front_setback;
+outlet_honeycomb_area = outlet_w * (outlet_z1 - outlet_seal_z0);   // часть выхода напротив сот
+outlet_feed_area      = outlet_w * (outlet_seal_z0 - outlet_z0);   // часть под днище
+nozzle_trans_len = nozzle_len - duct_flange_t;
+// smoothstep: y = Δ(3t²−2t³) → максимальная кривизна y'' = 6Δ/L² → R = L²/(6Δ)
+duct_delta_top  = (inlet_cz + inlet_h / 2) - outlet_z1;
+duct_delta_bot  = outlet_z0 - (inlet_cz - inlet_h / 2);
+duct_delta_side = abs(outlet_w - inlet_w) / 2;
+duct_bend_r_min = nozzle_trans_len * nozzle_trans_len /
+                  (6 * max(duct_delta_top, duct_delta_bot, duct_delta_side));
 
 out_flange_w  = holder_outer_w;
-out_flange_z0 = max(0, outlet_z0 - duct_flange_t - 4);
-out_flange_z1 = post_top_z;
+out_flange_z0 = 0;                                           // до base_plate: закрывает перед подднищевой зоны
+out_flange_z1 = outlet_z1 + duct_wall + 8;
 out_flange_h  = out_flange_z1 - out_flange_z0;
+post_top_z    = out_flange_z1;
+guide_top_z   = device_base_zl + guide_wall_extra_h;
 duct_bolt_xs  = [front_post_w / 2, holder_outer_w - front_post_w / 2];
-duct_bolt_zs  = [device_base_zl + 6, device_base_zl + device_height - 4];
-in_flange_w   = fan_size + 2 * holder_wall;   // 150
+duct_bolt_zs  = [15, out_flange_z1 - 8];
 
-// Панель и вырезы (x от оси модуля; z от нижнего края панели — ТОЛЬКО если shelf_top_z известен)
+// --- holder: опоры под ножки (координаты holder'а) ---------------------------
+dev_y = gasket_t;
+foot_xs = [dev_x + device_foot_inset_x, dev_x + device_width - device_foot_inset_x];
+foot_ys = [dev_y + device_foot_inset_y, dev_y + device_depth - device_foot_inset_y];
+// нижняя решётка в координатах holder'а
+bvent_x0 = dev_x + bottom_vent_x0;
+bvent_y0 = dev_y + bottom_vent_y0;
+function pedestal_overlaps_vent(fx, fy) =
+    (fx + pedestal_size / 2 > bvent_x0) && (fx - pedestal_size / 2 < bvent_x0 + bottom_vent_w) &&
+    (fy + pedestal_size / 2 > bvent_y0) && (fy - pedestal_size / 2 < bvent_y0 + bottom_vent_d);
+holder_mount_holes = [for (sx = [-1, 1], sy = [-1, 1])
+    [holder_outer_w / 2 + sx * holder_mount_pitch_x / 2, dev_y + device_depth / 2 + sy * holder_mount_pitch_y / 2]];
+function mount_hits_pedestal(h) = len([for (fx = foot_xs, fy = foot_ys)
+    if (abs(h[0] - fx) < pedestal_size / 2 + holder_mount_cbore_d / 2 &&
+        abs(h[1] - fy) < pedestal_size / 2 + holder_mount_slot_l / 2) 1]) > 0;
+baffle_y_local = dev_y + baffle_y_body;
+baffle_h = bypass_block * (device_base_zl - holder_floor_t - 1);
+
+// --- панель ------------------------------------------------------------------
 fan_cx_from_center = [-track_pitch / 2, track_pitch / 2];     // ±98
-fan_center_z_panel = known(shelf_top_z) ? shelf_top_z + fan_center_z : undef;
-// Допустимый диапазон оси по вертикали: фланец 150 должен отстоять от краёв панели ≥ keepout
+fan_center_z_panel = shelf_top_z + fan_center_z;              // 118 от нижнего края
 fan_center_z_panel_min = panel_edge_keepout + in_flange_w / 2;             // 90
 fan_center_z_panel_max = panel_h - panel_edge_keepout - in_flange_w / 2;   // 131.5
-shelf_top_z_min = fan_center_z_panel_min - fan_center_z;                  // 12
-shelf_top_z_max = fan_center_z_panel_max - fan_center_z;                  // 53.5
+shelf_top_z_min = fan_center_z_panel_min - fan_center_z;
+shelf_top_z_max = fan_center_z_panel_max - fan_center_z;
+// угловые позиции пазов вентилятора (x, z от центра вентилятора) для pitch
+function fan_hole_pos(sx, sz, pitch) = [sx * pitch / 2, sz * pitch / 2];
+fan_hole_pitch = (fan_hole_pitch_min + fan_hole_pitch_max) / 2;  // номинал для макетов
 
-// Уголки panel↔base_plate
-bracket_cx = bracket_x_from_center > 0 ? bracket_x_from_center
-           : track_pitch / 2 + in_flange_w / 2 + 5 + bracket_w / 2;      // 193
-// Зоны электроники (x — внутренняя граница полосы, ширина — при известной плите)
-ctrl_zone_x_in = track_pitch / 2 + in_flange_w / 2 + ctrl_zone_margin;   // 175
-ctrl_zone_y0   = base_plate_front_gap + bracket_d + 7;                    // за уголком
-ctrl_zone_y1   = y_duct_out - 6;                                          // до выходного фланца (181 wide)
-ctrl_zone_d    = ctrl_zone_y1 - ctrl_zone_y0;
-
-// Base plate (ширина — только при известном rack_opening_w)
-base_plate_w = known(rack_opening_w) ? rack_opening_w - 2 * base_plate_side_gap : undef;
-ctrl_zone_w  = known(base_plate_w) ? base_plate_w / 2 - ctrl_zone_margin - ctrl_zone_x_in : undef;
-base_plate_d = known(shelf_depth) ? max(base_plate_depth_min, min(shelf_depth, y_track_end + 10)) : undef;
+// --- уголки и base_plate (x от оси модуля, y от задней плоскости панели) ----
+bracket_cx = track_pitch / 2 + in_flange_w / 2 + 5 + bracket_w / 2;     // 193
+bracket_hole_zl = [bracket_t + 12, bracket_h - 12];                      // над плитой
+base_plate_w = rack_opening_w - 2 * base_plate_side_gap;                 // 444
 base_plate_y0 = base_plate_front_gap;
+base_plate_d = max(base_plate_depth_min, min(shelf_depth - base_plate_y0, y_track_end + 10)); // 443
+ctrl_zone_x_in = track_pitch / 2 + in_flange_w / 2 + ctrl_zone_margin;  // 175
+ctrl_zone_y0   = base_plate_front_gap + bracket_d + 7;
+ctrl_zone_y1   = y_duct_out - 6;
+ctrl_zone_d    = ctrl_zone_y1 - ctrl_zone_y0;
+ctrl_zone_w    = base_plate_w / 2 - ctrl_zone_margin - ctrl_zone_x_in;
+plate_holder_holes = [for (cx = fan_cx_from_center, h = holder_mount_holes)
+    [cx - track_cx + h[0], y_holder_front + h[1]]];
+plate_bracket_holes = [for (sx = [-1, 1], k = [0, 1])
+    [sx * bracket_cx, base_plate_y0 + bracket_t + 12 + k * (bracket_d - bracket_t - 24)]];
+strip_cx = ctrl_zone_x_in + ctrl_zone_w / 2;
+plate_ctrl_holes = [for (sx = [-1, 1], i = [-1, 1], j = [-1, 1])
+    [sx * (strip_cx + i * strip_holes_pitch[0] / 2), ctrl_zone_y0 + 25 + j * strip_holes_pitch[1] / 2]];
+dc_bracket_pos = [strip_cx, ctrl_zone_y1 - 10];
+plate_dc_holes = [for (sx = [-1, 1]) dc_bracket_pos + [sx * 10, 0]];
 
-// Рамка контроллера (в координатах панели: x от оси трака, z от нижнего края ФП-5)
-bezel_w = known(ctrl_w) ? ctrl_w + 2 * (bezel_wall + bezel_clear) : undef;
-bezel_h = known(ctrl_h) ? ctrl_h + 2 * (bezel_wall + bezel_clear) : undef;
-bezel_d = known(ctrl_d) ? bezel_back_t + ctrl_d + bezel_clear + bezel_front_t : undef;  // выступ перед панелью
-bezel_z0_panel = known(fan_center_z_panel)
-    ? fan_center_z_panel + fan_size / 2 + bezel_fan_clearance : undef;      // низ рамки
-bezel_cz_panel = known(bezel_z0_panel) && known(bezel_h) ? bezel_z0_panel + bezel_h / 2 : undef;
-strip_above_fan = known(fan_center_z_panel)
-    ? panel_h - (fan_center_z_panel + fan_size / 2 + bezel_fan_clearance) : undef; // = 71.5 − shelf_top_z
-bezel_lug_dx  = known(bezel_w) ? bezel_w / 2 + bezel_lug_w / 2 : undef;    // лапки: ±от оси трака
-cable_hole_dx = known(bezel_w) ? bezel_w / 2 + bezel_lug_w + cable_hole_gap : undef; // ×cable_hole_side
+// --- пакет болта сэндвича ---------------------------------------------------
+sandwich_stack = grille_stack_t + panel_t + fan_thickness + duct_flange_t;   // 37.8
+sandwich_bolt_l = first_ge(m4_lengths, sandwich_stack + bolt_min_protrusion);
+sandwich_protrusion = sandwich_bolt_l - sandwich_stack;
+
+// --- рамка контроллера (только при известных габаритах) --------------------
+ctrl_known = known(ctrl_w) && known(ctrl_h) && known(ctrl_d);
+bezel_w = ctrl_known ? ctrl_w + 2 * (bezel_wall + bezel_clear) : undef;
+bezel_h = ctrl_known ? ctrl_h + 2 * (bezel_wall + bezel_clear) : undef;
+bezel_d = ctrl_known ? bezel_back_t + ctrl_d + bezel_clear + bezel_front_t : undef;
+bezel_z0_panel = fan_center_z_panel + fan_size / 2 + bezel_fan_clearance;   // 190
+strip_above_fan = panel_h - bezel_z0_panel;                                  // 31.5
+ctrl_h_max = strip_above_fan - 2 * (bezel_wall + bezel_clear);              // 24.7
+bezel_cz_panel = ctrl_known ? bezel_z0_panel + bezel_h / 2 : undef;
+bezel_lug_dx   = ctrl_known ? bezel_w / 2 + bezel_lug_w / 2 : undef;
+cable_hole_dx  = ctrl_known ? bezel_w / 2 + bezel_lug_w + cable_hole_gap : undef;
 ctrl_win_w_eff = known(ctrl_win_w) ? ctrl_win_w : (known(ctrl_w) ? ctrl_w - 2 * bezel_win_margin : undef);
 ctrl_win_h_eff = known(ctrl_win_h) ? ctrl_win_h : (known(ctrl_h) ? ctrl_h - 2 * bezel_win_margin : undef);
 
-// Болт сэндвича: решётка + панель + вентилятор + фланец(гайка внутри) + выступ 2–3 мм
-sandwich_stack = known(panel_t) ? grille_t + panel_t + fan_thickness + duct_flange_t : undef;
+// Макет MSI с измеренной геометрией (начало — левый-передний-нижний угол корпуса).
+// Файл-потребитель должен подключать lib/shapes.scad (use).
+module msi() {
+    device_mockup(device_width, device_depth, device_height,
+                  [honeycomb_w, honeycomb_h, honeycomb_z0],
+                  [bottom_vent_w, bottom_vent_d, bottom_vent_x0, bottom_vent_y0],
+                  [rear_exhaust_w, rear_exhaust_h, rear_exhaust_top],
+                  [device_foot_dia, device_foot_height, device_foot_inset_x, device_foot_inset_y]);
+}
 
-// --- Проверки --------------------------------------------------------------
-// Детали вызывают part_checks(); сборка/плита/панель — rack_checks().
+// ===========================================================================
+// ПРОВЕРКИ
+// ===========================================================================
 module part_checks() {
-    assert(holder_outer_w <= print_bed_x && y_holder_rear - y_holder_front <= print_bed_y,
-           "Holder exceeds print bed");
-    assert(duct_len <= print_bed_z || duct_split,
-           "Duct taller than print bed: set duct_split = true");
+    assert(holder_outer_w <= print_bed_x && holder_depth <= print_bed_y,
+           str("Holder exceeds print bed: ", holder_outer_w, " x ", holder_depth));
+    assert(duct_len <= print_bed_z || duct_split, "Duct taller than print bed: set duct_split = true");
     assert(outlet_w * outlet_h < inlet_w * inlet_h, "Outlet area must be smaller than inlet area");
-    assert(outlet_w <= in_flange_w, "Outlet wider than the duct body");
-    assert(rail_front_setback >= 0, "Rail setback negative");
+    assert(outlet_w + 2 * duct_wall <= device_width,
+           "Outlet wider than MSI front face — gasket would miss the body");
+    assert(duct_bend_r_min >= duct_min_bend_r,
+           str("Nozzle bend radius ", duct_bend_r_min, " < R", duct_min_bend_r, " → lengthen nozzle_len"));
+    assert(outlet_z0 - duct_wall >= 0, "Duct outlet below base plate");
+    assert(fan_center_zl - in_flange_w / 2 >= 0, "Inlet flange below base plate (raise fan_axis_above_plate)");
+    assert(honeycomb_z0 - outlet_margin_bot >= gasket_w || under_feed,
+           "Sealed variant: strip under honeycomb narrower than gasket");
+    for (fx = foot_xs, fy = foot_ys)
+        assert(!pedestal_overlaps_vent(fx, fy), str("Pedestal at ", fx, ",", fy, " covers the bottom vent"));
+    for (h = holder_mount_holes)
+        assert(!mount_hits_pedestal(h), str("Holder mount slot ", h, " under a pedestal"));
+    assert(baffle_y_local > foot_ys[1] + pedestal_size / 2 && baffle_y_local + baffle_t < dev_y + device_depth + holder_rear_clearance,
+           "Baffle groove collides with rear pedestals or rear stops");
+}
+
+// Шкаф/полка/панель/плита (всё измерено → должно проходить)
+module rack_checks() {
+    assert(base_plate_w >= pair_w, str("Base plate too narrow: ", base_plate_w, " < pair ", pair_w));
+    assert(2 * bracket_cx + bracket_w <= base_plate_w,
+           str("Brackets outside base plate: need ", 2 * bracket_cx + bracket_w, " > ", base_plate_w));
+    assert(bracket_cx + bracket_w / 2 <= panel_w / 2 - panel_edge_keepout, "Brackets inside panel keep-out");
+    assert(ctrl_zone_w >= 30, str("Electronics strip too narrow: ", ctrl_zone_w));
+    assert(fan_center_z_panel >= fan_center_z_panel_min && fan_center_z_panel <= fan_center_z_panel_max,
+           str("Fan cutouts leave the 15 mm panel margin: axis ", fan_center_z_panel, " not in [",
+               fan_center_z_panel_min, ", ", fan_center_z_panel_max, "] → shelf_top_z in [",
+               shelf_top_z_min, ", ", shelf_top_z_max, "]"));
+    assert(shelf_depth >= base_plate_depth_min, str("Shelf too shallow: ", shelf_depth));
+    assert(y_holder_front + holder_depth <= base_plate_y0 + base_plate_d,
+           str("Holder overhangs base plate: ends at ", y_holder_front + holder_depth, " > ", base_plate_y0 + base_plate_d));
+    assert(y_track_end + 20 <= rack_depth, str("Module deeper than rack: ", y_track_end + 20));
+    assert(panel_t + grille_depth <= door_gap - door_margin, "Fan grille touches the glass door");
+    assert(is_num(sandwich_bolt_l), str("No standard M4 length for stack ", sandwich_stack));
 }
 
 module bezel_checks() {
-    assert(known(ctrl_w) && known(ctrl_h) && known(ctrl_d),
-           "TO_MEASURE: ctrl_w / ctrl_h / ctrl_d (п.23) — габариты термоконтроллера");
+    assert(ctrl_known, "TO_MEASURE: ctrl_w / ctrl_h / ctrl_d (п.11) — габариты термоконтроллера");
     assert(ctrl_win_w_eff > 10 && ctrl_win_h_eff > 10, "Bezel window too small");
 }
 
 module ctrl_checks() {
     bezel_checks();
-    assert(known(door_gap), "TO_MEASURE: door_gap (п.25) — зазор стекло двери ↔ лицевая плоскость ФП-5");
     assert(bezel_h <= strip_above_fan,
            str("Bezel ", bezel_h, " mm taller than strip above fan ", strip_above_fan,
-               " mm (= panel_h − shelf_top_z − 150) → lower the shelf (shelf_top_z) or move bezel beside the fan"));
+               " mm (= 221.5 − shelf_top_z − 150; ctrl_h ≤ ", ctrl_h_max,
+               "). Options: lower the shelf one rack hole (strip ≈ 44–47), place beside the fan, or behind the panel"));
     assert(bezel_cz_panel <= panel_h - panel_edge_keepout,
-           str("Bezel lug holes z=", bezel_cz_panel, " inside top keep-out (max ", panel_h - panel_edge_keepout, ")"));
-    assert(bezel_d <= door_gap - bezel_door_margin,
-           str("Bezel depth ", bezel_d, " > door_gap − ", bezel_door_margin, " = ", door_gap - bezel_door_margin));
-    assert(track_pitch / 2 + cable_hole_dx + cable_hole_d / 2 <= panel_w / 2 - panel_edge_keepout,
-           "Cable hole inside panel side keep-out");
+           str("Bezel lug holes z=", bezel_cz_panel, " inside top keep-out"));
+    assert(panel_t + bezel_d <= door_gap - door_margin,
+           str("Bezel front at ", panel_t + bezel_d, " mm > door_gap − ", door_margin, " = ", door_gap - door_margin));
+    assert(track_pitch / 2 + cable_hole_dx + cable_hole_d / 2 <= rack_opening_w / 2 - 3,
+           "Cable hole outside rack opening (behind the post)");
     assert(bezel_cz_panel - cable_hole_d / 2 >= fan_center_z_panel + in_flange_w / 2 + 1,
            "Cable hole overlaps the duct inlet flange behind the panel");
 }
 
-module rack_checks() {
-    assert(known(rack_opening_w), "TO_MEASURE: rack_opening_w (п.1 чек-листа) — проём между передними стойками");
-    assert(known(shelf_top_z),    "TO_MEASURE: shelf_top_z (п.2) — верх полки относительно нижнего края ФП-5");
-    assert(known(shelf_depth),    "TO_MEASURE: shelf_depth (п.3) — глубина полки");
-    assert(known(panel_t),        "TO_MEASURE: panel_t (п.4) — толщина листа ФП-5");
-    assert(known(panel_hole_pitch_v), "TO_MEASURE: panel_hole_pitch_v (п.5) — шаг отверстий в ушах ФП-5");
-    assert(base_plate_w >= pair_w,
-           str("Base plate too narrow: ", base_plate_w, " < pair ", pair_w));
-    assert(2 * bracket_cx + bracket_w <= base_plate_w,
-           str("Brackets outside base plate: need ", 2 * bracket_cx + bracket_w, " > ", base_plate_w));
-    assert(2 * bracket_cx + bracket_w <= panel_w - 2 * panel_edge_keepout,
-           "Brackets inside panel keep-out");
-    assert(ctrl_zone_w >= 30,
-           str("Electronics strip too narrow: ", ctrl_zone_w, " mm (< 30) — rack opening too small"));
-    assert(fan_center_z_panel >= fan_center_z_panel_min && fan_center_z_panel <= fan_center_z_panel_max,
-           str("Fan cutouts leave the 15 mm panel margin: axis ", fan_center_z_panel,
-               " must be in [", fan_center_z_panel_min, ", ", fan_center_z_panel_max,
-               "] → shelf_top_z in [", shelf_top_z_min, ", ", shelf_top_z_max, "]"));
-    assert(shelf_depth >= base_plate_depth_min, str("Shelf too shallow: ", shelf_depth, " < ", base_plate_depth_min));
-    assert(shelf_depth >= y_track_end - 30,
-           str("Shelf must carry the module: need ≥ ", y_track_end - 30, " mm, have ", shelf_depth));
-    assert(y_track_end + 20 <= rack_depth,
-           str("Module deeper than rack: ", y_track_end + 20, " > ", rack_depth));
-    ctrl_checks();
+module geo_report() {
+    echo(str("[GEO] fan axis ", fan_center_zl, " above plate (", fan_center_z, " above shelf, ",
+             fan_center_z_panel, " on panel); MSI body ", device_base_zl, "..", device_top_zl,
+             " above plate; foot seat ", foot_seat_zl));
+    echo(str("[GEO] duct ", duct_len, " (plenum ", plenum_len, " + nozzle ", nozzle_len, "): inlet ",
+             inlet_w, "x", inlet_h, " → outlet ", outlet_w, "x", outlet_h, " (honeycomb part ",
+             outlet_z1 - outlet_seal_z0, ", under-feed ", outlet_seal_z0 - outlet_z0, "); area ratio ",
+             (inlet_w * inlet_h) / (outlet_w * outlet_h), " (", (inlet_w * inlet_h) / outlet_honeycomb_area,
+             " to honeycomb part); min bend R", duct_bend_r_min));
+    echo(str("[GEO] y: fan 0..", y_duct_in, "; duct ..", y_duct_out, "; MSI ", y_device_front, "..",
+             y_device_rear, "; T_out ", y_t_out, "; holder to ", y_holder_rear, "; exhaust zone to ", y_track_end));
 }
 
 module fit_report() {
     rack_checks();
-    echo(str("[FIT] electronics strips ", ctrl_zone_w, " x ", ctrl_zone_d, " mm per side at x=±", ctrl_zone_x_in, "..±", ctrl_zone_x_in + ctrl_zone_w));
-    echo(str("[FIT] pair ", pair_w, " on base plate ", base_plate_w, " x ", base_plate_d,
-             "; module length ", y_track_end, "; fan axis on panel z=", fan_center_z_panel,
-             " (allowed ", fan_center_z_panel_min, "..", fan_center_z_panel_max, ")"));
-    echo(str("[FIT] sandwich bolt stack ", sandwich_stack, " mm → M4 x ",
-             ceil((sandwich_stack + 2.5) / 5) * 5, " (nut inside flange, 2–3 mm protrusion)"));
-    echo(str("[FIT] bezel ", bezel_w, " x ", bezel_h, " x ", bezel_d, " on panel z=", bezel_z0_panel, "..",
-             bezel_z0_panel + bezel_h, " (strip above fan ", strip_above_fan, "); door_gap ", door_gap));
+    echo(str("[FIT] base plate ", base_plate_w, " x ", base_plate_d, "; pair ", pair_w,
+             "; holder ends at ", y_holder_front + holder_depth, " (plate ends ", base_plate_y0 + base_plate_d, ")"));
+    echo(str("[FIT] sandwich: grille ", grille_stack_t, " + panel ", panel_t, " + fan ", fan_thickness,
+             " + flange ", duct_flange_t, " = ", sandwich_stack, " → M4x", sandwich_bolt_l,
+             " (protrusion ", sandwich_protrusion, ")"));
+    echo(str("[FIT] strip above fan for controller bezel ", strip_above_fan, " mm → ctrl_h ≤ ", ctrl_h_max,
+             "; in front of panel ≤ ", door_gap - door_margin - panel_t, " mm"));
 }
 
-module geo_report() {
-    echo(str("[GEO] fan axis z=", fan_center_z, " above shelf (", fan_center_zl, " above plate); MSI base z=",
-             device_base_z, "; outlet ", outlet_w, "x", outlet_h, " @zl", outlet_cz,
-             "; inlet ", inlet_w, "x", inlet_h, "; area ratio ", (inlet_w * inlet_h) / (outlet_w * outlet_h)));
-    echo(str("[GEO] y: fan 0..", y_duct_in, "; duct ..", y_duct_out, "; MSI ", y_device_front, "..",
-             y_device_rear, "; exhaust zone to ", y_track_end, "; rails setback ", rail_front_setback));
+// Производные для scripts/make_drawings.py (один источник истины)
+module export_derived() {
+    names = ["fan_center_zl","fan_center_z","device_base_zl","foot_seat_zl","pedestal_top_zl","device_top_zl",
+             "t_out_zl","holder_outer_w","track_w","track_cx","dev_x","track_pitch","pair_w","in_flange_w",
+             "y_duct_in","duct_len","y_duct_out","y_device_front","y_device_rear","y_back_stop","y_t_out",
+             "y_t_out_post","y_holder_rear","holder_depth","y_track_end","inlet_w","inlet_h","outlet_w",
+             "outlet_z0","outlet_z1","outlet_seal_z0","outlet_h","duct_bend_r_min","out_flange_z1","post_top_z",
+             "guide_top_z","fan_center_z_panel","fan_center_z_panel_min","fan_center_z_panel_max",
+             "shelf_top_z_min","shelf_top_z_max","fan_hole_pitch","bracket_cx","base_plate_w","base_plate_y0",
+             "base_plate_d","ctrl_zone_x_in","ctrl_zone_y0","ctrl_zone_y1","ctrl_zone_d","ctrl_zone_w",
+             "sandwich_stack","sandwich_bolt_l","sandwich_protrusion","strip_above_fan","ctrl_h_max",
+             "bezel_z0_panel","ctrl_known","bezel_w","bezel_h","bezel_d","bezel_cz_panel","bezel_lug_dx",
+             "cable_hole_dx","baffle_y_local","baffle_h","dev_y"];
+    values = [fan_center_zl,fan_center_z,device_base_zl,foot_seat_zl,pedestal_top_zl,device_top_zl,
+             t_out_zl,holder_outer_w,track_w,track_cx,dev_x,track_pitch,pair_w,in_flange_w,
+             y_duct_in,duct_len,y_duct_out,y_device_front,y_device_rear,y_back_stop,y_t_out,
+             y_t_out_post,y_holder_rear,holder_depth,y_track_end,inlet_w,inlet_h,outlet_w,
+             outlet_z0,outlet_z1,outlet_seal_z0,outlet_h,duct_bend_r_min,out_flange_z1,post_top_z,
+             guide_top_z,fan_center_z_panel,fan_center_z_panel_min,fan_center_z_panel_max,
+             shelf_top_z_min,shelf_top_z_max,fan_hole_pitch,bracket_cx,base_plate_w,base_plate_y0,
+             base_plate_d,ctrl_zone_x_in,ctrl_zone_y0,ctrl_zone_y1,ctrl_zone_d,ctrl_zone_w,
+             sandwich_stack,sandwich_bolt_l,sandwich_protrusion,strip_above_fan,ctrl_h_max,
+             bezel_z0_panel,ctrl_known,bezel_w,bezel_h,bezel_d,bezel_cz_panel,bezel_lug_dx,
+             cable_hole_dx,baffle_y_local,baffle_h,dev_y];
+    for (i = [0 : len(names) - 1]) echo(str("DERIVED|", names[i], "|", values[i]));
+    echo(str("DERIVED|foot_xs|", foot_xs));
+    echo(str("DERIVED|foot_ys|", foot_ys));
+    echo(str("DERIVED|plate_holder_holes|", plate_holder_holes));
+    echo(str("DERIVED|plate_bracket_holes|", plate_bracket_holes));
+    echo(str("DERIVED|plate_ctrl_holes|", plate_ctrl_holes));
+    echo(str("DERIVED|plate_dc_holes|", plate_dc_holes));
 }

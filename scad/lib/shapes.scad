@@ -100,24 +100,29 @@ module fan_mockup(size = 140, t = 25, hub = 45, hole_pitch = 124.5) {
     }
 }
 
-module device_mockup(w, d, h, foot_dia = 16, foot_inset = 20, foot_h = 4,
-                     vent_w = 40, vent_d = 55, vent_front = 12,
-                     intake_mx = 3, intake_mt = 3, intake_mb = 3) {
+// Паз отверстия вентилятора: hull двух окружностей на межцентровых pmin и pmax
+// (sx, sz — квадрант, ±1). 2D, центр вентилятора в (0,0).
+module fan_hole_slot2d(sx, sz, pmin, pmax, d, fn = 24) {
+    hull() for (p = [pmin, pmax]) translate([sx * p / 2, sz * p / 2]) circle(d = d, $fn = fn);
+}
+
+/*
+ * Макет MSI EdgeXpert по замерам. Начало координат — левый-передний-нижний угол
+ * КОРПУСА (без ножек); ножки уходят в −z. «Левый» — при взгляде спереди.
+ *   hc = [w, h, z0]           — сотовая полоса на передней грани (центр по ширине)
+ *   bv = [w, d, x0, y0]       — нижняя решётка (x0 от левого края, y0 от передней грани)
+ *   rx = [w, h, top]          — задний выхлоп (центр по ширине, top — от верха)
+ *   ft = [dia, h, inset_x, inset_y]
+ */
+module device_mockup(w, d, h, hc, bv, rx, ft) {
     color([0.14, 0.15, 0.16, 0.85]) cube([w, d, h]);
-    // передняя сотовая решётка — зона всасывания
-    color([0.35, 0.65, 0.95, 0.9])
-        translate([intake_mx, -0.4, intake_mb])
-            cube([w - 2 * intake_mx, 0.4, h - intake_mt - intake_mb]);
-    // задняя решётка — выхлоп
-    color([0.95, 0.45, 0.3, 0.9])
-        translate([intake_mx, d, h * 0.45])
-            cube([w - 2 * intake_mx, 0.4, h * 0.5]);
-    // ножки
-    color([0.2, 0.2, 0.2])
-        for (fx = [foot_inset, w - foot_inset], fy = [foot_inset, d - foot_inset])
-            translate([fx, fy, -foot_h]) cylinder(h = foot_h, d = foot_dia, $fn = 32);
-    // нижняя щелевая решётка (по msi.png — у переднего края, по центру)
-    color([0.35, 0.65, 0.95, 0.9])
-        translate([w / 2 - vent_w / 2, vent_front, -0.4])
-            cube([vent_w, vent_d, 0.4]);
+    color([0.35, 0.65, 0.95, 0.95])            // соты — вход
+        translate([(w - hc[0]) / 2, -0.4, hc[2]]) cube([hc[0], 0.4, hc[1]]);
+    color([0.95, 0.45, 0.3, 0.95])             // задний выхлоп
+        translate([(w - rx[0]) / 2, d, h - rx[2] - rx[1]]) cube([rx[0], 0.4, rx[1]]);
+    color([0.35, 0.65, 0.95, 0.95])            // нижняя решётка
+        translate([bv[2], bv[3], -0.4]) cube([bv[0], bv[1], 0.4]);
+    color([0.2, 0.2, 0.2])                     // ножки
+        for (fx = [ft[2], w - ft[2]], fy = [ft[3], d - ft[3]])
+            translate([fx, fy, -ft[1]]) cylinder(h = ft[1], d = ft[0], $fn = 32);
 }
