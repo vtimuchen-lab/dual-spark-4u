@@ -64,7 +64,7 @@ module grille_mockup(cx) {
 module bezels() {
     for (cx = fan_cx_from_center)
         translate([cx - bezel_w / 2, -panel_t, bezel_z0_panel - shelf_top_z])
-            mirror([0, 1, 0]) { color([0.55, 0.58, 0.62]) bezel(); ctrl_mockup(); }
+            mirror([0, 1, 0]) { color([0.55, 0.58, 0.62]) bezel(); ctrl_mockup(); probe_mockup(); }
 }
 
 // Не деталь: разметка места на плите — слева WAGO 221-413 («+», «−»), справа

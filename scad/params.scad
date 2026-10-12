@@ -210,19 +210,25 @@ strip_holes_pitch = [20, 30];  // [ASSM] 2×2 отверстия M3 в кажд�
 // ---------------------------------------------------------------------------
 // 8. ТЕРМОКОНТРОЛЛЕРЫ — на лицевой стороне ФП-5 над вентиляторами (TZ §4.1)
 // ---------------------------------------------------------------------------
-ctrl_w     = undef;  // TO_MEASURE п.11 ширина платы
-ctrl_h     = undef;  // TO_MEASURE п.11 высота платы
-ctrl_d     = undef;  // TO_MEASURE п.11 толщина (пайка сзади … верх кнопок/дисплея)
-ctrl_win_w = undef;  // TO_MEASURE п.11 окно; undef → плата минус bezel_win_margin
-ctrl_win_h = undef;
-ctrl_win_dx = 0;
-ctrl_win_dz = 0;
+// Контроллер — панельный корпус с защёлками (фото пользователя 2026-10-12):
+// лицевая рамка с дисплеем °C / ×100 об/мин и кнопками +, −/OK, сзади провода
+// 12 В, вилка вентилятора и вилка XH датчика NTC (капля на проводе). Корпус
+// вставляется СПЕРЕДИ в прямоугольный вырез лицевой стенки печатной рамки
+// ctrl_bezel и держится своими защёлками; сталь ФП-5 прямоугольно не режется.
+ctrl_cut_w   = undef;  // TO_MEASURE п.11a корпус за лицевой рамкой без защёлок: ширина (= вырез)
+ctrl_cut_h   = undef;  // TO_MEASURE п.11a то же: высота
+ctrl_w       = undef;  // TO_MEASURE п.11b корпус за рамкой по зубьям защёлок: ширина
+ctrl_h       = undef;  // TO_MEASURE п.11b то же: высота (рамка встаёт над вентилятором при ≤ 24.7)
+ctrl_d       = undef;  // TO_MEASURE п.11c глубина за лицевой рамкой с вилками проводов и датчика
+ctrl_frame_w = undef;  // TO_MEASURE п.11d лицевая рамка контроллера: ширина
+ctrl_frame_h = undef;  // TO_MEASURE п.11d высота
+ctrl_frame_t = undef;  // TO_MEASURE п.11d толщина (выступ перед вырезом)
+ctrl_clip_t  = undef;  // TO_MEASURE п.11e толщина стенки под защёлки: задняя грань рамки ↔ зуб защёлки
 
 bezel_wall      = 3;
-bezel_front_t   = 2.5;
 bezel_back_t    = 1.5;
 bezel_clear     = 0.4;
-bezel_win_margin = 3;
+bezel_cut_clear = 0.3;  // [ASSM] вырез под корпус: + 0.3 к ctrl_cut_*
 bezel_lug_w     = 10;
 bezel_lug_t     = 7;
 bezel_lug_h     = 14;
@@ -231,6 +237,15 @@ door_margin     = 3;    // [SRC ТЗ п.8] всё перед панелью ≤ 
 cable_hole_d    = 12;   // [SRC ТЗ п.8]
 cable_hole_gap  = 8;
 cable_hole_side = 1;
+// Датчик контроллера — на лицевой стороне, в притоке (решение пользователя
+// 2026-10-12, вместо T_out): NTC свисает из втулки в нижней стенке рамки перед
+// верхом решётки, в поток, который засасывает вентилятор.
+ctrl_probe_d    = undef; // TO_MEASURE п.11f наибольший диаметр капли NTC-датчика
+ctrl_probe_fit  = 0.3;   // [ASSM] зазор в отверстии втулки (провод фиксируется каплей силикона)
+ctrl_probe_wall = 1.6;   // [ASSM] стенка втулки
+ctrl_probe_boss = 12;    // [ASSM] втулка вниз от рамки
+ctrl_probe_gap  = 5;     // [ASSM] датчик ↔ лицо решётки
+ctrl_probe_dx   = 0;     // [ASSM] смещение втулки от центра рамки по x
 
 // ---------------------------------------------------------------------------
 // 9. КРЕПЁЖ И ПЕЧАТЬ
@@ -379,18 +394,23 @@ sandwich_bolt_l = first_ge(m4_lengths, sandwich_stack + bolt_min_protrusion);
 sandwich_protrusion = sandwich_bolt_l - sandwich_stack;
 
 // --- рамка контроллера (только при известных габаритах) --------------------
-ctrl_known = known(ctrl_w) && known(ctrl_h) && known(ctrl_d);
+ctrl_known = known(ctrl_cut_w) && known(ctrl_cut_h) && known(ctrl_w) && known(ctrl_h) && known(ctrl_d)
+             && known(ctrl_frame_w) && known(ctrl_frame_h) && known(ctrl_frame_t) && known(ctrl_clip_t);
 bezel_w = ctrl_known ? ctrl_w + 2 * (bezel_wall + bezel_clear) : undef;
 bezel_h = ctrl_known ? ctrl_h + 2 * (bezel_wall + bezel_clear) : undef;
-bezel_d = ctrl_known ? bezel_back_t + ctrl_d + bezel_clear + bezel_front_t : undef;
+bezel_front_t = ctrl_known ? ctrl_clip_t : undef;                 // лицевую стенку берут защёлки
+bezel_d = ctrl_known ? bezel_back_t + ctrl_d + bezel_clear : undef;  // до лицевой плоскости рамки
+ctrl_front = ctrl_known ? panel_t + bezel_d + ctrl_frame_t : undef;  // выступ от передней грани стоек
 bezel_z0_panel = fan_center_z_panel + fan_size / 2 + bezel_fan_clearance;   // 190
 strip_above_fan = panel_h - bezel_z0_panel;                                  // 31.5
 ctrl_h_max = strip_above_fan - 2 * (bezel_wall + bezel_clear);              // 24.7
 bezel_cz_panel = ctrl_known ? bezel_z0_panel + bezel_h / 2 : undef;
 bezel_lug_dx   = ctrl_known ? bezel_w / 2 + bezel_lug_w / 2 : undef;
 cable_hole_dx  = ctrl_known ? bezel_w / 2 + bezel_lug_w + cable_hole_gap : undef;
-ctrl_win_w_eff = known(ctrl_win_w) ? ctrl_win_w : (known(ctrl_w) ? ctrl_w - 2 * bezel_win_margin : undef);
-ctrl_win_h_eff = known(ctrl_win_h) ? ctrl_win_h : (known(ctrl_h) ? ctrl_h - 2 * bezel_win_margin : undef);
+// ось датчика от лицевой плоскости панели (+ к стеклу): перед решёткой с зазором
+probe_known = known(ctrl_probe_d);
+probe_y   = probe_known ? grille_depth + ctrl_probe_gap + ctrl_probe_d / 2 : undef;
+probe_r_o = probe_known ? (ctrl_probe_d + ctrl_probe_fit) / 2 + ctrl_probe_wall : undef;
 
 // Макет MSI с измеренной геометрией (начало — левый-передний-нижний угол корпуса).
 // Файл-потребитель должен подключать lib/shapes.scad (use).
@@ -447,8 +467,16 @@ module rack_checks() {
 }
 
 module bezel_checks() {
-    assert(ctrl_known, "TO_MEASURE: ctrl_w / ctrl_h / ctrl_d (п.11) — габариты термоконтроллера");
-    assert(ctrl_win_w_eff > 10 && ctrl_win_h_eff > 10, "Bezel window too small");
+    assert(ctrl_known, "TO_MEASURE: ctrl_cut_* / ctrl_w / ctrl_h / ctrl_d / ctrl_frame_* / ctrl_clip_t (п.11) — габариты термоконтроллера");
+    assert(probe_known, "TO_MEASURE: ctrl_probe_d (п.11f) — диаметр капли NTC-датчика контроллера");
+    assert(ctrl_cut_w <= ctrl_w && ctrl_cut_h <= ctrl_h, "ctrl_cut_* (без защёлок) больше ctrl_w/h (по защёлкам)");
+    assert(ctrl_frame_w >= ctrl_cut_w + 2 && ctrl_frame_h >= ctrl_cut_h + 2, "Лицевая рамка контроллера не закрывает вырез");
+    assert(ctrl_clip_t >= 1.2, str("Стенка под защёлки ", ctrl_clip_t, " мм — тоньше 1.2, не напечатать прочно"));
+    assert(bezel_back_t + bezel_clear + 2 <= bezel_d - bezel_front_t, "Нет места в кармане рамки за лицевой стенкой");
+    assert(probe_y + probe_r_o <= bezel_d,
+           str("Probe boss (front ", probe_y + probe_r_o, ") deeper than bezel ", bezel_d,
+               " — reduce ctrl_probe_gap or move the probe"));
+    assert(abs(ctrl_probe_dx) + probe_r_o <= bezel_w / 2 - bezel_wall, "Probe boss outside bezel width");
 }
 
 module ctrl_checks() {
@@ -459,8 +487,11 @@ module ctrl_checks() {
                "). Options: lower the shelf one rack hole (strip ≈ 44–47), place beside the fan, or behind the panel"));
     assert(bezel_cz_panel <= panel_h - panel_edge_keepout,
            str("Bezel lug holes z=", bezel_cz_panel, " inside top keep-out"));
-    assert(panel_t + bezel_d <= door_gap - door_margin,
-           str("Bezel front at ", panel_t + bezel_d, " mm > door_gap − ", door_margin, " = ", door_gap - door_margin));
+    assert(ctrl_front <= door_gap - door_margin,
+           str("Controller front at ", ctrl_front, " mm > door_gap − ", door_margin, " = ", door_gap - door_margin));
+    if (bezel_cz_panel + ctrl_frame_h / 2 > panel_h)
+        echo(str("WARN: лицевая рамка контроллера выходит за верх ФП-5 на ", bezel_cz_panel + ctrl_frame_h / 2 - panel_h,
+                 " мм (перед заглушкой следующего юнита; не мешает, но заметно)"));
     assert(track_pitch / 2 + cable_hole_dx + cable_hole_d / 2 <= rack_opening_w / 2 - 3,
            "Cable hole outside rack opening (behind the post)");
     assert(bezel_cz_panel - cable_hole_d / 2 >= fan_center_z_panel + in_flange_w / 2 + 1,
