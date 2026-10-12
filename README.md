@@ -37,6 +37,7 @@ CC BY-NC 4.0), два независимых воздуховода 140 → пе
 | `docs/06_dimensions.md` | таблица размеров |
 | `docs/07_rack_layout.md` | раскладка 18U, холодная/горячая зона, датчики, установка/снятие |
 | `docs/08_measurements.md` | сводка замеров и как они попали в модель |
+| `docs/09_print_materials.md` | пластики, температуры деталей, режимы и параметры печати |
 | `docs/drawings/` | `panel_fp5`, `base_plate` (SVG/PNG/DXF/CSV), `side_view`, `top_view` |
 | `docs/renders/` | 3D-рендеры |
 | `stl/assembly_module_VIEW_ONLY.stl` | весь модуль в 3D (GitHub показывает STL в браузере) |
