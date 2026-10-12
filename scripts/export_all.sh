@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-# Экспорт печатных деталей (STL), рендеров (PNG) и чертежей (SVG/PNG) 5U-модуля.
+# Экспорт печатных деталей (двоичный STL), рендеров (PNG), чертежей (SVG/PNG) и
+# шаблонов разметки ФП-5 1:1 (PDF A4) 5U-модуля.
 # Требуется OpenSCAD ≥ 2021.01; для PNG без дисплея — xvfb-run; python3 для чертежей.
 #
 # Правило: деталь экспортируется, когда заполнены все TO_MEASURE, от которых
@@ -47,6 +48,9 @@ mkdir -p ../stl/kit
 export_part ../stl/kit/kit_1_duct_fanstand.stl print_plates.scad -D 'part="kit_1"'
 export_part ../stl/kit/kit_2_holder_baffles.stl print_plates.scad -D 'part="kit_2"'
 
+echo "== STL → двоичный (меньше в 4–5 раз, геометрия та же) =="
+python3 ../scripts/stl_to_binary.py ../stl/*.stl ../stl/kit/*.stl
+
 echo "== 2D для резки/сверловки (DXF) =="
 mkdir -p ../docs/drawings
 openscad -o ../docs/drawings/panel_fp5.dxf -D 'part="panel_2d"' front_panel.scad 2>/dev/null && echo "  OK    panel_fp5.dxf"
@@ -75,8 +79,18 @@ python3 ../scripts/make_drawings.py
 CH=$(command -v chromium || command -v chromium-browser || command -v google-chrome || find /opt/pw-browsers -maxdepth 3 -type f -name chrome 2>/dev/null | head -1 || true)
 if [ -n "${CH:-}" ]; then
   for f in ../docs/drawings/*.svg; do
+    case "$f" in *fan_template_*) continue ;; esac   # шаблоны 1:1 в мм — только PDF
     W=$(grep -o 'width="[0-9]*"' "$f" | head -1 | tr -dc '0-9'); H=$(grep -o 'height="[0-9]*"' "$f" | head -1 | tr -dc '0-9')
     timeout 60 "$CH" --headless=new --no-sandbox --disable-gpu --hide-scrollbars --window-size="$W,$H" --screenshot="${f%.svg}.png" "file://$(readlink -f "$f")" >/dev/null 2>&1 || true
   done
+  # шаблоны разметки вырезов ФП-5, 1:1 на A4 → один PDF (печать 100 %)
+  {
+    echo '<!doctype html><meta charset="utf-8"><style>@page{size:A4;margin:0}html,body{margin:0}'
+    echo 'img{display:block;width:210mm;height:297mm;break-after:page}img:last-child{break-after:auto}</style>'
+    for f in ../docs/drawings/fan_template_FAN*.svg; do echo "<img src=\"file://$(readlink -f "$f")\">"; done
+  } > "$S/fan_template.html"
+  timeout 60 "$CH" --headless=new --no-sandbox --disable-gpu --no-pdf-header-footer \
+    --print-to-pdf="$(readlink -f ../docs/drawings)/fan_template_fp5_A4.pdf" "file://$S/fan_template.html" >/dev/null 2>&1 \
+    && echo "  OK    fan_template_fp5_A4.pdf" || echo "  FAIL  fan_template_fp5_A4.pdf"
 fi
 echo "done"

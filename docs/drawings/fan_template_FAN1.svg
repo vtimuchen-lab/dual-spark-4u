@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="210mm" height="297mm" viewBox="0 0 210 297">
+<rect width="210" height="297" fill="#fff"/>
+<line x1="8.00" y1="255.00" x2="195.00" y2="255.00" stroke="#000" stroke-width="0.6"/>
+<text x="101.50" y="259.20" font-size="3" font-family="sans-serif" fill="#000" text-anchor="middle" font-weight="bold">НИЖНИЙ КРАЙ ФП-5 — совместить с краем панели</text>
+<line x1="8.00" y1="33.50" x2="195.00" y2="33.50" stroke="#000" stroke-width="0.6"/>
+<text x="101.50" y="31.90" font-size="3" font-family="sans-serif" fill="#000" text-anchor="middle" font-weight="bold">ВЕРХНИЙ КРАЙ ФП-5 — совместить с краем панели</text>
+<line x1="195.00" y1="27.50" x2="195.00" y2="261.00" stroke="#06c" stroke-width="0.35" stroke-dasharray="6,1.5,1,1.5"/>
+<text x="193.50" y="26.00" font-size="3" font-family="sans-serif" fill="#06c" text-anchor="end" font-weight="bold">ОСЬ ПАНЕЛИ (241.3 от каждого края)</text>
+<line x1="97.00" y1="255.00" x2="97.00" y2="33.50" stroke="#777" stroke-width="0.15" stroke-dasharray="4,1,1,1"/>
+<line x1="8.00" y1="137.00" x2="195.00" y2="137.00" stroke="#777" stroke-width="0.15" stroke-dasharray="4,1,1,1"/>
+<circle cx="97.000" cy="137.000" r="69.000" stroke="#000" stroke-width="0.45" fill="none"/>
+<line x1="89.00" y1="137.00" x2="105.00" y2="137.00" stroke="#000" stroke-width="0.3"/>
+<line x1="97.00" y1="129.00" x2="97.00" y2="145.00" stroke="#000" stroke-width="0.3"/>
+<circle cx="97.000" cy="137.000" r="0.500" stroke="#000" stroke-width="0.2" fill="#000"/>
+<text x="97.00" y="115.00" font-size="7" font-family="sans-serif" fill="#000" text-anchor="middle" font-weight="bold">FAN1</text>
+<text x="97.00" y="122.00" font-size="3.4" font-family="sans-serif" fill="#000" text-anchor="middle">вырез Ø138 — линия реза</text>
+<text x="97.00" y="150.00" font-size="3" font-family="sans-serif" fill="#777" text-anchor="middle">центр: керн / пилот коронки</text>
+<line x1="34.750" y1="199.250" x2="34.000" y2="200.000" stroke="#000" stroke-width="4.500" stroke-linecap="round" stroke-opacity="0.12"/>
+<circle cx="34.750" cy="199.250" r="2.250" stroke="#000" stroke-width="0.2" fill="none"/>
+<line x1="31.55" y1="199.25" x2="37.95" y2="199.25" stroke="#000" stroke-width="0.15"/>
+<line x1="34.75" y1="196.05" x2="34.75" y2="202.45" stroke="#000" stroke-width="0.15"/>
+<circle cx="34.000" cy="200.000" r="2.250" stroke="#000" stroke-width="0.2" fill="none"/>
+<line x1="30.80" y1="200.00" x2="37.20" y2="200.00" stroke="#000" stroke-width="0.15"/>
+<line x1="34.00" y1="196.80" x2="34.00" y2="203.20" stroke="#000" stroke-width="0.15"/>
+<line x1="34.750" y1="74.750" x2="34.000" y2="74.000" stroke="#000" stroke-width="4.500" stroke-linecap="round" stroke-opacity="0.12"/>
+<circle cx="34.750" cy="74.750" r="2.250" stroke="#000" stroke-width="0.2" fill="none"/>
+<line x1="31.55" y1="74.75" x2="37.95" y2="74.75" stroke="#000" stroke-width="0.15"/>
+<line x1="34.75" y1="71.55" x2="34.75" y2="77.95" stroke="#000" stroke-width="0.15"/>
+<circle cx="34.000" cy="74.000" r="2.250" stroke="#000" stroke-width="0.2" fill="none"/>
+<line x1="30.80" y1="74.00" x2="37.20" y2="74.00" stroke="#000" stroke-width="0.15"/>
+<line x1="34.00" y1="70.80" x2="34.00" y2="77.20" stroke="#000" stroke-width="0.15"/>
+<line x1="159.250" y1="199.250" x2="160.000" y2="200.000" stroke="#000" stroke-width="4.500" stroke-linecap="round" stroke-opacity="0.12"/>
+<circle cx="159.250" cy="199.250" r="2.250" stroke="#000" stroke-width="0.2" fill="none"/>
+<line x1="156.05" y1="199.25" x2="162.45" y2="199.25" stroke="#000" stroke-width="0.15"/>
+<line x1="159.25" y1="196.05" x2="159.25" y2="202.45" stroke="#000" stroke-width="0.15"/>
+<circle cx="160.000" cy="200.000" r="2.250" stroke="#000" stroke-width="0.2" fill="none"/>
+<line x1="156.80" y1="200.00" x2="163.20" y2="200.00" stroke="#000" stroke-width="0.15"/>
+<line x1="160.00" y1="196.80" x2="160.00" y2="203.20" stroke="#000" stroke-width="0.15"/>
+<line x1="159.250" y1="74.750" x2="160.000" y2="74.000" stroke="#000" stroke-width="4.500" stroke-linecap="round" stroke-opacity="0.12"/>
+<circle cx="159.250" cy="74.750" r="2.250" stroke="#000" stroke-width="0.2" fill="none"/>
+<line x1="156.05" y1="74.75" x2="162.45" y2="74.75" stroke="#000" stroke-width="0.15"/>
+<line x1="159.25" y1="71.55" x2="159.25" y2="77.95" stroke="#000" stroke-width="0.15"/>
+<circle cx="160.000" cy="74.000" r="2.250" stroke="#000" stroke-width="0.2" fill="none"/>
+<line x1="156.80" y1="74.00" x2="163.20" y2="74.00" stroke="#000" stroke-width="0.15"/>
+<line x1="160.00" y1="70.80" x2="160.00" y2="77.20" stroke="#000" stroke-width="0.15"/>
+<text x="97.00" y="41.50" font-size="2.6" font-family="sans-serif" fill="#777" text-anchor="middle">над вырезом — полоса 31.5 мм под рамку контроллера (отверстия — после замера)</text>
+<line x1="20.00" y1="255.00" x2="20.00" y2="137.00" stroke="#c00" stroke-width="0.25"/>
+<line x1="18.50" y1="255.00" x2="21.50" y2="255.00" stroke="#c00" stroke-width="0.25"/>
+<line x1="18.50" y1="137.00" x2="21.50" y2="137.00" stroke="#c00" stroke-width="0.25"/>
+<text x="21.20" y="196.00" font-size="3.4" font-family="sans-serif" fill="#c00" text-anchor="middle" font-weight="bold" transform="rotate(-90 21.20 196.00)">118</text>
+<line x1="195.00" y1="249.00" x2="97.00" y2="249.00" stroke="#c00" stroke-width="0.25"/>
+<line x1="195.00" y1="247.50" x2="195.00" y2="250.50" stroke="#c00" stroke-width="0.25"/>
+<line x1="97.00" y1="247.50" x2="97.00" y2="250.50" stroke="#c00" stroke-width="0.25"/>
+<text x="146.00" y="247.80" font-size="3.4" font-family="sans-serif" fill="#c00" text-anchor="middle" font-weight="bold">98</text>
+<text x="95.00" y="243.50" font-size="2.8" font-family="sans-serif" fill="#c00" text-anchor="end">до левого края панели 143.3</text>
+<text x="8.00" y="10.00" font-size="4.2" font-family="sans-serif" fill="#000" text-anchor="start" font-weight="bold">ФП-5 · разметка FAN1 (левый) · вид снаружи · МАСШТАБ 1:1</text>
+<text x="8.00" y="15.50" font-size="3" font-family="sans-serif" fill="#000" text-anchor="start">Печать A4 «Фактический размер» / 100 %, без подгонки. Проверка: линейка 100 мм внизу, между краями 221.5.</text>
+<text x="8.00" y="20.50" font-size="3" font-family="sans-serif" fill="#000" text-anchor="start">Ось выреза 118 от нижнего края, 98 от оси панели; межосевое вентиляторов 196.</text>
+<line x1="15.00" y1="268.00" x2="115.00" y2="268.00" stroke="#000" stroke-width="0.4"/>
+<line x1="15.00" y1="265.50" x2="15.00" y2="268.00" stroke="#000" stroke-width="0.25"/>
+<line x1="25.00" y1="266.50" x2="25.00" y2="268.00" stroke="#000" stroke-width="0.25"/>
+<line x1="35.00" y1="266.50" x2="35.00" y2="268.00" stroke="#000" stroke-width="0.25"/>
+<line x1="45.00" y1="266.50" x2="45.00" y2="268.00" stroke="#000" stroke-width="0.25"/>
+<line x1="55.00" y1="266.50" x2="55.00" y2="268.00" stroke="#000" stroke-width="0.25"/>
+<line x1="65.00" y1="265.50" x2="65.00" y2="268.00" stroke="#000" stroke-width="0.25"/>
+<line x1="75.00" y1="266.50" x2="75.00" y2="268.00" stroke="#000" stroke-width="0.25"/>
+<line x1="85.00" y1="266.50" x2="85.00" y2="268.00" stroke="#000" stroke-width="0.25"/>
+<line x1="95.00" y1="266.50" x2="95.00" y2="268.00" stroke="#000" stroke-width="0.25"/>
+<line x1="105.00" y1="266.50" x2="105.00" y2="268.00" stroke="#000" stroke-width="0.25"/>
+<line x1="115.00" y1="265.50" x2="115.00" y2="268.00" stroke="#000" stroke-width="0.25"/>
+<text x="65.00" y="272.00" font-size="3" font-family="sans-serif" fill="#000" text-anchor="middle">100 мм — проверка масштаба</text>
+<text x="8.00" y="278.00" font-size="2.9" font-family="sans-serif" fill="#000" text-anchor="start">Пазы M4: две точки на межцентровом 124.5 и 126 (±62.25 и ±63 от центра выреза по X и Z).</text>
+<text x="8.00" y="282.50" font-size="2.9" font-family="sans-serif" fill="#000" text-anchor="start">Сверло Ø4.5 в обе точки + надфиль; для 4 болтов M4×40 сэндвича решётка–панель–вентилятор–фланец.</text>
+<text x="8.00" y="287.00" font-size="2.9" font-family="sans-serif" fill="#777" text-anchor="start">Керн через бумагу по перекрестьям, потом снять шаблон. Данные — scad/params.scad (make_drawings.py).</text>
+</svg>

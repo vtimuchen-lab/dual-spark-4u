@@ -10,6 +10,7 @@
   docs/drawings/base_plate_holes.csv — координаты центров (от левого и переднего края)
   docs/drawings/side_view.svg        — продольная цепочка трака
   docs/drawings/top_view.svg         — модуль сверху
+  docs/drawings/fan_template_FAN*.svg — шаблоны разметки вырезов ФП-5 1:1 на A4
 """
 from __future__ import annotations
 
@@ -376,11 +377,108 @@ def draw_top(p, d):
     s.save(OUT / "top_view.svg")
 
 
+# ---------------------------------------------------------------------------
+def draw_fan_templates(p, d):
+    """Шаблоны разметки вырезов ФП-5 в масштабе 1:1 на A4, по одному на вентилятор.
+
+    Вид снаружи. Привязка: нижний и верхний край панели (полная высота 221.5
+    помещается на A4) и ось панели. Печатать 100 %, проверить по линейке 100 мм.
+    """
+    pw, ph = p["panel_w"], p["panel_h"]
+    axis = d["fan_center_z_panel"]
+    pmin, pmax = p["fan_hole_pitch_min"], p["fan_hole_pitch_max"]
+    r_open, r_hole = p["fan_open_dia"] / 2, p["fan_hole_dia"] / 2
+    PW, PH, yb = 210.0, 297.0, 255.0          # лист A4; нижний край панели на листе
+    ink, red, blue, grey = "#000", "#c00", "#06c", "#777"
+    for i, cx_rel in enumerate((-d["track_pitch"] / 2, d["track_pitch"] / 2), start=1):
+        side = -1 if cx_rel < 0 else 1
+        x_axis = 195.0 if side < 0 else 15.0  # ось панели на листе
+        def X(x): return x_axis + x           # x — от оси панели (вид снаружи)
+        def Y(z): return yb - z               # z — от нижнего края панели
+        cx = cx_rel
+        el = []
+        def line(x1, y1, x2, y2, c=ink, w=0.25, dash=None):
+            ds = f' stroke-dasharray="{dash}"' if dash else ""
+            el.append(f'<line x1="{x1:.2f}" y1="{y1:.2f}" x2="{x2:.2f}" y2="{y2:.2f}" stroke="{c}" stroke-width="{w}"{ds}/>')
+        def circ(x, y, r, c=ink, w=0.3, fill="none"):
+            el.append(f'<circle cx="{x:.3f}" cy="{y:.3f}" r="{r:.3f}" stroke="{c}" stroke-width="{w}" fill="{fill}"/>')
+        def text(x, y, t, size=3.2, c=ink, anchor="start", bold=False, rot=None):
+            fw = ' font-weight="bold"' if bold else ""
+            tr = f' transform="rotate({rot} {x:.2f} {y:.2f})"' if rot else ""
+            el.append(f'<text x="{x:.2f}" y="{y:.2f}" font-size="{size}" font-family="sans-serif" fill="{c}" text-anchor="{anchor}"{fw}{tr}>{t}</text>')
+        def cross(x, y, r, c=ink, w=0.2):
+            line(x - r, y, x + r, y, c, w); line(x, y - r, x, y + r, c, w)
+        x_lo, x_hi = (8.0, x_axis) if side < 0 else (x_axis, 202.0)
+        # края панели и ось
+        for z, name in ((0, "НИЖНИЙ"), (ph, "ВЕРХНИЙ")):
+            line(x_lo, Y(z), x_hi, Y(z), w=0.6)
+            text((x_lo + x_hi) / 2, Y(z) + (4.2 if z == 0 else -1.6), f"{name} КРАЙ ФП-5 — совместить с краем панели", 3, anchor="middle", bold=True)
+        line(X(0), Y(ph) - 6, X(0), Y(0) + 6, blue, 0.35, "6,1.5,1,1.5")
+        text(X(0) + (-1.5 if side < 0 else 1.5), Y(ph) - 7.5, f"ОСЬ ПАНЕЛИ ({pw / 2:g} от каждого края)", 3,
+             blue, "end" if side < 0 else "start", True)
+        # осевые вентилятора
+        line(X(cx), Y(0), X(cx), Y(ph), grey, 0.15, "4,1,1,1")
+        line(x_lo, Y(axis), x_hi, Y(axis), grey, 0.15, "4,1,1,1")
+        # вырез
+        circ(X(cx), Y(axis), r_open, ink, 0.45)
+        cross(X(cx), Y(axis), 8, ink, 0.3); circ(X(cx), Y(axis), 0.5, ink, 0.2, ink)
+        text(X(cx), Y(axis) - 22, f"FAN{i}", 7, anchor="middle", bold=True)
+        text(X(cx), Y(axis) - 15, f"вырез Ø{p['fan_open_dia']:g} — линия реза", 3.4, anchor="middle")
+        text(X(cx), Y(axis) + 13, "центр: керн / пилот коронки", 3, grey, "middle")
+        # пазы M4: обе точки (124.5 и 126) + контур паза
+        for sx in (-1, 1):
+            for sz in (-1, 1):
+                pts = [(X(cx + sx * pt / 2), Y(axis + sz * pt / 2)) for pt in (pmin, pmax)]
+                (x1, y1), (x2, y2) = pts
+                el.append(f'<line x1="{x1:.3f}" y1="{y1:.3f}" x2="{x2:.3f}" y2="{y2:.3f}" stroke="{ink}" '
+                          f'stroke-width="{2 * r_hole:.3f}" stroke-linecap="round" stroke-opacity="0.12"/>')
+                for (x, y) in pts:
+                    circ(x, y, r_hole, ink, 0.2); cross(x, y, 3.2, ink, 0.15)
+        # рамка контроллера — только после замера
+        if d["ctrl_known"]:
+            for sx in (-1, 1):
+                x = X(cx + sx * d["bezel_lug_dx"]); circ(x, Y(d["bezel_cz_panel"]), p["m3_clear_d"] / 2); cross(x, Y(d["bezel_cz_panel"]), 3)
+            chx = X(cx + (1 if cx > 0 else -1) * p["cable_hole_side"] * d["cable_hole_dx"])
+            circ(chx, Y(d["bezel_cz_panel"]), p["cable_hole_d"] / 2); cross(chx, Y(d["bezel_cz_panel"]), 4)
+        else:
+            text(X(cx), Y(ph) + 8, f"над вырезом — полоса {d['strip_above_fan']:g} мм под рамку контроллера (отверстия — после замера)", 2.6, grey, "middle")
+        # размеры
+        xd = X(cx) + side * (r_open + 8)
+        line(xd, Y(0), xd, Y(axis), red, 0.25)
+        for z in (0, axis):
+            line(xd - 1.5, Y(z), xd + 1.5, Y(z), red, 0.25)
+        text(xd + side * -1.2, Y(axis / 2), f"{axis:g}", 3.4, red, "middle", True, -90)
+        yd = Y(0) - 6
+        line(X(0), yd, X(cx), yd, red, 0.25)
+        for x in (X(0), X(cx)):
+            line(x, yd - 1.5, x, yd + 1.5, red, 0.25)
+        text((X(0) + X(cx)) / 2, yd - 1.2, f"{abs(cx):g}", 3.4, red, "middle", True)
+        text(X(cx) + side * 2, Y(0) - 11.5, f"до {'левого' if side < 0 else 'правого'} края панели {pw / 2 - abs(cx):g}", 2.8, red,
+             "end" if side < 0 else "start")
+        # шапка
+        name = "левый" if side < 0 else "правый"
+        text(8, 10, f"ФП-5 · разметка FAN{i} ({name}) · вид снаружи · МАСШТАБ 1:1", 4.2, bold=True)
+        text(8, 15.5, f"Печать A4 «Фактический размер» / 100 %, без подгонки. Проверка: линейка 100 мм внизу, между краями {ph:g}.", 3)
+        text(8, 20.5, f"Ось выреза {axis:g} от нижнего края, {abs(cx):g} от оси панели; межосевое вентиляторов {d['track_pitch']:g}.", 3)
+        # подвал: проверка масштаба и указания
+        y0 = yb + 13
+        line(15, y0, 115, y0, ink, 0.4)
+        for k in range(11):
+            line(15 + 10 * k, y0 - (2.5 if k % 5 == 0 else 1.5), 15 + 10 * k, y0, ink, 0.25)
+        text(65, y0 + 4, "100 мм — проверка масштаба", 3, anchor="middle")
+        text(8, y0 + 10, f"Пазы M4: две точки на межцентровом {pmin:g} и {pmax:g} (±{pmin / 2:g} и ±{pmax / 2:g} от центра выреза по X и Z).", 2.9)
+        text(8, y0 + 14.5, f"Сверло Ø{p['fan_hole_dia']:g} в обе точки + надфиль; для 4 болтов M4×{d['sandwich_bolt_l']:g} сэндвича решётка–панель–вентилятор–фланец.", 2.9)
+        text(8, y0 + 19, "Керн через бумагу по перекрестьям, потом снять шаблон. Данные — scad/params.scad (make_drawings.py).", 2.9, grey)
+        svg = (f'<svg xmlns="http://www.w3.org/2000/svg" width="{PW:g}mm" height="{PH:g}mm" viewBox="0 0 {PW:g} {PH:g}">\n'
+               f'<rect width="{PW:g}" height="{PH:g}" fill="#fff"/>\n' + "\n".join(el) + "\n</svg>\n")
+        (OUT / f"fan_template_FAN{i}.svg").write_text(svg, encoding="utf-8")
+
+
 def main():
     OUT.mkdir(parents=True, exist_ok=True)
     p = load_params()
     d = load_derived()
-    draw_panel(p, d); draw_base_plate(p, d); draw_side(p, d); draw_top(p, d)
+    draw_panel(p, d); draw_base_plate(p, d); draw_side(p, d); draw_top(p, d); draw_fan_templates(p, d)
     print("drawings written to", OUT)
     print(f"panel axis {d['fan_center_z_panel']:g}; strip above fan {d['strip_above_fan']:g}; plate {d['base_plate_w']:g}x{d['base_plate_d']:g}; bolt M4x{d['sandwich_bolt_l']:g}")
 

@@ -40,6 +40,7 @@ CC BY-NC 4.0), два независимых воздуховода 140 → пе
 | `docs/08_measurements.md` | сводка замеров и как они попали в модель |
 | `docs/09_print_materials.md` | пластики, температуры деталей, режимы и параметры печати |
 | `docs/drawings/` | `panel_fp5`, `base_plate` (SVG/PNG/DXF/CSV), `side_view`, `top_view` |
+| `docs/drawings/fan_template_fp5_A4.pdf` | шаблон разметки вырезов вентиляторов на ФП-5, 1:1, 2 листа A4 |
 | `docs/renders/` | 3D-рендеры |
 | `stl/assembly_module_VIEW_ONLY.stl` | весь модуль в 3D (GitHub показывает STL в браузере) |
 
@@ -69,7 +70,7 @@ scad/base_plate.scad      base_plate, panel_bracket, dc_jack_bracket (требу
 scad/ctrl_bezel.scad      рамка термоконтроллера на лицевой стороне ФП-5 (требует ctrl_w/h/d)
 scad/assembly.scad        модуль (part=module|exploded|track|printables)
 scad/fan_bracket.scad     ОПЦИЯ: рамка для настольного стенда
-stl/                      печатные детали (экспорт по зависимостям каждой детали)
+stl/                      печатные детали, двоичный STL (экспорт по зависимостям каждой детали)
 stl/kit/                  тестовый комплект на один тракт: 2 стола 330 × 320
 scad/print_plates.scad    раскладка тестового комплекта (part=kit_1|kit_2)
 stl/assembly_*_VIEW_ONLY.stl  весь модуль одним файлом и разнесённый вид — только для просмотра
@@ -82,7 +83,8 @@ scripts/make_drawings.py  чертежи и таблицы отверстий
 
 1. `./scripts/export_all.sh` — пересобирает всё; в выводе OK/SKIP по деталям.
 2. Панель: вырезы и пазы по `docs/drawings/panel_fp5.dxf` или
-   `panel_fp5_holes.csv`. Плита: `base_plate.dxf` / `base_plate_holes.csv`.
+   `panel_fp5_holes.csv`; вручную — шаблон 1:1 `fan_template_fp5_A4.pdf`
+   (печать «Фактический размер», совместить края панели, кернить через бумагу). Плита: `base_plate.dxf` / `base_plate_holes.csv`.
 3. Печать по `docs/05_bom_hardware.md` (PETG прототип, ASA финал), сборка по
    `docs/07_rack_layout.md` §5.
 4. Когда придут контроллер и DC-гнездо — вписать `ctrl_w/h/d` и `dc_jack_d`
