@@ -170,12 +170,13 @@ def draw_panel(p, d):
         else:
             s.text(cx, z0 + (ph - z0) / 2 + 3, f"полоса под рамку {d['strip_above_fan']:g} мм", size=8, anchor="middle", color="#070")
             s.text(cx, z0 + (ph - z0) / 2 - 8, "отверстия — после замера контроллера", size=8, anchor="middle", color="#070")
-    # уголки
-    for sx in (-1, 1):
-        for zl in (p["bracket_t"] + 12, p["bracket_h"] - 12):
-            x = pw / 2 + sx * d["bracket_cx"]; z = p["shelf_top_z"] + p["base_plate_t"] + zl
-            s.circle(x, z, p["bracket_hole_d"] / 2, stroke="#000", sw=1.1); s.cross(x, z, 4)
-            holes.append(("уголок M4", x, z, f"Ø{p['bracket_hole_d']:g}"))
+    # печатные уголки (опция; по умолчанию крепление через штатные отверстия)
+    if d["use_panel_brackets"]:
+        for sx in (-1, 1):
+            for zl in (p["bracket_t"] + 12, p["bracket_h"] - 12):
+                x = pw / 2 + sx * d["bracket_cx"]; z = p["shelf_top_z"] + p["base_plate_t"] + zl
+                s.circle(x, z, p["bracket_hole_d"] / 2, stroke="#000", sw=1.1); s.cross(x, z, 4)
+                holes.append(("уголок M4", x, z, f"Ø{p['bracket_hole_d']:g}"))
     # уши (справочно)
     if p["ear_hole_low"] is not None and p["ear_hole_high"] is not None:
         for sx in (-1, 1):
@@ -187,7 +188,8 @@ def draw_panel(p, d):
     s.line(pw / 2, 0, pw / 2, ph, stroke="#06c", sw=0.5, dash="8,4")
     cx1, cx2 = pw / 2 - d["track_pitch"] / 2, pw / 2 + d["track_pitch"] / 2
     s.dim_h(0, cx1, -10, f"{cx1:g}"); s.dim_h(cx1, cx2, -10, f"{d['track_pitch']:g}"); s.dim_h(cx2, pw, -10, f"{pw - cx2:g}")
-    s.dim_h(0, pw / 2 - d["bracket_cx"], -22, f"{pw / 2 - d['bracket_cx']:g} (уголок)")
+    if d["use_panel_brackets"]:
+        s.dim_h(0, pw / 2 - d["bracket_cx"], -22, f"{pw / 2 - d['bracket_cx']:g} (уголок)")
     s.dim_h(0, pw, -34, f"{pw:g} [SOURCE]")
     xr = pw + 6
     s.dim_v(0, axis, xr, f"ось {axis:g}")
@@ -233,8 +235,9 @@ def draw_base_plate(p, d):
         s.circle(X(xm), Y(ym), p["m3_clear_d"] / 2, stroke="#000", sw=1.0)
         holes.append(("стойка DC M3", X(xm), Y(ym), f"Ø{p['m3_clear_d']:g}"))
     for sx in (-1, 1):
-        bx = X(sx * d["bracket_cx"])
-        s.rect(bx - p["bracket_w"] / 2, 0, p["bracket_w"], p["bracket_d"], stroke="#555", dash="3,2", sw=0.8)
+        if d["use_panel_brackets"]:
+            bx = X(sx * d["bracket_cx"])
+            s.rect(bx - p["bracket_w"] / 2, 0, p["bracket_w"], p["bracket_d"], stroke="#555", dash="3,2", sw=0.8)
         xin = X(sx * d["ctrl_zone_x_in"]); xa = min(xin, xin + sx * d["ctrl_zone_w"])
         s.rect(xa, Y(d["ctrl_zone_y0"]), d["ctrl_zone_w"], d["ctrl_zone_d"], stroke="#2a2", dash="3,2", sw=0.8)
         s.text(xa + d["ctrl_zone_w"] / 2, Y(d["ctrl_zone_y1"]) + 3, "WAGO" if sx < 0 else "DC", size=9, anchor="middle", color="#2a2")
@@ -356,7 +359,7 @@ def draw_top(p, d):
             s.rect(cx - d["bezel_w"] / 2, Y(-p["panel_t"] - d["bezel_d"]), d["bezel_w"], d["bezel_d"], fill="#cfc", stroke="#070")
     s.line(0, Y(-p["door_gap"]), pw, Y(-p["door_gap"]), stroke="#6af", sw=1.5)
     s.text(pw / 2, Y(-p["door_gap"]) + 3, f"стекло двери: {p['door_gap']:g} от передней грани стоек", size=9, anchor="middle", color="#36c")
-    for sx in (-1, 1):
+    for sx in (-1, 1) if d["use_panel_brackets"] else ():
         bx = pw / 2 + sx * d["bracket_cx"]
         s.rect(bx - p["bracket_w"] / 2, Y(d["base_plate_y0"]), p["bracket_w"], p["bracket_d"], fill="#ccc", stroke="#555")
     cx1, cx2 = pw / 2 - d["track_pitch"] / 2, pw / 2 + d["track_pitch"] / 2

@@ -109,6 +109,11 @@ base_plate_side_gap  = 3;    // [SRC ТЗ v2] ширина = rack_opening_w − 
 base_plate_depth_min = 330;  // [SRC ТЗ v2]
 base_plate_front_gap = 2;    // [ASSM] от задней плоскости панели до переднего края плиты
 
+// Печатные уголки panel↔base_plate не печатаем: панель и плита крепятся через
+// штатные отверстия (решение пользователя 2026-10-12, фото IMG_5497). При false
+// в панели и плите нет отверстий под уголки, уголок — только опциональный STL.
+use_panel_brackets = false;  // [ASSM]
+
 bracket_w      = 30;   // [ASSM]
 bracket_h      = 60;   // [ASSM]
 bracket_d      = 50;   // [ASSM]
@@ -360,8 +365,8 @@ ctrl_zone_d    = ctrl_zone_y1 - ctrl_zone_y0;
 ctrl_zone_w    = base_plate_w / 2 - ctrl_zone_margin - ctrl_zone_x_in;
 plate_holder_holes = [for (cx = fan_cx_from_center, h = holder_mount_holes)
     [cx - track_cx + h[0], y_holder_front + h[1]]];
-plate_bracket_holes = [for (sx = [-1, 1], k = [0, 1])
-    [sx * bracket_cx, base_plate_y0 + bracket_t + 12 + k * (bracket_d - bracket_t - 24)]];
+plate_bracket_holes = use_panel_brackets ? [for (sx = [-1, 1], k = [0, 1])
+    [sx * bracket_cx, base_plate_y0 + bracket_t + 12 + k * (bracket_d - bracket_t - 24)]] : [];
 strip_cx = ctrl_zone_x_in + ctrl_zone_w / 2;
 plate_ctrl_holes = [for (sx = [-1, 1], i = [-1, 1], j = [-1, 1])
     [sx * (strip_cx + i * strip_holes_pitch[0] / 2), ctrl_zone_y0 + 25 + j * strip_holes_pitch[1] / 2]];
@@ -424,9 +429,10 @@ module part_checks() {
 // Шкаф/полка/панель/плита (всё измерено → должно проходить)
 module rack_checks() {
     assert(base_plate_w >= pair_w, str("Base plate too narrow: ", base_plate_w, " < pair ", pair_w));
-    assert(2 * bracket_cx + bracket_w <= base_plate_w,
+    assert(!use_panel_brackets || 2 * bracket_cx + bracket_w <= base_plate_w,
            str("Brackets outside base plate: need ", 2 * bracket_cx + bracket_w, " > ", base_plate_w));
-    assert(bracket_cx + bracket_w / 2 <= panel_w / 2 - panel_edge_keepout, "Brackets inside panel keep-out");
+    assert(!use_panel_brackets || bracket_cx + bracket_w / 2 <= panel_w / 2 - panel_edge_keepout,
+           "Brackets inside panel keep-out");
     assert(ctrl_zone_w >= 30, str("Electronics strip too narrow: ", ctrl_zone_w));
     assert(fan_center_z_panel >= fan_center_z_panel_min && fan_center_z_panel <= fan_center_z_panel_max,
            str("Fan cutouts leave the 15 mm panel margin: axis ", fan_center_z_panel, " not in [",
@@ -497,7 +503,7 @@ module export_derived() {
              "base_plate_d","ctrl_zone_x_in","ctrl_zone_y0","ctrl_zone_y1","ctrl_zone_d","ctrl_zone_w",
              "sandwich_stack","sandwich_bolt_l","sandwich_protrusion","strip_above_fan","ctrl_h_max",
              "bezel_z0_panel","ctrl_known","bezel_w","bezel_h","bezel_d","bezel_cz_panel","bezel_lug_dx",
-             "cable_hole_dx","baffle_y_local","baffle_h","dev_y"];
+             "cable_hole_dx","baffle_y_local","baffle_h","dev_y","use_panel_brackets"];
     values = [fan_center_zl,fan_center_z,device_base_zl,foot_seat_zl,pedestal_top_zl,device_top_zl,
              t_out_zl,holder_outer_w,track_w,track_cx,dev_x,track_pitch,pair_w,in_flange_w,
              y_duct_in,duct_len,y_duct_out,y_device_front,y_device_rear,y_back_stop,y_t_out,
@@ -508,7 +514,7 @@ module export_derived() {
              base_plate_d,ctrl_zone_x_in,ctrl_zone_y0,ctrl_zone_y1,ctrl_zone_d,ctrl_zone_w,
              sandwich_stack,sandwich_bolt_l,sandwich_protrusion,strip_above_fan,ctrl_h_max,
              bezel_z0_panel,ctrl_known,bezel_w,bezel_h,bezel_d,bezel_cz_panel,bezel_lug_dx,
-             cable_hole_dx,baffle_y_local,baffle_h,dev_y];
+             cable_hole_dx,baffle_y_local,baffle_h,dev_y,use_panel_brackets];
     for (i = [0 : len(names) - 1]) echo(str("DERIVED|", names[i], "|", values[i]));
     echo(str("DERIVED|foot_xs|", foot_xs));
     echo(str("DERIVED|foot_ys|", foot_ys));

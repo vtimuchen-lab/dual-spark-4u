@@ -1,6 +1,6 @@
 /*
  * assembly.scad — 5U-модуль: панель ЦМО ФП-5 + 2 × (решётка ARCTIC, Arctic P14 Pro PST,
- * воздуховод, holder, MSI EdgeXpert) + base_plate + 2 уголка + WAGO/DC-гнездо
+ * воздуховод, holder, MSI EdgeXpert) + base_plate (+ 2 уголка, если use_panel_brackets) + WAGO/DC-гнездо
  * (+ рамки термоконтроллеров на лицевой стороне, когда габариты контроллера измерены).
  *
  * part:
@@ -81,7 +81,7 @@ module module_assembly(explode = 0) {
     if (show_grilles && show("grilles")) for (cx = fan_cx_from_center) grille_mockup(cx);
     if (show_bezels && ctrl_known && show("bezels")) bezels();
     if (show("plate")) base_plate();
-    if (show("brackets"))
+    if (use_panel_brackets && show("brackets"))
         for (sx = [-1, 1])
             translate([sx * bracket_cx - bracket_w / 2, base_plate_front_gap, base_plate_t])
                 color([0.55, 0.58, 0.62]) panel_bracket();
@@ -98,7 +98,7 @@ module printables() {
     holder();
     translate([0, holder_depth + 30, 0]) color([0.9, 0.5, 0.2]) baffle();
     translate([holder_outer_w + 30, -y_duct_in, 0]) duct_full();
-    translate([holder_outer_w + 30, y_track_end + 40, 0]) panel_bracket();
+    if (use_panel_brackets) translate([holder_outer_w + 30, y_track_end + 40, 0]) panel_bracket();
 }
 
 if (part == "track") track(0);

@@ -35,18 +35,6 @@
 <circle cx="758.0" cy="280.4" r="4.0" stroke="#000" fill="none" stroke-width="1.2"/>
 <line x1="750.8" y1="280.4" x2="765.2" y2="280.4" stroke="#222" stroke-width="0.5"/>
 <line x1="758.0" y1="287.6" x2="758.0" y2="273.2" stroke="#222" stroke-width="0.5"/>
-<circle cx="162.2" cy="906.8" r="4.0" stroke="#000" fill="none" stroke-width="1.2"/>
-<line x1="155.0" y1="906.8" x2="169.4" y2="906.8" stroke="#222" stroke-width="0.5"/>
-<line x1="162.2" y1="914.0" x2="162.2" y2="899.6" stroke="#222" stroke-width="0.5"/>
-<circle cx="162.2" cy="869.0" r="4.0" stroke="#000" fill="none" stroke-width="1.2"/>
-<line x1="155.0" y1="869.0" x2="169.4" y2="869.0" stroke="#222" stroke-width="0.5"/>
-<line x1="162.2" y1="876.2" x2="162.2" y2="861.8" stroke="#222" stroke-width="0.5"/>
-<circle cx="857.0" cy="906.8" r="4.0" stroke="#000" fill="none" stroke-width="1.2"/>
-<line x1="849.8" y1="906.8" x2="864.2" y2="906.8" stroke="#222" stroke-width="0.5"/>
-<line x1="857.0" y1="914.0" x2="857.0" y2="899.6" stroke="#222" stroke-width="0.5"/>
-<circle cx="857.0" cy="869.0" r="4.0" stroke="#000" fill="none" stroke-width="1.2"/>
-<line x1="849.8" y1="869.0" x2="864.2" y2="869.0" stroke="#222" stroke-width="0.5"/>
-<line x1="857.0" y1="876.2" x2="857.0" y2="861.8" stroke="#222" stroke-width="0.5"/>
 <circle cx="172.1" cy="816.8" r="3.1" stroke="#000" fill="none" stroke-width="1.0"/>
 <line x1="166.7" y1="816.8" x2="177.5" y2="816.8" stroke="#222" stroke-width="0.5"/>
 <line x1="172.1" y1="822.2" x2="172.1" y2="811.4" stroke="#222" stroke-width="0.5"/>
@@ -73,10 +61,8 @@
 <line x1="883.1" y1="768.2" x2="883.1" y2="757.4" stroke="#222" stroke-width="0.5"/>
 <circle cx="847.1" cy="561.2" r="3.1" stroke="#000" fill="none" stroke-width="1.0"/>
 <circle cx="883.1" cy="561.2" r="3.1" stroke="#000" fill="none" stroke-width="1.0"/>
-<rect x="135.2" y="847.4" width="54.0" height="90.0" stroke="#555" fill="none" stroke-width="0.8" stroke-dasharray="3,2"/>
 <rect x="113.6" y="543.2" width="81.0" height="291.6" stroke="#2a2" fill="none" stroke-width="0.8" stroke-dasharray="3,2"/>
 <text x="154.1" y="537.8" font-size="9" font-family="sans-serif" text-anchor="middle" fill="#2a2">WAGO</text>
-<rect x="830.0" y="847.4" width="54.0" height="90.0" stroke="#555" fill="none" stroke-width="0.8" stroke-dasharray="3,2"/>
 <rect x="824.6" y="543.2" width="81.0" height="291.6" stroke="#2a2" fill="none" stroke-width="0.8" stroke-dasharray="3,2"/>
 <text x="865.1" y="537.8" font-size="9" font-family="sans-serif" text-anchor="middle" fill="#2a2">DC</text>
 <line x1="110.0" y1="955.4" x2="261.2" y2="955.4" stroke="#b00" stroke-width="0.8"/>
@@ -95,6 +81,6 @@
 <line x1="916.4" y1="937.4" x2="923.6" y2="937.4" stroke="#b00" stroke-width="0.8"/>
 <line x1="916.4" y1="140.0" x2="923.6" y2="140.0" stroke="#b00" stroke-width="0.8"/>
 <text x="923.6" y="538.7" font-size="10" font-family="sans-serif" text-anchor="middle" fill="#b00" transform="rotate(-90 923.6 538.7)">443 (полка 445 − 2)</text>
-<text x="113.6" y="1009.4" font-size="10" font-family="sans-serif" text-anchor="start" fill="#111">Передний край плиты — на 2 мм за задней плоскостью панели. M4: Ø4.5 (12 шт.), M3: Ø3.4 (10 шт.).</text>
+<text x="113.6" y="1009.4" font-size="10" font-family="sans-serif" text-anchor="start" fill="#111">Передний край плиты — на 2 мм за задней плоскостью панели. M4: Ø4.5 (8 шт.), M3: Ø3.4 (10 шт.).</text>
 <text x="113.6" y="1032.8" font-size="10" font-family="sans-serif" text-anchor="start" fill="#111">X — от левого края, Y — от переднего края. Координаты всех центров — base_plate_holes.csv; контур — base_plate.dxf.</text>
 </svg>

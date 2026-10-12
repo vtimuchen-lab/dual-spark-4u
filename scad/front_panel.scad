@@ -3,7 +3,8 @@
  * с разметкой:
  *   - два выреза Ø fan_open_dia на x = ±track_pitch/2, ось = shelf_top_z + 78;
  *   - по 4 паза M4 на межцентровом 124.5…126 вокруг каждого выреза;
- *   - 4 отверстия Ø4.5 под уголки panel↔base_plate;
+ *   - 4 отверстия Ø4.5 под печатные уголки panel↔base_plate — только при
+ *     use_panel_brackets (сейчас false: крепление через штатные отверстия);
  *   - над каждым вентилятором — 2 × Ø3.4 под лапки рамки контроллера и Ø12 под
  *     втулку кабелей, ТОЛЬКО если габариты контроллера измерены (ctrl_*);
  *   - отверстия ушей — справочно, если заданы ear_hole_* (не режутся).
@@ -31,9 +32,10 @@ module panel_cutouts_2d() {
             translate([cx + sign(cx) * cable_hole_side * cable_hole_dx, bezel_cz_panel]) circle(d = cable_hole_d, $fn = 48);
         }
     }
-    // уголки panel↔base_plate
-    for (sx = [-1, 1], zl = bracket_hole_zl)
-        translate([sx * bracket_cx, shelf_top_z + base_plate_t + zl]) circle(d = bracket_hole_d, $fn = 24);
+    // печатные уголки panel↔base_plate (опция)
+    if (use_panel_brackets)
+        for (sx = [-1, 1], zl = bracket_hole_zl)
+            translate([sx * bracket_cx, shelf_top_z + base_plate_t + zl]) circle(d = bracket_hole_d, $fn = 24);
 }
 
 module panel_outline_2d() { translate([-panel_w / 2, 0]) square([panel_w, panel_h]); }
@@ -61,7 +63,8 @@ module panel() {
 echo(str("[PANEL] cutouts Ø", fan_open_dia, " at x=±", track_pitch / 2, ", z=", fan_center_z_panel,
          " from bottom edge (allowed ", fan_center_z_panel_min, "..", fan_center_z_panel_max,
          "); M4 slots ", fan_hole_pitch_min, "…", fan_hole_pitch_max,
-         "; bracket holes x=±", bracket_cx, " z=", [for (zl = bracket_hole_zl) shelf_top_z + base_plate_t + zl],
+         use_panel_brackets ? str("; bracket holes x=±", bracket_cx, " z=", [for (zl = bracket_hole_zl) shelf_top_z + base_plate_t + zl])
+                            : "; no bracket holes (stock holes)",
          ctrl_known ? str("; bezel lugs z=", bezel_cz_panel) : "; bezel holes: after controller is measured"));
 
 if (part == "panel_2d") panel_2d();

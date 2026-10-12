@@ -33,7 +33,7 @@ export_part ../stl/duct.stl duct.scad
 export_part ../stl/duct_sealed_variant.stl duct.scad -D under_feed=false
 export_part ../stl/duct_part_a_plenum.stl duct.scad -D duct_split=true -D 'part="duct_a"'
 export_part ../stl/duct_part_b_nozzle.stl duct.scad -D duct_split=true -D 'part="duct_b"'
-export_part ../stl/panel_bracket.stl base_plate.scad -D 'part="panel_bracket"'
+export_part ../stl/panel_bracket_OPTIONAL.stl base_plate.scad -D 'part="panel_bracket"'
 export_part ../stl/dc_jack_bracket.stl base_plate.scad -D 'part="dc_jack_bracket"'
 export_part ../stl/ctrl_bezel.stl ctrl_bezel.scad
 export_part ../stl/fan_bracket_bench_OPTIONAL.stl fan_bracket.scad

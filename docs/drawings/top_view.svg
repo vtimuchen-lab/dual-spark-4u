@@ -27,8 +27,6 @@
 <text x="609.0" y="280.0" font-size="9" font-family="sans-serif" text-anchor="middle" fill="#111">выхлоп →</text>
 <line x1="100.0" y1="1018.0" x2="823.9" y2="1018.0" stroke="#6af" stroke-width="1.5"/>
 <text x="462.0" y="1013.5" font-size="9" font-family="sans-serif" text-anchor="middle" fill="#36c">стекло двери: 65 от передней грани стоек</text>
-<rect x="150.0" y="842.5" width="45.0" height="75.0" stroke="#555" fill="#ccc" stroke-width="1.2"/>
-<rect x="729.0" y="842.5" width="45.0" height="75.0" stroke="#555" fill="#ccc" stroke-width="1.2"/>
 <line x1="315.0" y1="188.5" x2="609.0" y2="188.5" stroke="#b00" stroke-width="0.8"/>
 <line x1="315.0" y1="191.5" x2="315.0" y2="185.5" stroke="#b00" stroke-width="0.8"/>
 <line x1="609.0" y1="191.5" x2="609.0" y2="185.5" stroke="#b00" stroke-width="0.8"/>
