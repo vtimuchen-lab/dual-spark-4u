@@ -62,6 +62,7 @@ fan_model      = "Arctic P14 Pro PST";
 fan_size       = 140;    // [SRC]
 fan_thickness  = 27;     // [SRC]
 fan_corner_t   = undef;  // TO_MEASURE п.13b толщина в углу по резиновым амортизаторам (в пакете болта)
+fan_stack_t    = known(fan_corner_t) ? fan_corner_t : fan_thickness;  // вентилятор в пакете и в цепочке y
 fan_mass_g     = 242;    // [SRC]
 fan_hole_pitch_min = 124.5; // [SRC] стандарт 140 мм
 fan_hole_pitch_max = 126;   // [MEAS п.13] замер на P14 Pro → все отверстия = пазы 124.5…126
@@ -73,7 +74,7 @@ fan_rpm_max    = 2500;   // [SRC]
 fan_q_max_m3h  = 186;    // [SRC]
 fan_p_max_mmH2O = 5.2;   // [SRC]
 fan_i_a        = 0.35;   // [SRC]
-pwm_min_percent = 20;    // [SRC] 0 об/мин при PWM < 5 % → минимум 15–20 %, автостоп запрещён
+pwm_min_percent = 40;    // [ASSM] 0 об/мин при PWM < 5 % (SRC); датчик на притоке (решение 13) → минимум ≈ 40 %
 
 grille_stack_t = 1.3;    // [MEAS п.14] толщина решётки ARCTIC в углу (в пакете болта)
 grille_depth   = 3.8;    // [MEAS п.14] общая высота решётки (выступ перед панелью)
@@ -130,12 +131,13 @@ plenum_len   = 50;   // [ASSM] (ТЗ 40–80), включая входной ф�
 nozzle_len   = 150;  // [MEAS вывод] сужение ~5:1 → длинное сопло; включая выходной фланец
 duct_wall    = 2.4;  // [ASSM]
 duct_flange_t = 6;   // [ASSM]
-duct_inlet_corner_r  = 20;  // [MEAS вывод] ≥ R20
+duct_inlet_corner_r  = 36;  // [ASSM] ≥ R20 по замерам; R36 — чтобы болты и гайки сэндвича в углах
+                            // фланца прошли снаружи стенки пленума (при R20 они попадали в стенку);
+                            // угол R36 лежит за кругом лопастей Ø138 — площадь потока не теряется
 duct_outlet_corner_r = 6;   // ограничено высотой выхода
 duct_min_bend_r = 20;       // [MEAS вывод] минимальный радиус кривизны стенки сопла (assert)
 duct_slices  = 36;
 duct_split   = false;       // true → две части по границе plenum/nozzle
-duct_tongue  = 2;
 guide_vanes  = 0;
 vane_t       = 1.6;
 
@@ -150,6 +152,7 @@ under_feed   = true;  // [ASSM] предмет испытаний (docs/04 §7)
 under_feed_h = 3;     // [ASSM]
 
 gasket_t     = 5;    // [ASSM] EPDM 5×5 между выходным фланцем и MSI
+gasket_compr = 1.5;  // [ASSM] поджатие EPDM (≈ 30 %): зазор фланец ↔ MSI = gasket_t − gasket_compr
 gasket_w     = 5;    // [ASSM] ширина ленты (снизу под сотами всего 5 мм полосы)
 
 rear_free_zone = 90; // [SRC ТЗ v2]
@@ -239,8 +242,10 @@ bezel_lug_h     = 14;
 bezel_fan_clearance = 2;
 door_margin     = 3;    // [SRC ТЗ п.8] всё перед панелью ≤ door_gap − 3
 cable_hole_d    = 12;   // [SRC ТЗ п.8]
-cable_hole_gap  = 8;
-cable_hole_side = 1;
+// Ø12 — в панели ЗА рамкой, на оси тракта: провода (12 В, вентилятор) уходят из кармана
+// через заднюю стенку рамки прямо в модуль; рамки обоих трактов одинаковые.
+panel_small_hole_edge = 5;  // [ASSM] малые отверстия (≤ Ø12) — край ≥ 5 мм от края листа: за гибом
+                            // отбортовки (лист ~1.5); правило 15 мм — для вырезов вентиляторов и фланцев
 // Датчик контроллера — на лицевой стороне, в притоке (решение пользователя
 // 2026-10-12, вместо T_out): NTC свисает из втулки в нижней стенке рамки перед
 // верхом решётки, в поток, который засасывает вентилятор.
@@ -309,11 +314,11 @@ in_flange_w    = fan_size + 2 * holder_wall;   // 150
 
 // --- трак: глубина (y от задней плоскости панели) ---------------------------
 y_fan_front    = 0;
-y_duct_in      = y_fan_front + fan_thickness;     // 27
+y_duct_in      = y_fan_front + fan_stack_t;       // 27 (по углам вентилятора, где фланец прижат)
 duct_len       = plenum_len + nozzle_len;         // 200
 y_duct_out     = y_duct_in + duct_len;            // 227
 y_holder_front = y_duct_out;
-y_device_front = y_holder_front + gasket_t;       // 232
+y_device_front = y_holder_front + gasket_t - gasket_compr;  // 230.5
 y_device_rear  = y_device_front + device_depth;   // 382
 y_back_stop    = y_device_rear + holder_rear_clearance;
 y_t_out        = y_device_rear + t_out_behind;
@@ -403,7 +408,6 @@ dc_bracket_pos = [strip_cx, ctrl_zone_y1 - 10];
 plate_dc_holes = [for (sx = [-1, 1]) dc_bracket_pos + [sx * 10, 0]];
 
 // --- пакет болта сэндвича ---------------------------------------------------
-fan_stack_t    = known(fan_corner_t) ? fan_corner_t : fan_thickness;         // вентилятор в пакете болта
 sandwich_stack = grille_stack_t + panel_t + fan_stack_t + duct_flange_t;     // 37.8
 sandwich_bolt_l = first_ge(m4_lengths, sandwich_stack + bolt_min_protrusion);
 sandwich_protrusion = sandwich_bolt_l - sandwich_stack;
@@ -421,7 +425,7 @@ strip_above_fan = panel_h - bezel_z0_panel;                                  // 
 ctrl_h_max = strip_above_fan - 2 * (bezel_wall + bezel_clear);              // 24.7
 bezel_cz_panel = ctrl_known ? bezel_z0_panel + bezel_h / 2 : undef;
 bezel_lug_dx   = ctrl_known ? bezel_w / 2 + bezel_lug_w / 2 : undef;
-cable_hole_dx  = ctrl_known ? bezel_w / 2 + bezel_lug_w + cable_hole_gap : undef;
+cable_hole_dx  = ctrl_known ? 0 : undef;                 // от оси тракта: за центром рамки
 // ось датчика от лицевой плоскости панели (+ к стеклу): перед решёткой с зазором
 probe_known = known(ctrl_probe_d);
 probe_y   = probe_known ? grille_depth + front_filter_t + ctrl_probe_gap + ctrl_probe_d / 2 : undef;
@@ -447,6 +451,13 @@ module part_checks() {
     assert(outlet_w * outlet_h < inlet_w * inlet_h, "Outlet area must be smaller than inlet area");
     assert(outlet_w + 2 * duct_wall <= device_width,
            "Outlet wider than MSI front face — gasket would miss the body");
+    // болты и гайки сэндвича в углах входного фланца — снаружи стенки пленума (иначе в стенке и в потоке)
+    let (cc = inlet_w / 2 - duct_inlet_corner_r,
+         gap = sqrt(2) * (fan_hole_pitch_min / 2 - cc) - m4_nut_af / sqrt(3) - (duct_inlet_corner_r + duct_wall))
+        assert(gap >= 0.3, str("Sandwich bolt nut pocket cuts the plenum wall (gap ", gap,
+                               " mm) — raise duct_inlet_corner_r"));
+    assert(outlet_w + 2 * gasket_w <= device_width,
+           str("EPDM frame ", outlet_w + 2 * gasket_w, " wider than MSI front ", device_width));
     assert(duct_bend_r_min >= duct_min_bend_r,
            str("Nozzle bend radius ", duct_bend_r_min, " < R", duct_min_bend_r, " → lengthen nozzle_len"));
     assert(outlet_z0 - duct_wall >= 0, "Duct outlet below base plate");
@@ -481,36 +492,39 @@ module rack_checks() {
     assert(is_num(sandwich_bolt_l), str("No standard M4 length for stack ", sandwich_stack));
 }
 
-module bezel_checks() {
+// Проверки контроллера, нужные панели (отверстия рамки) и рамке; без датчика.
+module ctrl_checks() {
     assert(ctrl_known, "TO_MEASURE: ctrl_cut_* / ctrl_w / ctrl_h / ctrl_d / ctrl_frame_* / ctrl_clip_t (п.11) — габариты термоконтроллера");
-    assert(probe_known, "TO_MEASURE: ctrl_probe_d (п.11f) — диаметр капли NTC-датчика контроллера");
     assert(ctrl_cut_w <= ctrl_w && ctrl_cut_h <= ctrl_h, "ctrl_cut_* (без защёлок) больше ctrl_w/h (по защёлкам)");
     assert(ctrl_frame_w >= ctrl_cut_w + 2 && ctrl_frame_h >= ctrl_cut_h + 2, "Лицевая рамка контроллера не закрывает вырез");
     assert(ctrl_clip_t >= 1.2, str("Стенка под защёлки ", ctrl_clip_t, " мм — тоньше 1.2, не напечатать прочно"));
     assert(bezel_back_t + bezel_clear + 2 <= bezel_d - bezel_front_t, "Нет места в кармане рамки за лицевой стенкой");
-    assert(probe_y + probe_r_o <= bezel_d,
-           str("Probe boss (front ", probe_y + probe_r_o, ") deeper than bezel ", bezel_d,
-               " — reduce ctrl_probe_gap or move the probe"));
-    assert(abs(ctrl_probe_dx) + probe_r_o <= bezel_w / 2 - bezel_wall, "Probe boss outside bezel width");
-}
-
-module ctrl_checks() {
-    bezel_checks();
     assert(bezel_h <= strip_above_fan,
            str("Bezel ", bezel_h, " mm taller than strip above fan ", strip_above_fan,
                " mm (= 221.5 − shelf_top_z − 150; ctrl_h ≤ ", ctrl_h_max,
                "). Options: lower the shelf one rack hole (strip ≈ 44–47), place beside the fan, or behind the panel"));
-    assert(bezel_cz_panel <= panel_h - panel_edge_keepout,
-           str("Bezel lug holes z=", bezel_cz_panel, " inside top keep-out"));
+    // края отверстий рамки (лапки M3 и Ø12 за рамкой) — не ближе panel_small_hole_edge к верху листа
+    assert(bezel_cz_panel + max(cable_hole_d, m3_clear_d) / 2 <= panel_h - panel_small_hole_edge,
+           str("Bezel holes reach z=", bezel_cz_panel + max(cable_hole_d, m3_clear_d) / 2,
+               " — closer than ", panel_small_hole_edge, " mm to the top edge"));
     assert(ctrl_front <= door_gap - door_margin,
            str("Controller front at ", ctrl_front, " mm > door_gap − ", door_margin, " = ", door_gap - door_margin));
     if (bezel_cz_panel + ctrl_frame_h / 2 > panel_h)
         echo(str("WARN: лицевая рамка контроллера выходит за верх ФП-5 на ", bezel_cz_panel + ctrl_frame_h / 2 - panel_h,
                  " мм (перед заглушкой следующего юнита; не мешает, но заметно)"));
-    assert(track_pitch / 2 + cable_hole_dx + cable_hole_d / 2 <= rack_opening_w / 2 - 3,
-           "Cable hole outside rack opening (behind the post)");
+    assert(cable_hole_d / 2 + 1 <= ctrl_cut_h / 2, "Ø12 за рамкой шире корпуса контроллера — провода упрутся в стенку кармана");
     assert(bezel_cz_panel - cable_hole_d / 2 >= fan_center_z_panel + in_flange_w / 2 + 1,
            "Cable hole overlaps the duct inlet flange behind the panel");
+}
+
+// Рамка целиком: контроллер + втулка датчика.
+module bezel_checks() {
+    ctrl_checks();
+    assert(probe_known, "TO_MEASURE: ctrl_probe_d (п.11f) — диаметр капли NTC-датчика контроллера");
+    assert(probe_y + probe_r_o <= bezel_d,
+           str("Probe boss (front ", probe_y + probe_r_o, ") deeper than bezel ", bezel_d,
+               " — reduce ctrl_probe_gap or move the probe"));
+    assert(abs(ctrl_probe_dx) + probe_r_o <= bezel_w / 2 - bezel_wall, "Probe boss outside bezel width");
 }
 
 module geo_report() {

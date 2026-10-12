@@ -1,32 +1,32 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="924" height="1188" viewBox="0 0 924 1188">
+<svg xmlns="http://www.w3.org/2000/svg" width="924" height="1186" viewBox="0 0 924 1186">
 <rect width="100%" height="100%" fill="#fff"/>
 <text x="100" y="70" font-size="18" font-family="sans-serif" font-weight="bold">ВИД СВЕРХУ — модуль (панель внизу, ниже — стекло двери). Размеры в мм</text>
-<rect x="100.0" y="920.5" width="723.9" height="5.2" stroke="#222" fill="#bbb" stroke-width="1.2"/>
-<text x="106.0" y="943.8" font-size="9" font-family="sans-serif" text-anchor="start" fill="#111">ФП-5</text>
-<rect x="129.0" y="253.0" width="666.0" height="664.5" stroke="#000" fill="#eee" stroke-width="1.2"/>
-<line x1="462.0" y1="950.5" x2="462.0" y2="197.5" stroke="#06c" stroke-width="0.5" stroke-dasharray="8,4"/>
-<rect x="210.0" y="880.0" width="210.0" height="40.5" stroke="#222" fill="#9cf" stroke-width="1.2"/>
-<text x="315.0" y="900.2" font-size="9" font-family="sans-serif" text-anchor="middle" fill="#111">P14 Pro 140×27</text>
-<rect x="202.5" y="805.0" width="225.0" height="75.0" stroke="#222" fill="#eef" stroke-width="1.2"/>
-<polygon points="202.5,805.0 427.5,805.0 423.7,589.0 206.2,589.0" stroke="#222" fill="#eef" stroke-width="1.2"/>
-<text x="315.0" y="697.0" font-size="9" font-family="sans-serif" text-anchor="middle" fill="#111">сопло</text>
-<rect x="179.2" y="254.5" width="271.5" height="325.5" stroke="#555" fill="none" stroke-width="1.2" stroke-dasharray="3,2"/>
+<rect x="100.0" y="918.2" width="723.9" height="5.2" stroke="#222" fill="#bbb" stroke-width="1.2"/>
+<text x="106.0" y="941.5" font-size="9" font-family="sans-serif" text-anchor="start" fill="#111">ФП-5</text>
+<rect x="129.0" y="250.8" width="666.0" height="664.5" stroke="#000" fill="#eee" stroke-width="1.2"/>
+<line x1="462.0" y1="948.2" x2="462.0" y2="197.5" stroke="#06c" stroke-width="0.5" stroke-dasharray="8,4"/>
+<rect x="210.0" y="877.8" width="210.0" height="40.5" stroke="#222" fill="#9cf" stroke-width="1.2"/>
+<text x="315.0" y="898.0" font-size="9" font-family="sans-serif" text-anchor="middle" fill="#111">P14 Pro 140×27</text>
+<rect x="202.5" y="802.8" width="225.0" height="75.0" stroke="#222" fill="#eef" stroke-width="1.2"/>
+<polygon points="202.5,802.8 427.5,802.8 423.7,586.8 206.2,586.8" stroke="#222" fill="#eef" stroke-width="1.2"/>
+<text x="315.0" y="694.8" font-size="9" font-family="sans-serif" text-anchor="middle" fill="#111">сопло</text>
+<rect x="179.2" y="254.5" width="271.5" height="323.2" stroke="#555" fill="none" stroke-width="1.2" stroke-dasharray="3,2"/>
 <rect x="201.7" y="347.5" width="226.5" height="225.0" stroke="#222" fill="#444" stroke-width="1.2"/>
 <text x="315.0" y="460.0" font-size="10" font-family="sans-serif" text-anchor="middle" fill="#fff">MSI EdgeXpert 1</text>
 <rect x="207.3" y="212.5" width="215.4" height="135.0" stroke="#e73" fill="#fca" stroke-width="1.2" stroke-dasharray="3,2"/>
 <text x="315.0" y="280.0" font-size="9" font-family="sans-serif" text-anchor="middle" fill="#111">выхлоп →</text>
-<rect x="504.0" y="880.0" width="210.0" height="40.5" stroke="#222" fill="#9cf" stroke-width="1.2"/>
-<text x="609.0" y="900.2" font-size="9" font-family="sans-serif" text-anchor="middle" fill="#111">P14 Pro 140×27</text>
-<rect x="496.5" y="805.0" width="225.0" height="75.0" stroke="#222" fill="#eef" stroke-width="1.2"/>
-<polygon points="496.5,805.0 721.5,805.0 717.7,589.0 500.2,589.0" stroke="#222" fill="#eef" stroke-width="1.2"/>
-<text x="609.0" y="697.0" font-size="9" font-family="sans-serif" text-anchor="middle" fill="#111">сопло</text>
-<rect x="473.2" y="254.5" width="271.5" height="325.5" stroke="#555" fill="none" stroke-width="1.2" stroke-dasharray="3,2"/>
+<rect x="504.0" y="877.8" width="210.0" height="40.5" stroke="#222" fill="#9cf" stroke-width="1.2"/>
+<text x="609.0" y="898.0" font-size="9" font-family="sans-serif" text-anchor="middle" fill="#111">P14 Pro 140×27</text>
+<rect x="496.5" y="802.8" width="225.0" height="75.0" stroke="#222" fill="#eef" stroke-width="1.2"/>
+<polygon points="496.5,802.8 721.5,802.8 717.7,586.8 500.2,586.8" stroke="#222" fill="#eef" stroke-width="1.2"/>
+<text x="609.0" y="694.8" font-size="9" font-family="sans-serif" text-anchor="middle" fill="#111">сопло</text>
+<rect x="473.2" y="254.5" width="271.5" height="323.2" stroke="#555" fill="none" stroke-width="1.2" stroke-dasharray="3,2"/>
 <rect x="495.7" y="347.5" width="226.5" height="225.0" stroke="#222" fill="#444" stroke-width="1.2"/>
 <text x="609.0" y="460.0" font-size="10" font-family="sans-serif" text-anchor="middle" fill="#fff">MSI EdgeXpert 2</text>
 <rect x="501.2" y="212.5" width="215.4" height="135.0" stroke="#e73" fill="#fca" stroke-width="1.2" stroke-dasharray="3,2"/>
 <text x="609.0" y="280.0" font-size="9" font-family="sans-serif" text-anchor="middle" fill="#111">выхлоп →</text>
-<line x1="100.0" y1="1018.0" x2="823.9" y2="1018.0" stroke="#6af" stroke-width="1.5"/>
-<text x="462.0" y="1013.5" font-size="9" font-family="sans-serif" text-anchor="middle" fill="#36c">стекло двери: 65 от передней грани стоек</text>
+<line x1="100.0" y1="1015.8" x2="823.9" y2="1015.8" stroke="#6af" stroke-width="1.5"/>
+<text x="462.0" y="1011.2" font-size="9" font-family="sans-serif" text-anchor="middle" fill="#36c">стекло двери: 65 от передней грани стоек</text>
 <line x1="315.0" y1="188.5" x2="609.0" y2="188.5" stroke="#b00" stroke-width="0.8"/>
 <line x1="315.0" y1="191.5" x2="315.0" y2="185.5" stroke="#b00" stroke-width="0.8"/>
 <line x1="609.0" y1="191.5" x2="609.0" y2="185.5" stroke="#b00" stroke-width="0.8"/>
@@ -43,24 +43,24 @@
 <line x1="100.0" y1="137.5" x2="100.0" y2="131.5" stroke="#b00" stroke-width="0.8"/>
 <line x1="823.9" y1="137.5" x2="823.9" y2="131.5" stroke="#b00" stroke-width="0.8"/>
 <text x="462.0" y="131.5" font-size="10" font-family="sans-serif" text-anchor="middle" fill="#b00">панель 482.6</text>
-<line x1="832.9" y1="920.5" x2="832.9" y2="880.0" stroke="#b00" stroke-width="0.8"/>
-<line x1="829.9" y1="920.5" x2="835.9" y2="920.5" stroke="#b00" stroke-width="0.8"/>
-<line x1="829.9" y1="880.0" x2="835.9" y2="880.0" stroke="#b00" stroke-width="0.8"/>
-<text x="830.7" y="900.2" font-size="10" font-family="sans-serif" text-anchor="middle" fill="#b00" transform="rotate(-90 830.7 900.2)">27</text>
-<line x1="832.9" y1="880.0" x2="832.9" y2="580.0" stroke="#b00" stroke-width="0.8"/>
-<line x1="829.9" y1="880.0" x2="835.9" y2="880.0" stroke="#b00" stroke-width="0.8"/>
-<line x1="829.9" y1="580.0" x2="835.9" y2="580.0" stroke="#b00" stroke-width="0.8"/>
-<text x="830.7" y="730.0" font-size="10" font-family="sans-serif" text-anchor="middle" fill="#b00" transform="rotate(-90 830.7 730.0)">возд. 200</text>
-<line x1="832.9" y1="580.0" x2="832.9" y2="347.5" stroke="#b00" stroke-width="0.8"/>
-<line x1="829.9" y1="580.0" x2="835.9" y2="580.0" stroke="#b00" stroke-width="0.8"/>
+<line x1="832.9" y1="918.2" x2="832.9" y2="877.8" stroke="#b00" stroke-width="0.8"/>
+<line x1="829.9" y1="918.2" x2="835.9" y2="918.2" stroke="#b00" stroke-width="0.8"/>
+<line x1="829.9" y1="877.8" x2="835.9" y2="877.8" stroke="#b00" stroke-width="0.8"/>
+<text x="830.7" y="898.0" font-size="10" font-family="sans-serif" text-anchor="middle" fill="#b00" transform="rotate(-90 830.7 898.0)">27</text>
+<line x1="832.9" y1="877.8" x2="832.9" y2="577.8" stroke="#b00" stroke-width="0.8"/>
+<line x1="829.9" y1="877.8" x2="835.9" y2="877.8" stroke="#b00" stroke-width="0.8"/>
+<line x1="829.9" y1="577.8" x2="835.9" y2="577.8" stroke="#b00" stroke-width="0.8"/>
+<text x="830.7" y="727.8" font-size="10" font-family="sans-serif" text-anchor="middle" fill="#b00" transform="rotate(-90 830.7 727.8)">возд. 200</text>
+<line x1="832.9" y1="577.8" x2="832.9" y2="347.5" stroke="#b00" stroke-width="0.8"/>
+<line x1="829.9" y1="577.8" x2="835.9" y2="577.8" stroke="#b00" stroke-width="0.8"/>
 <line x1="829.9" y1="347.5" x2="835.9" y2="347.5" stroke="#b00" stroke-width="0.8"/>
-<text x="830.7" y="463.8" font-size="10" font-family="sans-serif" text-anchor="middle" fill="#b00" transform="rotate(-90 830.7 463.8)">5+MSI 150</text>
+<text x="830.7" y="462.6" font-size="10" font-family="sans-serif" text-anchor="middle" fill="#b00" transform="rotate(-90 830.7 462.6)">5+MSI 150</text>
 <line x1="832.9" y1="347.5" x2="832.9" y2="212.5" stroke="#b00" stroke-width="0.8"/>
 <line x1="829.9" y1="347.5" x2="835.9" y2="347.5" stroke="#b00" stroke-width="0.8"/>
 <line x1="829.9" y1="212.5" x2="835.9" y2="212.5" stroke="#b00" stroke-width="0.8"/>
 <text x="830.7" y="280.0" font-size="10" font-family="sans-serif" text-anchor="middle" fill="#b00" transform="rotate(-90 830.7 280.0)">выхлоп 90</text>
-<line x1="856.9" y1="920.5" x2="856.9" y2="212.5" stroke="#b00" stroke-width="0.8"/>
-<line x1="853.9" y1="920.5" x2="859.9" y2="920.5" stroke="#b00" stroke-width="0.8"/>
+<line x1="856.9" y1="918.2" x2="856.9" y2="212.5" stroke="#b00" stroke-width="0.8"/>
+<line x1="853.9" y1="918.2" x2="859.9" y2="918.2" stroke="#b00" stroke-width="0.8"/>
 <line x1="853.9" y1="212.5" x2="859.9" y2="212.5" stroke="#b00" stroke-width="0.8"/>
-<text x="854.7" y="566.5" font-size="10" font-family="sans-serif" text-anchor="middle" fill="#b00" transform="rotate(-90 854.7 566.5)">472</text>
+<text x="854.7" y="565.4" font-size="10" font-family="sans-serif" text-anchor="middle" fill="#b00" transform="rotate(-90 854.7 565.4)">470.5</text>
 </svg>

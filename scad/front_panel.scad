@@ -29,7 +29,7 @@ module panel_cutouts_2d() {
         }
         if (ctrl_known) {
             for (sx = [-1, 1]) translate([cx + sx * bezel_lug_dx, bezel_cz_panel]) circle(d = m3_clear_d, $fn = 24);
-            translate([cx + sign(cx) * cable_hole_side * cable_hole_dx, bezel_cz_panel]) circle(d = cable_hole_d, $fn = 48);
+            translate([cx + cable_hole_dx, bezel_cz_panel]) circle(d = cable_hole_d, $fn = 48);   // за рамкой
         }
     }
     // печатные уголки panel↔base_plate (опция)

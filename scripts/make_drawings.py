@@ -166,7 +166,7 @@ def draw_panel(p, d):
                 hx = cx + sx * d["bezel_lug_dx"]
                 s.circle(hx, d["bezel_cz_panel"], p["m3_clear_d"] / 2, stroke="#000", sw=1.1)
                 holes.append((f"FAN{i} лапка рамки", hx, d["bezel_cz_panel"], f"Ø{p['m3_clear_d']:g}"))
-            chx = cx + (1 if cx_rel > 0 else -1) * p["cable_hole_side"] * d["cable_hole_dx"]
+            chx = cx + d["cable_hole_dx"]
             s.circle(chx, d["bezel_cz_panel"], p["cable_hole_d"] / 2, stroke="#000", sw=1.2)
             holes.append((f"FAN{i} втулка кабелей", chx, d["bezel_cz_panel"], f"Ø{p['cable_hole_d']:g}"))
         else:
@@ -443,7 +443,7 @@ def draw_fan_templates(p, d):
         if d["ctrl_known"]:
             for sx in (-1, 1):
                 x = X(cx + sx * d["bezel_lug_dx"]); circ(x, Y(d["bezel_cz_panel"]), p["m3_clear_d"] / 2); cross(x, Y(d["bezel_cz_panel"]), 3)
-            chx = X(cx + (1 if cx > 0 else -1) * p["cable_hole_side"] * d["cable_hole_dx"])
+            chx = X(cx + d["cable_hole_dx"])
             circ(chx, Y(d["bezel_cz_panel"]), p["cable_hole_d"] / 2); cross(chx, Y(d["bezel_cz_panel"]), 4)
         else:
             text(X(cx), Y(ph) + 8, f"над вырезом — полоса {d['strip_above_fan']:g} мм под рамку контроллера (отверстия — после замера)", 2.6, grey, "middle")

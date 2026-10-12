@@ -130,9 +130,6 @@ module cutouts() {
     for (x0 = [holder_wall - baffle_groove_depth, holder_outer_w - holder_wall - 0.01])
         translate([x0, baffle_y_local - baffle_clearance, holder_floor_t])
             cube([baffle_groove_depth + 0.01, baffle_t + 2 * baffle_clearance, post_top_z]);
-    // гнездо датчика T_in — внутренняя грань левой стойки, на оси сот
-    translate([front_post_w - 0.01, front_post_len / 2, fan_center_zl])
-        rotate([0, -90, 0]) cylinder(h = sensor_pocket_h, d = sensor_pocket_d, $fn = 24);
 }
 
 module holder() {

@@ -3,11 +3,11 @@
 <text x="110" y="80" font-size="18" font-family="sans-serif" font-weight="bold">BASE_PLATE 444 × 443 × 3 Al — сверловка (вид сверху, перед внизу)</text>
 <rect x="110.0" y="140.0" width="799.2" height="797.4" stroke="#000" fill="none" stroke-width="1.8"/>
 <line x1="509.6" y1="937.4" x2="509.6" y2="140.0" stroke="#06c" stroke-width="0.6" stroke-dasharray="8,4"/>
-<rect x="170.3" y="141.8" width="325.8" height="390.6" stroke="#888" fill="none" stroke-width="0.8" stroke-dasharray="3,2"/>
+<rect x="170.3" y="144.5" width="325.8" height="387.9" stroke="#888" fill="none" stroke-width="0.8" stroke-dasharray="3,2"/>
 <rect x="198.2" y="536.0" width="270.0" height="405.0" stroke="#aaa" fill="none" stroke-width="0.6" stroke-dasharray="2,2"/>
 <text x="333.2" y="352.4" font-size="9" font-family="sans-serif" text-anchor="middle" fill="#888">holder (контур)</text>
 <text x="333.2" y="736.7" font-size="9" font-family="sans-serif" text-anchor="middle" fill="#aaa">воздуховод (контур)</text>
-<rect x="523.1" y="141.8" width="325.8" height="390.6" stroke="#888" fill="none" stroke-width="0.8" stroke-dasharray="3,2"/>
+<rect x="523.1" y="144.5" width="325.8" height="387.9" stroke="#888" fill="none" stroke-width="0.8" stroke-dasharray="3,2"/>
 <rect x="551.0" y="536.0" width="270.0" height="405.0" stroke="#aaa" fill="none" stroke-width="0.6" stroke-dasharray="2,2"/>
 <text x="686.0" y="352.4" font-size="9" font-family="sans-serif" text-anchor="middle" fill="#888">holder (контур)</text>
 <text x="686.0" y="736.7" font-size="9" font-family="sans-serif" text-anchor="middle" fill="#aaa">воздуховод (контур)</text>

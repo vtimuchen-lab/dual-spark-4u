@@ -4,7 +4,8 @@
  * Тракт по Y:
  *   [входной фланец 150×150: 4 паза M4 124.5…126 + гнёзда гаек — болты сэндвича
  *    решётка → панель → вентилятор → фланец]
- *   [пленум 135.2×135.2, R20, длина plenum_len = 50]
+ *   [пленум 135.2×135.2, R36 (болты и гайки в углах фланца — снаружи стенки),
+ *    длина plenum_len = 50]
  *   [сопло smoothstep 135.2×135.2 → outlet_w × outlet_h, длина nozzle_len = 150;
  *    сужение ≈5:1 к полосе сот 138.2×22.4 у НИЗА передней грани MSI;
  *    минимальный радиус кривизны стенки проверяется (≥ R20)]
@@ -14,7 +15,10 @@
  *   [порт T_in: Ø4 в левой стенке сопла в 12 мм перед выходным фланцем]
  *
  * Стенка 2.4, фланцы 6. Внутренний контур — единый лофт без ступенек.
- * Опции: duct_split (2 части по границе пленум/сопло), guide_vanes.
+ * Отверстия и гнёзда гаек входного фланца вырезаются последними — из всего
+ * воздуховода, иначе оболочка пленума заполняла бы их снова.
+ * Опции: duct_split (2 части по границе пленум/сопло, стык — фланцы на 4 × M3),
+ * guide_vanes.
  *
  * Локальные координаты: x=0 — левая грань трака, y=0 — задняя плоскость панели,
  * z=0 — верх base_plate.
@@ -44,17 +48,21 @@ in_flange_h = in_flange_w;                 // 150 (in_flange_w из params)
 in_flange_z0 = fan_center_zl - in_flange_h / 2;
 
 module inlet_flange() {
-    difference() {
-        translate([track_cx - in_flange_w / 2, y_in, in_flange_z0])
-            cube([in_flange_w, duct_flange_t, in_flange_h]);
-        // Пазы под болты сэндвича (межцентровое 124.5…126) + удлинённые гнёзда гаек M4
-        for (sx = [-1, 1], sz = [-1, 1]) {
-            hull() for (pt = [fan_hole_pitch_min, fan_hole_pitch_max])
-                hole_y(track_cx + sx * pt / 2, fan_center_zl + sz * pt / 2, m4_clear_d, y_in - 1, duct_flange_t + 2);
-            hull() for (pt = [fan_hole_pitch_min, fan_hole_pitch_max])
-                hex_pocket_y(track_cx + sx * pt / 2, fan_center_zl + sz * pt / 2, m4_nut_af, m4_nut_h + 0.01,
-                             y_in + duct_flange_t - m4_nut_h);
-        }
+    translate([track_cx - in_flange_w / 2, y_in, in_flange_z0])
+        cube([in_flange_w, duct_flange_t, in_flange_h]);
+}
+
+// Пазы под болты сэндвича (межцентровое 124.5…126) + удлинённые гнёзда гаек M4.
+// Вырезаются из всего воздуховода в duct_full(); болт выходит за фланец на
+// sandwich_protrusion — там снаружи пленума свободно (проверка в part_checks).
+module inlet_bolt_cuts() {
+    for (sx = [-1, 1], sz = [-1, 1]) {
+        hull() for (pt = [fan_hole_pitch_min, fan_hole_pitch_max])
+            hole_y(track_cx + sx * pt / 2, fan_center_zl + sz * pt / 2, m4_clear_d, y_in - 1,
+                   duct_flange_t + sandwich_protrusion + 2);
+        hull() for (pt = [fan_hole_pitch_min, fan_hole_pitch_max])
+            hex_pocket_y(track_cx + sx * pt / 2, fan_center_zl + sz * pt / 2, m4_nut_af, m4_nut_h + 0.01,
+                         y_in + duct_flange_t - m4_nut_h);
     }
 }
 
@@ -91,7 +99,8 @@ module shell_inner() {
         section_slab(y_in - 1, s_in_inner, s_in_inner, 0, 32);
         section_slab(y_noz, s_in_inner, s_in_inner, 0, 32);
     }
-    loft_xz(y_noz, y_out + 1, s_in_inner, s_out_inner, duct_slices, 32);
+    // та же длина и те же сечения лофта, что у наружной оболочки — стенка везде w
+    loft_xz(y_noz, y_outf + 0.5, s_in_inner, s_out_inner, duct_slices, 32);
     // пробивка проёма сквозь выходной фланец
     hull() {
         section_slab(y_outf - 0.5, s_out_inner, s_out_inner, 0, 32);
@@ -133,44 +142,27 @@ module duct_full() {
             vanes();
         }
         t_in_port_cut();
+        inlet_bolt_cuts();
     }
 }
 
 // --- Разрез на две части (если duct_split) ---------------------------------
 // Разъём на y_noz: сечение здесь постоянное (пленум) → ступеньки внутри нет.
-// Часть A (вход + пленум) несёт паз, часть B (сопло + выходной фланец) — шип,
-// плюс кольцевой фланец 8 мм с 4 болтами M3.
+// Стык — два плоских фланца-квадрата по наружному контуру пленума (140 × 140,
+// острые углы) толщиной split_flange_t; 4 × M3 в углах, снаружи скруглённой
+// стенки пленума: в части A — heat-set M3, в части B — проход Ø3.4. Квадрат не
+// шире пленума — фланец не уходит ниже верха плиты. Уплотнение стыка — лента.
 split_flange_t = 5;
-split_flange_grow = 9;
+split_half = inlet_w / 2 + w;                                   // 70: полуширина квадрата
+split_cc   = inlet_w / 2 - duct_inlet_corner_r;                 // центр дуги угла пленума
+split_bolt = split_cc + (duct_inlet_corner_r + w + 1 + m3_insert_hole_d / 2) / sqrt(2);
+assert(split_bolt + m3_insert_hole_d / 2 + 1 <= split_half, "duct_split: M3 в углу не помещается во фланце");
 
-module split_flange_ring(y0) {
+module split_flange_ring(y0, hole_d) {
     difference() {
-        hull() {
-            section_slab(y0, [track_cx, inlet_cz, inlet_w + 2 * w + 2 * split_flange_grow,
-                              inlet_h + 2 * w + 2 * split_flange_grow, duct_inlet_corner_r + w + 4],
-                         s_in_outer, 0, 32);
-            section_slab(y0 + split_flange_t, [track_cx, inlet_cz, inlet_w + 2 * w + 2 * split_flange_grow,
-                              inlet_h + 2 * w + 2 * split_flange_grow, duct_inlet_corner_r + w + 4],
-                         s_in_outer, 0, 32);
-        }
+        translate([track_cx - split_half, y0, inlet_cz - split_half]) cube([2 * split_half, split_flange_t, 2 * split_half]);
         for (sx = [-1, 1], sz = [-1, 1])
-            hole_y(track_cx + sx * (inlet_w / 2 + w + split_flange_grow / 2),
-                   inlet_cz + sz * (inlet_h / 2 + w + split_flange_grow / 2),
-                   m3_clear_d, y0 - 1, split_flange_t + 2);
-    }
-}
-
-module tongue(y0) {
-    // кольцевой шип duct_tongue × duct_tongue посередине толщины стенки
-    difference() {
-        hull() {
-            section_slab(y0, [track_cx, inlet_cz, inlet_w + w + duct_tongue, inlet_h + w + duct_tongue, duct_inlet_corner_r + w / 2], s_in_outer, 0, 32);
-            section_slab(y0 + duct_tongue, [track_cx, inlet_cz, inlet_w + w + duct_tongue, inlet_h + w + duct_tongue, duct_inlet_corner_r + w / 2], s_in_outer, 0, 32);
-        }
-        hull() {
-            section_slab(y0 - 1, [track_cx, inlet_cz, inlet_w + w - duct_tongue, inlet_h + w - duct_tongue, duct_inlet_corner_r + w / 2], s_in_outer, 0, 32);
-            section_slab(y0 + duct_tongue + 1, [track_cx, inlet_cz, inlet_w + w - duct_tongue, inlet_h + w - duct_tongue, duct_inlet_corner_r + w / 2], s_in_outer, 0, 32);
-        }
+            hole_y(track_cx + sx * split_bolt, inlet_cz + sz * split_bolt, hole_d, y0 - 1, split_flange_t + 2);
     }
 }
 
@@ -178,20 +170,20 @@ module duct_a() {
     difference() {
         union() {
             intersection() { duct_full(); translate([-1, y_in - 1, -1]) cube([track_w + 2, y_noz - y_in + 1, 400]); }
-            split_flange_ring(y_noz - split_flange_t);
+            split_flange_ring(y_noz - split_flange_t, m3_insert_hole_d);
         }
         shell_inner();
-        // паз под шип (с зазором 0.2)
-        scale([1, 1, 1]) translate([0, -duct_tongue - 0.2, 0]) tongue(y_noz);
-        translate([0, -duct_tongue - 0.2, 0]) scale([1.004, 1, 1.004]) tongue(y_noz);
+        inlet_bolt_cuts();
     }
 }
 
 module duct_b() {
-    union() {
-        intersection() { duct_full(); translate([-1, y_noz, -1]) cube([track_w + 2, y_out - y_noz + 2, 400]); }
-        split_flange_ring(y_noz);
-        tongue(y_noz - duct_tongue);
+    difference() {
+        union() {
+            intersection() { duct_full(); translate([-1, y_noz, -1]) cube([track_w + 2, y_out - y_noz + 2, 400]); }
+            split_flange_ring(y_noz, m3_clear_d);
+        }
+        shell_inner();
     }
 }
 
