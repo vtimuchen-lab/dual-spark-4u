@@ -22,10 +22,11 @@ module base_plate_2d() {
     rack_checks();
     difference() {
         translate([-base_plate_w / 2, base_plate_y0]) square([base_plate_w, base_plate_d]);
-        for (h = plate_holder_holes) translate(h) circle(d = m4_clear_d, $fn = 24);
-        for (h = plate_bracket_holes) translate(h) circle(d = m4_clear_d, $fn = 24);
-        for (h = plate_ctrl_holes) translate(h) circle(d = m3_clear_d, $fn = 16);
-        for (h = plate_dc_holes) translate(h) circle(d = m3_clear_d, $fn = 16);
+        // plate_tapped: диаметры сверла под резьбу M4 / M3 (метчик по месту)
+        for (h = plate_holder_holes) translate(h) circle(d = plate_m4_d, $fn = 24);
+        for (h = plate_bracket_holes) translate(h) circle(d = plate_m4_d, $fn = 24);
+        for (h = plate_ctrl_holes) translate(h) circle(d = plate_m3_d, $fn = 16);
+        for (h = plate_dc_holes) translate(h) circle(d = plate_m3_d, $fn = 16);
     }
 }
 

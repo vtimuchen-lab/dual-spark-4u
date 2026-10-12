@@ -65,17 +65,17 @@
 <line x1="1194.9" y1="637.3" x2="1194.9" y2="377.7" stroke="#b00" stroke-width="0.8"/>
 <line x1="1190.5" y1="637.3" x2="1199.3" y2="637.3" stroke="#b00" stroke-width="0.8"/>
 <line x1="1190.5" y1="377.7" x2="1199.3" y2="377.7" stroke="#b00" stroke-width="0.8"/>
-<text x="1199.3" y="507.5" font-size="10" font-family="sans-serif" text-anchor="middle" fill="#b00" transform="rotate(-90 1199.3 507.5)">ось 118</text>
+<text x="1191.6" y="507.5" font-size="10" font-family="sans-serif" text-anchor="middle" fill="#b00" transform="rotate(-90 1191.6 507.5)">ось 118</text>
 <line x1="1230.1" y1="637.3" x2="1230.1" y2="219.3" stroke="#b00" stroke-width="0.8"/>
 <line x1="1225.7" y1="637.3" x2="1234.5" y2="637.3" stroke="#b00" stroke-width="0.8"/>
 <line x1="1225.7" y1="219.3" x2="1234.5" y2="219.3" stroke="#b00" stroke-width="0.8"/>
-<text x="1234.5" y="428.3" font-size="10" font-family="sans-serif" text-anchor="middle" fill="#b00" transform="rotate(-90 1234.5 428.3)">190</text>
+<text x="1226.8" y="428.3" font-size="10" font-family="sans-serif" text-anchor="middle" fill="#b00" transform="rotate(-90 1226.8 428.3)">190</text>
 <line x1="1265.3" y1="637.3" x2="1265.3" y2="150.0" stroke="#b00" stroke-width="0.8"/>
 <line x1="1260.9" y1="637.3" x2="1269.7" y2="637.3" stroke="#b00" stroke-width="0.8"/>
 <line x1="1260.9" y1="150.0" x2="1269.7" y2="150.0" stroke="#b00" stroke-width="0.8"/>
-<text x="1269.7" y="393.6" font-size="10" font-family="sans-serif" text-anchor="middle" fill="#b00" transform="rotate(-90 1269.7 393.6)">221.5 [SOURCE]</text>
+<text x="1262.0" y="393.6" font-size="10" font-family="sans-serif" text-anchor="middle" fill="#b00" transform="rotate(-90 1262.0 393.6)">221.5 [SOURCE]</text>
 <text x="124.4" y="747.3" font-size="10" font-family="sans-serif" text-anchor="start" fill="#111">Ось вырезов = shelf_top_z 40 + плита 3 + 75 = 118 (допуск 90…131.5).</text>
-<text x="124.4" y="775.9" font-size="10" font-family="sans-serif" text-anchor="start" fill="#070" font-weight="bold">Полоса над вентилятором под рамку контроллера: 31.5 мм → плата контроллера по высоте ≤ 24.7 мм.</text>
+<text x="124.4" y="775.9" font-size="10" font-family="sans-serif" text-anchor="start" fill="#070" font-weight="bold">Полоса над вентилятором под рамку контроллера: 31.5 мм → корпус контроллера по защёлкам по высоте ≤ 24.7 мм.</text>
 <text x="124.4" y="804.5" font-size="10" font-family="sans-serif" text-anchor="start" fill="#111">Лист + фильтр panel_t = 3.5; лист отдельно = TO_MEASURE. Уши без изменений: нижнее/верхнее отверстие TO_MEASURE/TO_MEASURE, шт. TO_MEASURE.</text>
 <text x="124.4" y="833.1" font-size="10" font-family="sans-serif" text-anchor="start" fill="#111">Координаты всех центров — panel_fp5_holes.csv; контур для резки — panel_fp5.dxf (scripts/export_all.sh).</text>
 </svg>

@@ -3,7 +3,10 @@
 
 Двоичный STL в 4–5 раз меньше: быстрее открывается в слайсере и в 3D-просмотре
 GitHub (в том числе с телефона). Геометрия не меняется: те же треугольники и
-нормали. Уже двоичные файлы пропускаются.
+нормали. Порядок граней приводится к постоянному (CGAL выдаёт их каждый раз в
+другом порядке): вершины треугольника поворачиваются так, чтобы первой была
+наименьшая (обход сохраняется), затем треугольники сортируются — повторный
+экспорт той же геометрии даёт тот же файл. Уже двоичные файлы пропускаются.
 
   python3 scripts/stl_to_binary.py stl/*.stl stl/kit/*.stl
 """
@@ -41,7 +44,11 @@ def convert(path: Path) -> None:
         elif w[0] == "endfacet":
             if len(verts) != 9:
                 raise ValueError(f"{path}: грань не из 3 вершин")
-            tris.append((*normal, *verts))
+            v = [tuple(verts[i:i + 3]) for i in (0, 3, 6)]
+            k = v.index(min(v))
+            v = v[k:] + v[:k]
+            tris.append((*normal, *v[0], *v[1], *v[2]))
+    tris.sort(key=lambda t: t[3:])
     header = f"{path.stem} (binary, from OpenSCAD ASCII)".encode("ascii", errors="replace")[:80].ljust(80, b" ")
     out = bytearray(header + struct.pack("<I", len(tris)))
     for t in tris:

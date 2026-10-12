@@ -141,7 +141,7 @@ holder со стойкой T_out — ASA при выхлопе > 50 °C, `docs/0
 
 * `main` создан из `claude/4u-dual-edgexpert-cooling-dw0pmu`; работа в ветке,
   PR в `main`.
-* STL в `stl/` помечаются `*_PREVIEW.stl`, пока не заполнены все TO_MEASURE.
+* STL в `stl/` помечаются `*_PREVIEW.stl` (отменено в §10.10), пока не заполнены все TO_MEASURE.
 * Неизвестные размеры = `undef`; `rack_checks()` — assert, модель не собирается
   на выдуманных числах. Детали, не зависящие от шкафа (holder, duct, уголок,
   заслонка), собираются.

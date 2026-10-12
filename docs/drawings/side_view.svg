@@ -38,23 +38,23 @@
 <line x1="1079.4" y1="473.8" x2="1079.4" y2="325.6" stroke="#b00" stroke-width="0.8"/>
 <line x1="1075.6" y1="473.8" x2="1083.2" y2="473.8" stroke="#b00" stroke-width="0.8"/>
 <line x1="1075.6" y1="325.6" x2="1083.2" y2="325.6" stroke="#b00" stroke-width="0.8"/>
-<text x="1083.2" y="399.8" font-size="10" font-family="sans-serif" text-anchor="middle" fill="#b00" transform="rotate(-90 1083.2 399.8)">ось вент. = ось сот 78</text>
+<text x="1076.5" y="399.8" font-size="10" font-family="sans-serif" text-anchor="middle" fill="#b00" transform="rotate(-90 1076.5 399.8)">ось вент. = ось сот 78</text>
 <line x1="1106.0" y1="473.8" x2="1106.0" y2="358.3" stroke="#b00" stroke-width="0.8"/>
 <line x1="1102.2" y1="473.8" x2="1109.8" y2="473.8" stroke="#b00" stroke-width="0.8"/>
 <line x1="1102.2" y1="358.3" x2="1109.8" y2="358.3" stroke="#b00" stroke-width="0.8"/>
-<text x="1109.8" y="416.1" font-size="10" font-family="sans-serif" text-anchor="middle" fill="#b00" transform="rotate(-90 1109.8 416.1)">низ MSI 60.8</text>
+<text x="1103.2" y="416.1" font-size="10" font-family="sans-serif" text-anchor="middle" fill="#b00" transform="rotate(-90 1103.2 416.1)">низ MSI 60.8</text>
 <line x1="1106.0" y1="358.3" x2="1106.0" y2="261.4" stroke="#b00" stroke-width="0.8"/>
 <line x1="1102.2" y1="358.3" x2="1109.8" y2="358.3" stroke="#b00" stroke-width="0.8"/>
 <line x1="1102.2" y1="261.4" x2="1109.8" y2="261.4" stroke="#b00" stroke-width="0.8"/>
-<text x="1109.8" y="309.9" font-size="10" font-family="sans-serif" text-anchor="middle" fill="#b00" transform="rotate(-90 1109.8 309.9)">MSI 51</text>
+<text x="1103.2" y="309.9" font-size="10" font-family="sans-serif" text-anchor="middle" fill="#b00" transform="rotate(-90 1103.2 309.9)">MSI 51</text>
 <line x1="1132.6" y1="473.8" x2="1132.6" y2="192.6" stroke="#b00" stroke-width="0.8"/>
 <line x1="1128.8" y1="473.8" x2="1136.4" y2="473.8" stroke="#b00" stroke-width="0.8"/>
 <line x1="1128.8" y1="192.6" x2="1136.4" y2="192.6" stroke="#b00" stroke-width="0.8"/>
-<text x="1136.4" y="333.2" font-size="10" font-family="sans-serif" text-anchor="middle" fill="#b00" transform="rotate(-90 1136.4 333.2)">верх вент. 148</text>
+<text x="1129.8" y="333.2" font-size="10" font-family="sans-serif" text-anchor="middle" fill="#b00" transform="rotate(-90 1129.8 333.2)">верх вент. 148</text>
 <line x1="1159.2" y1="473.8" x2="1159.2" y2="129.0" stroke="#b00" stroke-width="0.8"/>
 <line x1="1155.4" y1="473.8" x2="1163.0" y2="473.8" stroke="#b00" stroke-width="0.8"/>
 <line x1="1155.4" y1="129.0" x2="1163.0" y2="129.0" stroke="#b00" stroke-width="0.8"/>
-<text x="1163.0" y="301.4" font-size="10" font-family="sans-serif" text-anchor="middle" fill="#b00" transform="rotate(-90 1163.0 301.4)">верх панели 181.5</text>
+<text x="1156.3" y="301.4" font-size="10" font-family="sans-serif" text-anchor="middle" fill="#b00" transform="rotate(-90 1156.3 301.4)">верх панели 181.5</text>
 <line x1="137.0" y1="492.8" x2="188.3" y2="492.8" stroke="#b00" stroke-width="0.8"/>
 <line x1="137.0" y1="496.6" x2="137.0" y2="489.0" stroke="#b00" stroke-width="0.8"/>
 <line x1="188.3" y1="496.6" x2="188.3" y2="489.0" stroke="#b00" stroke-width="0.8"/>

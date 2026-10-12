@@ -263,6 +263,14 @@ m4_clear_d       = 4.5;
 m4_nut_af        = 7.0;
 m4_nut_h         = 3.2;
 m4_head_d        = 8.5;
+m4_tap_drill     = 3.3;  // [SRC ISO 2306] сверло под резьбу M4×0.7
+m3_tap_drill     = 2.5;  // [SRC ISO 2306] сверло под резьбу M3×0.5
+// Плита лежит прямо на полке: под ней ничего не должно выступать (гайка или
+// rivnut подняли бы плиту и сбили высоту тракта). Поэтому все отверстия плиты
+// — резьба в алюминии 3 мм, винты сверху, длина — не длиннее пакета.
+plate_tapped     = true; // [ASSM]
+plate_m4_d       = plate_tapped ? m4_tap_drill : m4_clear_d;
+plate_m3_d       = plate_tapped ? m3_tap_drill : m3_clear_d;
 m4_lengths       = [25, 30, 35, 40, 45, 50];  // стандартный ряд DIN 912
 bolt_min_protrusion = 1.5;   // за гайкой
 print_bed_x = 330;    // [MEAS] стол принтера пользователя 330 × 320 (макс.)
@@ -395,8 +403,8 @@ dc_bracket_pos = [strip_cx, ctrl_zone_y1 - 10];
 plate_dc_holes = [for (sx = [-1, 1]) dc_bracket_pos + [sx * 10, 0]];
 
 // --- пакет болта сэндвича ---------------------------------------------------
-sandwich_stack = grille_stack_t + panel_t + (known(fan_corner_t) ? fan_corner_t : fan_thickness)
-                 + duct_flange_t;                                            // 37.8
+fan_stack_t    = known(fan_corner_t) ? fan_corner_t : fan_thickness;         // вентилятор в пакете болта
+sandwich_stack = grille_stack_t + panel_t + fan_stack_t + duct_flange_t;     // 37.8
 sandwich_bolt_l = first_ge(m4_lengths, sandwich_stack + bolt_min_protrusion);
 sandwich_protrusion = sandwich_bolt_l - sandwich_stack;
 
@@ -542,7 +550,8 @@ module export_derived() {
              "base_plate_d","ctrl_zone_x_in","ctrl_zone_y0","ctrl_zone_y1","ctrl_zone_d","ctrl_zone_w",
              "sandwich_stack","sandwich_bolt_l","sandwich_protrusion","strip_above_fan","ctrl_h_max",
              "bezel_z0_panel","ctrl_known","bezel_w","bezel_h","bezel_d","bezel_cz_panel","bezel_lug_dx",
-             "cable_hole_dx","baffle_y_local","baffle_h","dev_y","use_panel_brackets"];
+             "cable_hole_dx","baffle_y_local","baffle_h","dev_y","use_panel_brackets","fan_stack_t",
+             "plate_tapped","plate_m4_d","plate_m3_d"];
     values = [fan_center_zl,fan_center_z,device_base_zl,foot_seat_zl,pedestal_top_zl,device_top_zl,
              t_out_zl,holder_outer_w,track_w,track_cx,dev_x,track_pitch,pair_w,in_flange_w,
              y_duct_in,duct_len,y_duct_out,y_device_front,y_device_rear,y_back_stop,y_t_out,
@@ -553,12 +562,14 @@ module export_derived() {
              base_plate_d,ctrl_zone_x_in,ctrl_zone_y0,ctrl_zone_y1,ctrl_zone_d,ctrl_zone_w,
              sandwich_stack,sandwich_bolt_l,sandwich_protrusion,strip_above_fan,ctrl_h_max,
              bezel_z0_panel,ctrl_known,bezel_w,bezel_h,bezel_d,bezel_cz_panel,bezel_lug_dx,
-             cable_hole_dx,baffle_y_local,baffle_h,dev_y,use_panel_brackets];
+             cable_hole_dx,baffle_y_local,baffle_h,dev_y,use_panel_brackets,fan_stack_t,
+             plate_tapped,plate_m4_d,plate_m3_d];
     for (i = [0 : len(names) - 1]) echo(str("DERIVED|", names[i], "|", values[i]));
     echo(str("DERIVED|foot_xs|", foot_xs));
     echo(str("DERIVED|foot_ys|", foot_ys));
     echo(str("DERIVED|plate_holder_holes|", plate_holder_holes));
     echo(str("DERIVED|plate_bracket_holes|", plate_bracket_holes));
+    echo(str("DERIVED|bracket_hole_zl|", bracket_hole_zl));
     echo(str("DERIVED|plate_ctrl_holes|", plate_ctrl_holes));
     echo(str("DERIVED|plate_dc_holes|", plate_dc_holes));
 }

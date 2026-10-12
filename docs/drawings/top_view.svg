@@ -46,21 +46,21 @@
 <line x1="832.9" y1="920.5" x2="832.9" y2="880.0" stroke="#b00" stroke-width="0.8"/>
 <line x1="829.9" y1="920.5" x2="835.9" y2="920.5" stroke="#b00" stroke-width="0.8"/>
 <line x1="829.9" y1="880.0" x2="835.9" y2="880.0" stroke="#b00" stroke-width="0.8"/>
-<text x="835.9" y="900.2" font-size="10" font-family="sans-serif" text-anchor="middle" fill="#b00" transform="rotate(-90 835.9 900.2)">27</text>
+<text x="830.7" y="900.2" font-size="10" font-family="sans-serif" text-anchor="middle" fill="#b00" transform="rotate(-90 830.7 900.2)">27</text>
 <line x1="832.9" y1="880.0" x2="832.9" y2="580.0" stroke="#b00" stroke-width="0.8"/>
 <line x1="829.9" y1="880.0" x2="835.9" y2="880.0" stroke="#b00" stroke-width="0.8"/>
 <line x1="829.9" y1="580.0" x2="835.9" y2="580.0" stroke="#b00" stroke-width="0.8"/>
-<text x="835.9" y="730.0" font-size="10" font-family="sans-serif" text-anchor="middle" fill="#b00" transform="rotate(-90 835.9 730.0)">возд. 200</text>
+<text x="830.7" y="730.0" font-size="10" font-family="sans-serif" text-anchor="middle" fill="#b00" transform="rotate(-90 830.7 730.0)">возд. 200</text>
 <line x1="832.9" y1="580.0" x2="832.9" y2="347.5" stroke="#b00" stroke-width="0.8"/>
 <line x1="829.9" y1="580.0" x2="835.9" y2="580.0" stroke="#b00" stroke-width="0.8"/>
 <line x1="829.9" y1="347.5" x2="835.9" y2="347.5" stroke="#b00" stroke-width="0.8"/>
-<text x="835.9" y="463.8" font-size="10" font-family="sans-serif" text-anchor="middle" fill="#b00" transform="rotate(-90 835.9 463.8)">5+MSI 150</text>
+<text x="830.7" y="463.8" font-size="10" font-family="sans-serif" text-anchor="middle" fill="#b00" transform="rotate(-90 830.7 463.8)">5+MSI 150</text>
 <line x1="832.9" y1="347.5" x2="832.9" y2="212.5" stroke="#b00" stroke-width="0.8"/>
 <line x1="829.9" y1="347.5" x2="835.9" y2="347.5" stroke="#b00" stroke-width="0.8"/>
 <line x1="829.9" y1="212.5" x2="835.9" y2="212.5" stroke="#b00" stroke-width="0.8"/>
-<text x="835.9" y="280.0" font-size="10" font-family="sans-serif" text-anchor="middle" fill="#b00" transform="rotate(-90 835.9 280.0)">выхлоп 90</text>
+<text x="830.7" y="280.0" font-size="10" font-family="sans-serif" text-anchor="middle" fill="#b00" transform="rotate(-90 830.7 280.0)">выхлоп 90</text>
 <line x1="856.9" y1="920.5" x2="856.9" y2="212.5" stroke="#b00" stroke-width="0.8"/>
 <line x1="853.9" y1="920.5" x2="859.9" y2="920.5" stroke="#b00" stroke-width="0.8"/>
 <line x1="853.9" y1="212.5" x2="859.9" y2="212.5" stroke="#b00" stroke-width="0.8"/>
-<text x="859.9" y="566.5" font-size="10" font-family="sans-serif" text-anchor="middle" fill="#b00" transform="rotate(-90 859.9 566.5)">472</text>
+<text x="854.7" y="566.5" font-size="10" font-family="sans-serif" text-anchor="middle" fill="#b00" transform="rotate(-90 854.7 566.5)">472</text>
 </svg>

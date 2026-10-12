@@ -47,7 +47,7 @@
 <line x1="20.00" y1="255.00" x2="20.00" y2="137.00" stroke="#c00" stroke-width="0.25"/>
 <line x1="18.50" y1="255.00" x2="21.50" y2="255.00" stroke="#c00" stroke-width="0.25"/>
 <line x1="18.50" y1="137.00" x2="21.50" y2="137.00" stroke="#c00" stroke-width="0.25"/>
-<text x="21.20" y="196.00" font-size="3.4" font-family="sans-serif" fill="#c00" text-anchor="middle" font-weight="bold" transform="rotate(-90 21.20 196.00)">118</text>
+<text x="18.80" y="196.00" font-size="3.4" font-family="sans-serif" fill="#c00" text-anchor="middle" font-weight="bold" transform="rotate(-90 18.80 196.00)">118</text>
 <line x1="195.00" y1="249.00" x2="97.00" y2="249.00" stroke="#c00" stroke-width="0.25"/>
 <line x1="195.00" y1="247.50" x2="195.00" y2="250.50" stroke="#c00" stroke-width="0.25"/>
 <line x1="97.00" y1="247.50" x2="97.00" y2="250.50" stroke="#c00" stroke-width="0.25"/>

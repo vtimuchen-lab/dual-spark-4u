@@ -119,7 +119,8 @@ class Svg:
         self.line(x, y1, x, y2, stroke=color, sw=0.8)
         for y in (y1, y2):
             self.line(x - 2, y, x + 2, y, stroke=color, sw=0.8)
-        self.text(x + 2, (y1 + y2) / 2, label, size=10, anchor="middle", color=color, rotate=-90)
+        # повёрнутый текст растёт влево от базовой линии — базовая линия левее размерной
+        self.text(x - 1.5, (y1 + y2) / 2, label, size=10, anchor="middle", color=color, rotate=-90)
 
     def save(self, path: Path):
         path.write_text(f'<svg xmlns="http://www.w3.org/2000/svg" width="{self.W:.0f}" height="{self.H:.0f}" viewBox="0 0 {self.W:.0f} {self.H:.0f}">\n<rect width="100%" height="100%" fill="#fff"/>\n' + "\n".join(self.parts) + "\n</svg>\n", encoding="utf-8")
@@ -174,7 +175,7 @@ def draw_panel(p, d):
     # печатные уголки (опция; по умолчанию крепление через штатные отверстия)
     if d["use_panel_brackets"]:
         for sx in (-1, 1):
-            for zl in (p["bracket_t"] + 12, p["bracket_h"] - 12):
+            for zl in d["bracket_hole_zl"]:
                 x = pw / 2 + sx * d["bracket_cx"]; z = p["shelf_top_z"] + p["base_plate_t"] + zl
                 s.circle(x, z, p["bracket_hole_d"] / 2, stroke="#000", sw=1.1); s.cross(x, z, 4)
                 holes.append(("уголок M4", x, z, f"Ø{p['bracket_hole_d']:g}"))
@@ -197,7 +198,7 @@ def draw_panel(p, d):
     s.dim_v(0, d["bezel_z0_panel"], xr + 16, f"{d['bezel_z0_panel']:g}")
     s.dim_v(0, ph, xr + 32, f"{ph:g} [SOURCE]")
     s.text(2, -50, f"Ось вырезов = shelf_top_z {p['shelf_top_z']:g} + плита {p['base_plate_t']:g} + {p['fan_axis_above_plate']:g} = {axis:g} (допуск {d['fan_center_z_panel_min']:g}…{d['fan_center_z_panel_max']:g}).", size=10)
-    s.text(2, -63, f"Полоса над вентилятором под рамку контроллера: {d['strip_above_fan']:g} мм → плата контроллера по высоте ≤ {d['ctrl_h_max']:g} мм.", size=10, color="#070", bold=True)
+    s.text(2, -63, f"Полоса над вентилятором под рамку контроллера: {d['strip_above_fan']:g} мм → корпус контроллера по защёлкам по высоте ≤ {d['ctrl_h_max']:g} мм.", size=10, color="#070", bold=True)
     s.text(2, -76, f"Лист + фильтр panel_t = {p['panel_t']:g}; лист отдельно = {fmt(p['panel_sheet_t'])}. Уши без изменений: нижнее/верхнее отверстие {fmt(p['ear_hole_low'])}/{fmt(p['ear_hole_high'])}, шт. {fmt(p['ear_hole_count'], 0)}.", size=10)
     s.text(2, -89, "Координаты всех центров — panel_fp5_holes.csv; контур для резки — panel_fp5.dxf (scripts/export_all.sh).", size=10)
     s.save(OUT / "panel_fp5.svg")
@@ -223,18 +224,21 @@ def draw_base_plate(p, d):
         s.rect(X(cx_rel) - d["in_flange_w"] / 2, Y(0), d["in_flange_w"], d["y_duct_out"] - y0, stroke="#aaa", dash="2,2", sw=0.6)
         s.text(X(cx_rel), Y(d["y_duct_out"] + 100), "holder (контур)", size=9, anchor="middle", color="#888")
         s.text(X(cx_rel), Y(d["y_duct_out"] / 2), "воздуховод (контур)", size=9, anchor="middle", color="#aaa")
+    m4, m3 = d["plate_m4_d"], d["plate_m3_d"]
+    t4 = f"резьба M4, сверло Ø{m4:g}" if d["plate_tapped"] else f"Ø{m4:g}"
+    t3 = f"резьба M3, сверло Ø{m3:g}" if d["plate_tapped"] else f"Ø{m3:g}"
     for (xm, ym) in d["plate_holder_holes"]:
-        s.circle(X(xm), Y(ym), p["m4_clear_d"] / 2, stroke="#000", sw=1.2); s.cross(X(xm), Y(ym), 4)
-        holes.append(("holder M4", X(xm), Y(ym), f"Ø{p['m4_clear_d']:g}"))
+        s.circle(X(xm), Y(ym), m4 / 2, stroke="#000", sw=1.2); s.cross(X(xm), Y(ym), 4)
+        holes.append(("holder M4", X(xm), Y(ym), t4))
     for (xm, ym) in d["plate_bracket_holes"]:
-        s.circle(X(xm), Y(ym), p["m4_clear_d"] / 2, stroke="#000", sw=1.2); s.cross(X(xm), Y(ym), 4)
-        holes.append(("уголок M4", X(xm), Y(ym), f"Ø{p['m4_clear_d']:g}"))
+        s.circle(X(xm), Y(ym), m4 / 2, stroke="#000", sw=1.2); s.cross(X(xm), Y(ym), 4)
+        holes.append(("уголок M4", X(xm), Y(ym), t4))
     for (xm, ym) in d["plate_ctrl_holes"]:
-        s.circle(X(xm), Y(ym), p["m3_clear_d"] / 2, stroke="#000", sw=1.0); s.cross(X(xm), Y(ym), 3)
-        holes.append(("полоса M3 (WAGO / стяжки)", X(xm), Y(ym), f"Ø{p['m3_clear_d']:g}"))
+        s.circle(X(xm), Y(ym), m3 / 2, stroke="#000", sw=1.0); s.cross(X(xm), Y(ym), 3)
+        holes.append(("полоса M3 (WAGO / стяжки)", X(xm), Y(ym), t3))
     for (xm, ym) in d["plate_dc_holes"]:
-        s.circle(X(xm), Y(ym), p["m3_clear_d"] / 2, stroke="#000", sw=1.0)
-        holes.append(("площадка стяжки DC-гнезда M3" if p.get("dc_jack_inline") else "стойка DC M3", X(xm), Y(ym), f"Ø{p['m3_clear_d']:g}"))
+        s.circle(X(xm), Y(ym), m3 / 2, stroke="#000", sw=1.0)
+        holes.append(("площадка стяжки DC-гнезда M3" if p.get("dc_jack_inline") else "стойка DC M3", X(xm), Y(ym), t3))
     for sx in (-1, 1):
         if d["use_panel_brackets"]:
             bx = X(sx * d["bracket_cx"])
@@ -248,8 +252,9 @@ def draw_base_plate(p, d):
     s.dim_v(0, Y(hy), -6, f"{Y(hy):g}")
     s.dim_h(0, bw, -24, f"{bw:g} = проём {p['rack_opening_w']:g} − 2×{p['base_plate_side_gap']:g}")
     s.dim_v(0, bd, bw + 6, f"{bd:g} (полка {p['shelf_depth']:g} − {y0:g})")
-    s.text(2, -40, f"Передний край плиты — на {y0:g} мм за задней плоскостью панели. M4: Ø{p['m4_clear_d']:g} ({len(d['plate_holder_holes']) + len(d['plate_bracket_holes'])} шт.), M3: Ø{p['m3_clear_d']:g} ({len(d['plate_ctrl_holes']) + len(d['plate_dc_holes'])} шт.).", size=10)
-    s.text(2, -53, "X — от левого края, Y — от переднего края. Координаты всех центров — base_plate_holes.csv; контур — base_plate.dxf.", size=10)
+    s.text(2, -40, f"Передний край плиты — на {y0:g} мм за задней плоскостью панели. M4: {t4} ({len(d['plate_holder_holes']) + len(d['plate_bracket_holes'])} шт.), M3: {t3} ({len(d['plate_ctrl_holes']) + len(d['plate_dc_holes'])} шт.)."
+, size=10)
+    s.text(2, -53, ("Плита лежит на полке: гаек снизу нет, винты сверху в резьбу. " if d["plate_tapped"] else "") + "X — от левого края, Y — от переднего края. Координаты всех центров — base_plate_holes.csv; контур — base_plate.dxf.", size=10)
     s.save(OUT / "base_plate.svg")
     with open(OUT / "base_plate_holes.csv", "w", newline="", encoding="utf-8") as f:
         w = csv.writer(f); w.writerow(["элемент", "X от левого края, мм", "Y от переднего края, мм", "размер"])
@@ -328,7 +333,7 @@ def draw_side(p, d):
     s.dim_h(dy, dy + p["device_depth"], -10, f"MSI {p['device_depth']:g}")
     s.dim_h(dy + p["device_depth"], X(d["y_track_end"]), -22, f"выхлоп {p['rear_free_zone']:g}")
     s.dim_h(X(0), X(d["y_track_end"]), -36, f"модуль {d['y_track_end']:g} от задней плоскости панели; полка {p['shelf_depth']:g}; шкаф {p['rack_depth']:g}")
-    s.text(X(0), -52, f"Пакет болта: решётка {p['grille_stack_t']:g} + панель {p['panel_t']:g} + вентилятор {p['fan_thickness']:g} + фланец {p['duct_flange_t']:g} = {d['sandwich_stack']:g} → M4×{d['sandwich_bolt_l']:g} (выступ {d['sandwich_protrusion']:.1f}).", size=10)
+    s.text(X(0), -52, f"Пакет болта: решётка {p['grille_stack_t']:g} + панель {p['panel_t']:g} + вентилятор {d['fan_stack_t']:g} + фланец {p['duct_flange_t']:g} = {d['sandwich_stack']:g} → M4×{d['sandwich_bolt_l']:g} (выступ {d['sandwich_protrusion']:.1f}).", size=10)
     s.save(OUT / "side_view.svg")
 
 
@@ -447,7 +452,7 @@ def draw_fan_templates(p, d):
         line(xd, Y(0), xd, Y(axis), red, 0.25)
         for z in (0, axis):
             line(xd - 1.5, Y(z), xd + 1.5, Y(z), red, 0.25)
-        text(xd + side * -1.2, Y(axis / 2), f"{axis:g}", 3.4, red, "middle", True, -90)
+        text(xd - 1.2, Y(axis / 2), f"{axis:g}", 3.4, red, "middle", True, -90)   # текст влево от линии
         yd = Y(0) - 6
         line(X(0), yd, X(cx), yd, red, 0.25)
         for x in (X(0), X(cx)):

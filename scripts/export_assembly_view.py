@@ -19,15 +19,23 @@ SCAD = ROOT / "scad" / "assembly.scad"
 GROUPS = ["panel", "grilles", "plate", "brackets", "holders", "baffles", "ducts", "msi", "fans", "bezels"]
 
 
-def main(out: Path, part: str = "module") -> None:
+def main(out: Path, part: str = "module") -> int:
     facets: list[str] = []
+    failed = 0
     with tempfile.TemporaryDirectory() as tmp:
         for g in GROUPS:
             stl = Path(tmp) / f"{g}.stl"
             r = subprocess.run(["openscad", "-o", str(stl), "-D", f'only="{g}"', "-D", f'part="{part}"', str(SCAD)],
                                capture_output=True, text=True)
             if r.returncode != 0 or not stl.exists():
-                print(f"  -     {g}: пусто или не собирается")
+                err = r.stderr
+                if "top level object is empty" in err and "Assertion" not in err and "ERROR" not in err.replace(
+                        "Current top level object is empty", ""):
+                    print(f"  -     {g}: пусто (нет деталей группы при текущих параметрах)")
+                else:
+                    line = next((ln for ln in err.splitlines() if "ERROR" in ln or "Assertion" in ln), err.strip()[-200:])
+                    print(f"  FAIL  {g}: {line[:200]}")
+                    failed += 1
                 continue
             body = [ln for ln in stl.read_text().splitlines()
                     if not ln.startswith("solid") and not ln.startswith("endsolid")]
@@ -37,9 +45,10 @@ def main(out: Path, part: str = "module") -> None:
     out.write_text("solid dual_spark_5u_module_VIEW_ONLY\n" + "\n".join(facets) +
                    "\nendsolid dual_spark_5u_module_VIEW_ONLY\n")
     print(f"written {out}")
+    return 1 if failed else 0
 
 
 if __name__ == "__main__":
     out = Path(sys.argv[1]) if len(sys.argv) > 1 else ROOT / "stl" / "assembly_module_VIEW_ONLY.stl"
     part = sys.argv[2] if len(sys.argv) > 2 else "module"
-    main(out, part)
+    sys.exit(main(out, part))
