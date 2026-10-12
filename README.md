@@ -103,7 +103,7 @@ scad/edgexpert_holder.scad  holder (part=holder|holder_with_device|baffle|holder
 scad/duct.scad            воздуховод (part=duct|duct_a|duct_b|duct_section)
 scad/front_panel.scad     ФП-5 с вырезами (part=panel|panel_2d)
 scad/base_plate.scad      base_plate, panel_bracket (опция), dc_jack_bracket (только для панельного гнезда)
-scad/ctrl_bezel.scad      рамка термоконтроллера на лицевой стороне ФП-5 (требует ctrl_w/h/d)
+scad/ctrl_bezel.scad      рамка термоконтроллера на лицевой стороне ФП-5 (требует п.11a–f: ctrl_cut_*, ctrl_w/h/d, ctrl_frame_*, ctrl_clip_t, ctrl_probe_d)
 scad/assembly.scad        модуль (part=module|exploded|track|printables)
 scad/fan_bracket.scad     ОПЦИЯ: рамка для настольного стенда
 stl/                      печатные детали, двоичный STL (экспорт по зависимостям каждой детали)
@@ -121,7 +121,7 @@ scripts/make_drawings.py  чертежи и таблицы отверстий
 2. Панель: вырезы и пазы по `docs/drawings/panel_fp5.dxf` или
    `panel_fp5_holes.csv`; вручную — шаблон 1:1 `fan_template_fp5_A4.pdf`
    (печать «Фактический размер», совместить края панели, кернить через бумагу). Плита: `base_plate.dxf` / `base_plate_holes.csv`.
-3. Печать по `docs/05_bom_hardware.md` (PETG прототип, ASA финал), сборка по
+3. Печать по `docs/05_bom_hardware.md` и `docs/09_print_materials.md` (тест — всё PETG; holder — ASA, если выхлоп > 50 °C), сборка по
    `docs/07_rack_layout.md` §5.
 4. Когда придёт контроллер — вписать его размеры (`ctrl_*`, `ctrl_probe_d`,
    `docs/03_measure_checklist.md` п.11) в `scad/params.scad` и снова запустить экспорт.
