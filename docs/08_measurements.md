@@ -47,7 +47,7 @@ TO_MEASURE — `undef` в `scad/params.scad`.
 | 13 | Межцентровое отверстий P14 Pro | 126 замер → пазы 124.5–126 | OK | `fan_hole_pitch_min/max` |
 | 14 | Решётка ARCTIC | общая высота 3.8, в углу 1.3 | OK | `grille_depth`, `grille_stack_t` |
 | 11 | Габариты контроллера | — | TO_MEASURE | `ctrl_w/h/d` |
-| 15 | Посадочный диаметр DC-гнезда | — | TO_MEASURE | `dc_jack_d` |
+| 15 | Посадочный диаметр DC-гнезда | гнездо кабельное («мама» 5.5×2.5) | не нужен | `dc_jack_d`, `dc_jack_inline` |
 | — | Стол принтера | 330 × 320 макс.; печать по одной детали | OK | `print_bed_x/y` (высота `print_bed_z` не названа) |
 
 ## 1U-модуль «1U fan unit with thermostat» (фото от 2026-10-12)

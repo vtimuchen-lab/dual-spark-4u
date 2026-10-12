@@ -234,14 +234,14 @@ def draw_base_plate(p, d):
         holes.append(("полоса M3 (WAGO / стяжки)", X(xm), Y(ym), f"Ø{p['m3_clear_d']:g}"))
     for (xm, ym) in d["plate_dc_holes"]:
         s.circle(X(xm), Y(ym), p["m3_clear_d"] / 2, stroke="#000", sw=1.0)
-        holes.append(("стойка DC M3", X(xm), Y(ym), f"Ø{p['m3_clear_d']:g}"))
+        holes.append(("площадка стяжки DC-гнезда M3" if p.get("dc_jack_inline") else "стойка DC M3", X(xm), Y(ym), f"Ø{p['m3_clear_d']:g}"))
     for sx in (-1, 1):
         if d["use_panel_brackets"]:
             bx = X(sx * d["bracket_cx"])
             s.rect(bx - p["bracket_w"] / 2, 0, p["bracket_w"], p["bracket_d"], stroke="#555", dash="3,2", sw=0.8)
         xin = X(sx * d["ctrl_zone_x_in"]); xa = min(xin, xin + sx * d["ctrl_zone_w"])
         s.rect(xa, Y(d["ctrl_zone_y0"]), d["ctrl_zone_w"], d["ctrl_zone_d"], stroke="#2a2", dash="3,2", sw=0.8)
-        s.text(xa + d["ctrl_zone_w"] / 2, Y(d["ctrl_zone_y1"]) + 3, "WAGO" if sx < 0 else "DC", size=9, anchor="middle", color="#2a2")
+        s.text(xa + d["ctrl_zone_w"] / 2, Y(d["ctrl_zone_y1"]) + 3, "резерв" if sx < 0 else "DC + WAGO", size=9, anchor="middle", color="#2a2")
     # размеры по одному отверстию каждого типа
     hx, hy = d["plate_holder_holes"][0]
     s.dim_h(0, X(hx), -10, f"{X(hx):g}")

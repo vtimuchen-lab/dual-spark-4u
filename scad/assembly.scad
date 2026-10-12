@@ -67,8 +67,9 @@ module bezels() {
             mirror([0, 1, 0]) { color([0.55, 0.58, 0.62]) bezel(); ctrl_mockup(); probe_mockup(); }
 }
 
-// Не деталь: разметка места на плите — слева WAGO 221-413 («+», «−»), справа
-// DC-гнездо 12 В. Тонкая площадка с подписью, чтобы на рендерах не выглядела блоком.
+// Не деталь: разметка места на плите — справа кабельная «мама» DC 12 В и рядом
+// WAGO 221-413 («+», «−»; провод «мамы» 22 см), слева резерв (ESP32). Тонкая
+// площадка с подписью, чтобы на рендерах не выглядела блоком.
 module electronics_zone() {
     for (sx = [-1, 1]) {
         x0 = sx > 0 ? ctrl_zone_x_in : -(ctrl_zone_x_in + ctrl_zone_w);
@@ -77,7 +78,7 @@ module electronics_zone() {
         color([0.1, 0.45, 0.15])
             translate([x0 + ctrl_zone_w / 2, ctrl_zone_y0 + ctrl_zone_d / 2, base_plate_t + 1])
                 rotate([0, 0, 90]) linear_extrude(height = 0.6)
-                    text(sx < 0 ? "WAGO 221-413" : "DC 12V", size = 9, font = "Liberation Sans:style=Bold",
+                    text(sx < 0 ? "резерв" : "DC 12V + WAGO", size = 9, font = "Liberation Sans:style=Bold",
                          halign = "center", valign = "center");
     }
 }
@@ -92,7 +93,7 @@ module module_assembly(explode = 0) {
         for (sx = [-1, 1])
             translate([sx * bracket_cx - bracket_w / 2, base_plate_front_gap, base_plate_t])
                 color([0.55, 0.58, 0.62]) panel_bracket();
-    if (known(dc_jack_d) && show("brackets"))
+    if (!dc_jack_inline && known(dc_jack_d) && show("brackets"))
         translate([dc_bracket_pos[0] + 15, dc_bracket_pos[1] + 7, base_plate_t]) rotate([0, 0, 180])
             color([0.55, 0.58, 0.62]) dc_jack_bracket();
     if (only == "all") electronics_zone();

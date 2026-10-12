@@ -62,9 +62,9 @@
 <circle cx="847.1" cy="561.2" r="3.1" stroke="#000" fill="none" stroke-width="1.0"/>
 <circle cx="883.1" cy="561.2" r="3.1" stroke="#000" fill="none" stroke-width="1.0"/>
 <rect x="113.6" y="543.2" width="81.0" height="291.6" stroke="#2a2" fill="none" stroke-width="0.8" stroke-dasharray="3,2"/>
-<text x="154.1" y="537.8" font-size="9" font-family="sans-serif" text-anchor="middle" fill="#2a2">WAGO</text>
+<text x="154.1" y="537.8" font-size="9" font-family="sans-serif" text-anchor="middle" fill="#2a2">резерв</text>
 <rect x="824.6" y="543.2" width="81.0" height="291.6" stroke="#2a2" fill="none" stroke-width="0.8" stroke-dasharray="3,2"/>
-<text x="865.1" y="537.8" font-size="9" font-family="sans-serif" text-anchor="middle" fill="#2a2">DC</text>
+<text x="865.1" y="537.8" font-size="9" font-family="sans-serif" text-anchor="middle" fill="#2a2">DC + WAGO</text>
 <line x1="110.0" y1="955.4" x2="261.2" y2="955.4" stroke="#b00" stroke-width="0.8"/>
 <line x1="110.0" y1="959.0" x2="110.0" y2="951.8" stroke="#b00" stroke-width="0.8"/>
 <line x1="261.2" y1="959.0" x2="261.2" y2="951.8" stroke="#b00" stroke-width="0.8"/>

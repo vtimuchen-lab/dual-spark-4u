@@ -21,7 +21,7 @@ export_part() {
     openscad -o "$out" "$@" "$scad" 2>/dev/null
     echo "  OK    $(basename "$out")"
   else
-    echo "  SKIP  $(basename "$out"): $(grep -o 'TO_MEASURE[^"]*' "$S/err.log" | head -1)"
+    echo "  SKIP  $(basename "$out"): $(grep -o 'TO_MEASURE[^"]*\|NOT_NEEDED[^"]*' "$S/err.log" | head -1)"
   fi
 }
 

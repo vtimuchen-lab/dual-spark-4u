@@ -3,7 +3,8 @@
  * по чертежу docs/drawings/base_plate.svg) + печатные детали:
  *   part="panel_bracket"   — уголок panel↔base_plate (PETG/ASA, M4), 2 шт. — ОПЦИЯ:
  *                            по умолчанию не печатается (use_panel_brackets = false)
- *   part="dc_jack_bracket" — стойка под панельное гнездо 12 В 5.5×2.5, 1 шт.
+ *   part="dc_jack_bracket" — стойка под ПАНЕЛЬНОЕ гнездо 12 В 5.5×2.5 — только при
+ *                            dc_jack_inline = false (сейчас гнездо кабельное, стойка не нужна)
  *   part="base_plate"      — сама плита с отверстиями (нужны rack_opening_w, shelf_depth)
  *   part="base_plate_2d"   — 2D-контур для чертежа
  *
@@ -54,6 +55,7 @@ module panel_bracket() {
 
 // --- Стойка DC-гнезда -------------------------------------------------------
 module dc_jack_bracket() {
+    assert(!dc_jack_inline, "NOT_NEEDED: гнездо DC кабельное (dc_jack_inline = true) — стойка не нужна");
     assert(known(dc_jack_d), "TO_MEASURE: dc_jack_d (п.15) — посадочный диаметр панельного DC-гнезда");
     h = 30; w = 30; d = 20; t = 4;
     difference() {
