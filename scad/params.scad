@@ -61,6 +61,7 @@ rear_port_z0 = undef;  // TO_MEASURE п.14 низ портов/кнопки на
 fan_model      = "Arctic P14 Pro PST";
 fan_size       = 140;    // [SRC]
 fan_thickness  = 27;     // [SRC]
+fan_corner_t   = undef;  // TO_MEASURE п.13b толщина в углу по резиновым амортизаторам (в пакете болта)
 fan_mass_g     = 242;    // [SRC]
 fan_hole_pitch_min = 124.5; // [SRC] стандарт 140 мм
 fan_hole_pitch_max = 126;   // [MEAS п.13] замер на P14 Pro → все отверстия = пазы 124.5…126
@@ -394,7 +395,8 @@ dc_bracket_pos = [strip_cx, ctrl_zone_y1 - 10];
 plate_dc_holes = [for (sx = [-1, 1]) dc_bracket_pos + [sx * 10, 0]];
 
 // --- пакет болта сэндвича ---------------------------------------------------
-sandwich_stack = grille_stack_t + panel_t + fan_thickness + duct_flange_t;   // 37.8
+sandwich_stack = grille_stack_t + panel_t + (known(fan_corner_t) ? fan_corner_t : fan_thickness)
+                 + duct_flange_t;                                            // 37.8
 sandwich_bolt_l = first_ge(m4_lengths, sandwich_stack + bolt_min_protrusion);
 sandwich_protrusion = sandwich_bolt_l - sandwich_stack;
 
@@ -520,7 +522,8 @@ module fit_report() {
     rack_checks();
     echo(str("[FIT] base plate ", base_plate_w, " x ", base_plate_d, "; pair ", pair_w,
              "; holder ends at ", y_holder_front + holder_depth, " (plate ends ", base_plate_y0 + base_plate_d, ")"));
-    echo(str("[FIT] sandwich: grille ", grille_stack_t, " + panel ", panel_t, " + fan ", fan_thickness,
+    echo(str("[FIT] sandwich: grille ", grille_stack_t, " + panel ", panel_t, " + fan ",
+             known(fan_corner_t) ? str(fan_corner_t, " (corner)") : fan_thickness,
              " + flange ", duct_flange_t, " = ", sandwich_stack, " → M4x", sandwich_bolt_l,
              " (protrusion ", sandwich_protrusion, ")"));
     echo(str("[FIT] strip above fan for controller bezel ", strip_above_fan, " mm → ctrl_h ≤ ", ctrl_h_max,
