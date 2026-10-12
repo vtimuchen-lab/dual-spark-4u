@@ -18,6 +18,10 @@
   отверстий `*_holes.csv`. Производные размеры берутся из OpenSCAD
   (`scad/derived.scad`), формулы в Python не дублируются.
 * Ветки: `main` — стабильная; работа в ветке, PR в `main`.
+* Коммиты — только с адресом
+  `226231059+vtimuchen-lab@users.noreply.github.com` (имя `vtimuchen-lab`):
+  репозиторий публичный, личная почта в истории не нужна. Перед первым
+  коммитом в новой сессии: `git config user.email …` и `git config user.name …`.
 * Лицензия производной: CC BY-NC 4.0 (исходник holder'а — A. Liesenfeld).
 
 ## Принятые решения
