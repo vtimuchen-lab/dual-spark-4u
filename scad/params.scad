@@ -247,7 +247,9 @@ ctrl_probe_d    = undef; // TO_MEASURE п.11f наибольший диамет�
 ctrl_probe_fit  = 0.3;   // [ASSM] зазор в отверстии втулки (провод фиксируется каплей силикона)
 ctrl_probe_wall = 1.6;   // [ASSM] стенка втулки
 ctrl_probe_boss = 12;    // [ASSM] втулка вниз от рамки
-ctrl_probe_gap  = 5;     // [ASSM] датчик ↔ лицо решётки
+ctrl_probe_gap  = 5;     // [ASSM] датчик ↔ лицо магнитного фильтра на решётке
+front_filter_t  = 1.5;   // [SRC аналог: Akasa GRM14 140 мм] магнитный фильтр 140 мм поверх стальной
+                         // решётки ARCTIC; уточнить п.21. Не в пакете болта.
 ctrl_probe_dx   = 0;     // [ASSM] смещение втулки от центра рамки по x
 
 // ---------------------------------------------------------------------------
@@ -412,7 +414,7 @@ bezel_lug_dx   = ctrl_known ? bezel_w / 2 + bezel_lug_w / 2 : undef;
 cable_hole_dx  = ctrl_known ? bezel_w / 2 + bezel_lug_w + cable_hole_gap : undef;
 // ось датчика от лицевой плоскости панели (+ к стеклу): перед решёткой с зазором
 probe_known = known(ctrl_probe_d);
-probe_y   = probe_known ? grille_depth + ctrl_probe_gap + ctrl_probe_d / 2 : undef;
+probe_y   = probe_known ? grille_depth + front_filter_t + ctrl_probe_gap + ctrl_probe_d / 2 : undef;
 probe_r_o = probe_known ? (ctrl_probe_d + ctrl_probe_fit) / 2 + ctrl_probe_wall : undef;
 
 // Макет MSI с измеренной геометрией (начало — левый-передний-нижний угол корпуса).
