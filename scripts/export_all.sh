@@ -38,6 +38,10 @@ export_part ../stl/dc_jack_bracket.stl base_plate.scad -D 'part="dc_jack_bracket
 export_part ../stl/ctrl_bezel.stl ctrl_bezel.scad
 export_part ../stl/fan_bracket_bench_OPTIONAL.stl fan_bracket.scad
 
+echo "== Сборка для просмотра (не для печати) =="
+python3 ../scripts/export_assembly_view.py ../stl/assembly_module_VIEW_ONLY.stl module
+python3 ../scripts/export_assembly_view.py ../stl/assembly_exploded_VIEW_ONLY.stl exploded
+
 echo "== 2D для резки/сверловки (DXF) =="
 mkdir -p ../docs/drawings
 openscad -o ../docs/drawings/panel_fp5.dxf -D 'part="panel_2d"' front_panel.scad 2>/dev/null && echo "  OK    panel_fp5.dxf"

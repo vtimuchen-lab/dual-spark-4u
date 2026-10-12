@@ -39,6 +39,7 @@ CC BY-NC 4.0), два независимых воздуховода 140 → пе
 | `docs/08_measurements.md` | сводка замеров и как они попали в модель |
 | `docs/drawings/` | `panel_fp5`, `base_plate` (SVG/PNG/DXF/CSV), `side_view`, `top_view` |
 | `docs/renders/` | 3D-рендеры |
+| `stl/assembly_module_VIEW_ONLY.stl` | весь модуль в 3D (GitHub показывает STL в браузере) |
 
 ## Ключевые размеры
 
@@ -67,6 +68,8 @@ scad/ctrl_bezel.scad      рамка термоконтроллера на ли�
 scad/assembly.scad        модуль (part=module|exploded|track|printables)
 scad/fan_bracket.scad     ОПЦИЯ: рамка для настольного стенда
 stl/                      печатные детали (экспорт по зависимостям каждой детали)
+stl/assembly_*_VIEW_ONLY.stl  весь модуль одним файлом и разнесённый вид — только для просмотра
+scripts/export_assembly_view.py  склейка сборки по группам деталей
 scripts/export_all.sh     STL, DXF, рендеры, чертежи; OK/SKIP по каждой детали
 scripts/make_drawings.py  чертежи и таблицы отверстий
 ```

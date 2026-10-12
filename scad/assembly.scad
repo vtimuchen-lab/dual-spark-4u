@@ -29,17 +29,21 @@ show_panel = true;
 show_grilles = true;
 show_baffles = true;
 show_bezels = true;   // рисуются только при известных ctrl_w/h/d
+// Выбор группы деталей для поштучного экспорта (scripts/export_assembly_view.py):
+// all | panel | grilles | plate | brackets | holders | baffles | ducts | msi | fans | bezels
+only = "all";
+function show(g) = only == "all" || only == g;
 
 geo_report();
 
 module track(explode = 0) {
-    if (show_fans)
+    if (show_fans && show("fans"))
         translate([track_cx, y_fan_front - explode, fan_center_zl])
             fan_mockup(fan_size, fan_thickness, fan_hub_dia, fan_hole_pitch);
-    if (show_ducts) color([0.75, 0.78, 0.82, 0.85]) duct_full();
-    color([0.55, 0.58, 0.62]) translate([0, y_holder_front + explode, 0]) holder();
-    if (show_baffles) color([0.9, 0.5, 0.2]) translate([0, y_holder_front + explode, 0]) baffle();
-    if (show_devices)
+    if (show_ducts && show("ducts")) color([0.75, 0.78, 0.82, 0.85]) duct_full();
+    if (show("holders")) color([0.55, 0.58, 0.62]) translate([0, y_holder_front + explode, 0]) holder();
+    if (show_baffles && show("baffles")) color([0.9, 0.5, 0.2]) translate([0, y_holder_front + explode, 0]) baffle();
+    if (show_devices && show("msi"))
         translate([device_x0, y_device_front + 2 * explode, device_base_zl]) msi();
     %translate([device_x0 + (device_width - rear_exhaust_w) / 2, y_device_rear,
                 device_top_zl - rear_exhaust_top - rear_exhaust_h])
@@ -73,17 +77,18 @@ module electronics_zone() {
 
 module module_assembly(explode = 0) {
     fit_report();
-    if (show_panel) panel();
-    if (show_grilles) for (cx = fan_cx_from_center) grille_mockup(cx);
-    if (show_bezels && ctrl_known) bezels();
-    base_plate();
-    for (sx = [-1, 1])
-        translate([sx * bracket_cx - bracket_w / 2, base_plate_front_gap, base_plate_t])
-            color([0.55, 0.58, 0.62]) panel_bracket();
-    if (known(dc_jack_d))
+    if (show_panel && show("panel")) panel();
+    if (show_grilles && show("grilles")) for (cx = fan_cx_from_center) grille_mockup(cx);
+    if (show_bezels && ctrl_known && show("bezels")) bezels();
+    if (show("plate")) base_plate();
+    if (show("brackets"))
+        for (sx = [-1, 1])
+            translate([sx * bracket_cx - bracket_w / 2, base_plate_front_gap, base_plate_t])
+                color([0.55, 0.58, 0.62]) panel_bracket();
+    if (known(dc_jack_d) && show("brackets"))
         translate([dc_bracket_pos[0] + 15, dc_bracket_pos[1] + 7, base_plate_t]) rotate([0, 0, 180])
             color([0.55, 0.58, 0.62]) dc_jack_bracket();
-    electronics_zone();
+    if (only == "all") electronics_zone();
     for (cx = fan_cx_from_center)
         translate([cx - track_cx, 0, hz0]) track(cx > 0 ? explode : 0);
     %color([0.5, 0.5, 0.5, 0.2]) translate([-rack_opening_w / 2, 0, -3]) cube([rack_opening_w, shelf_depth, 3]);
