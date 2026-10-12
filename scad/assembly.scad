@@ -67,12 +67,19 @@ module bezels() {
             mirror([0, 1, 0]) { color([0.55, 0.58, 0.62]) bezel(); ctrl_mockup(); }
 }
 
+// Не деталь: разметка места на плите — слева WAGO 221-413 («+», «−»), справа
+// DC-гнездо 12 В. Тонкая площадка с подписью, чтобы на рендерах не выглядела блоком.
 module electronics_zone() {
-    // слева WAGO 221-413 («+», «−»), справа DC-гнездо
-    for (sx = [-1, 1])
+    for (sx = [-1, 1]) {
+        x0 = sx > 0 ? ctrl_zone_x_in : -(ctrl_zone_x_in + ctrl_zone_w);
         %color([0.2, 0.8, 0.3, 0.35])
-            translate([sx > 0 ? ctrl_zone_x_in : -(ctrl_zone_x_in + ctrl_zone_w), ctrl_zone_y0, base_plate_t])
-                cube([ctrl_zone_w, ctrl_zone_d, 20]);
+            translate([x0, ctrl_zone_y0, base_plate_t]) cube([ctrl_zone_w, ctrl_zone_d, 1]);
+        color([0.1, 0.45, 0.15])
+            translate([x0 + ctrl_zone_w / 2, ctrl_zone_y0 + ctrl_zone_d / 2, base_plate_t + 1])
+                rotate([0, 0, 90]) linear_extrude(height = 0.6)
+                    text(sx < 0 ? "WAGO 221-413" : "DC 12V", size = 9, font = "Liberation Sans:style=Bold",
+                         halign = "center", valign = "center");
+    }
 }
 
 module module_assembly(explode = 0) {
