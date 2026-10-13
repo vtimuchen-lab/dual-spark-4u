@@ -58,7 +58,7 @@ rear_port_z0 = undef;  // TO_MEASURE п.14b низ портов/кнопки н�
 // ---------------------------------------------------------------------------
 // 2. ВЕНТИЛЯТОР: Arctic P14 Pro PST (ACFAN00314A)
 // ---------------------------------------------------------------------------
-fan_model      = "Arctic P14 Pro PST";
+fan_model      = "Arctic P14 Pro PST";  // [ASSM]
 fan_size       = 140;    // [SRC]
 fan_thickness  = 27;     // [SRC]
 fan_corner_t   = undef;  // TO_MEASURE п.13b толщина в углу по резиновым амортизаторам (в пакете болта)
@@ -66,7 +66,7 @@ fan_stack_t    = known(fan_corner_t) ? fan_corner_t : fan_thickness;  // вен�
 fan_mass_g     = 242;    // [SRC]
 fan_hole_pitch_min = 124.5; // [SRC] стандарт 140 мм
 fan_hole_pitch_max = 126;   // [MEAS п.13] замер на P14 Pro → все отверстия = пазы 124.5…126
-fan_hole_dia   = 4.5;    // под M4
+fan_hole_dia   = 4.5;    // [ASSM] под M4
 fan_open_dia   = 138;    // [ASSM] вырез в панели (без решётки)
 fan_hub_dia    = 45;     // [ASSM]
 fan_rpm_min    = 400;    // [SRC]
@@ -95,7 +95,7 @@ panel_fold     = 10;     // [SRC] отбортовка внутрь
 panel_edge_keepout = 15; // [SRC ТЗ v2] вырезы, фланцы и отверстия ≥ 15 мм от краёв
 panel_t        = 3.5;    // [MEAS п.4] лист + пылевой фильтр (временно) — входит в пакет болта
 panel_sheet_t  = undef;  // TO_MEASURE п.4a лист без фильтра (справочно)
-panel_color    = [0.78, 0.78, 0.76]; // RAL 7035
+panel_color    = [0.78, 0.78, 0.76]; // [ASSM] RAL 7035
 
 // Уши ФП-5 — справочно, на геометрию модуля не влияют (рисуются на чертеже, если заданы)
 ear_hole_low   = undef;  // TO_MEASURE п.5a низ панели → центр нижнего отверстия
@@ -126,7 +126,7 @@ bracket_w      = 30;   // [ASSM]
 bracket_h      = 60;   // [ASSM]
 bracket_d      = 50;   // [ASSM]
 bracket_t      = 5;    // [ASSM]
-bracket_hole_d = 4.5;  // M4
+bracket_hole_d = 4.5;  // [ASSM] M4
 
 // ---------------------------------------------------------------------------
 // 5. ТРАКТ: решётка → панель → вентилятор → воздуховод → MSI → выхлоп
@@ -140,12 +140,12 @@ duct_flange_t = 6;   // [ASSM]
 duct_inlet_corner_r  = 36;  // [ASSM] ≥ R20 по замерам; R36 — чтобы болты и гайки сэндвича в углах
                             // фланца прошли снаружи стенки пленума (при R20 они попадали в стенку);
                             // угол R36 лежит за кругом лопастей Ø138 — площадь потока не теряется
-duct_outlet_corner_r = 6;   // ограничено высотой выхода
+duct_outlet_corner_r = 6;   // [ASSM] ограничено высотой выхода
 duct_min_bend_r = 20;       // [MEAS вывод] минимальный радиус кривизны стенки сопла (assert)
-duct_slices  = 36;
-duct_split   = false;       // true → две части по границе plenum/nozzle
-guide_vanes  = 0;
-vane_t       = 1.6;
+duct_slices  = 36;  // [ASSM]
+duct_split   = false;       // [ASSM] true → две части по границе plenum/nozzle
+guide_vanes  = 0;  // [ASSM]
+vane_t       = 1.6;  // [ASSM]
 
 // Выход воздуховода = полоса сот + поля
 outlet_margin_side = 1;   // [ASSM]
@@ -166,47 +166,47 @@ rear_free_zone = 90; // [SRC ТЗ v2]
 // ---------------------------------------------------------------------------
 // 6. HOLDER (адаптация spark-rack-10 holder): опоры под ножки вместо рельсов
 // ---------------------------------------------------------------------------
-holder_side_clearance = 10;
-holder_rear_clearance = 1;
-holder_wall      = 5;
-holder_floor_t   = 5;
+holder_side_clearance = 10;  // [ASSM]
+holder_rear_clearance = 1;  // [ASSM]
+holder_wall      = 5;  // [ASSM]
+holder_floor_t   = 5;  // [ASSM]
 pedestal_size    = 24;   // [ASSM] квадратная опора под ножку
-pedestal_r       = 3;
+pedestal_r       = 3;  // [ASSM]
 foot_pocket_clear = 0.5; // [ASSM] радиальный зазор гнезда ножки
 foot_pocket_depth = 2;   // [ASSM]
-back_stop_t      = 3;
+back_stop_t      = 3;  // [ASSM]
 back_stop_h_above_body = 4;  // [ASSM] упор выше низа корпуса (не доходит до портов)
 back_stop_overlap = 3;       // [ASSM] заход упора за угол корпуса
-guide_wall_extra_h = 15;     // низкие боковые направляющие над низом корпуса
-front_post_len   = 25;
-front_post_w     = 10;
-step_r           = 5;
+guide_wall_extra_h = 15;     // [ASSM] низкие боковые направляющие над низом корпуса
+front_post_len   = 25;  // [ASSM]
+front_post_w     = 10;  // [ASSM]
+step_r           = 5;  // [ASSM]
 
-holder_mount_slot_l   = 10;
-holder_mount_slot_w   = 4.5;
-holder_mount_cbore_d  = 9;
-holder_mount_cbore_h  = 2.5;
+holder_mount_slot_l   = 10;  // [ASSM]
+holder_mount_slot_w   = 4.5;  // [ASSM]
+holder_mount_cbore_d  = 9;  // [ASSM]
+holder_mount_cbore_h  = 2.5;  // [ASSM]
 holder_mount_pitch_x  = 80;   // [ASSM] вне опор; сверловка base_plate — по этим значениям
 holder_mount_pitch_y  = 120;  // [ASSM]
 
-strap_slots      = true;
-strap_slot_w     = 22;
-strap_slot_h     = 3;
+strap_slots      = true;  // [ASSM]
+strap_slot_w     = 22;  // [ASSM]
+strap_slot_h     = 3;  // [ASSM]
 
-sensor_pocket_d  = 6.2;
-sensor_pocket_h  = 10;
+sensor_pocket_d  = 6.2;  // [ASSM]
+sensor_pocket_h  = 10;  // [ASSM]
 // Стойка T_out: тонкое ребро за вилками кабелей + консоль к точке замера
 t_out_post_behind = 50;  // [ASSM] ребро стоит на 50 мм за задней гранью (за вилками USB-C/HDMI/QSFP)
-t_out_fin_t       = 3;
-t_out_fin_len     = 12;
-t_out_arm_h       = 6;
+t_out_fin_t       = 3;  // [ASSM]
+t_out_fin_len     = 12;  // [ASSM]
+t_out_arm_h       = 6;  // [ASSM]
 
 // Заслонка под днищем (сзади): закрывает выход подаваемого под днище воздуха назад.
 // 0 = открыто, 1 = закрыто до днища. Вставляется сверху в пазы боковых стенок.
 bypass_block     = 0.5;   // [ASSM] предмет испытаний
-baffle_t         = 3;
-baffle_clearance = 0.3;
-baffle_groove_depth = 2;
+baffle_t         = 3;  // [ASSM]
+baffle_clearance = 0.3;  // [ASSM]
+baffle_groove_depth = 2;  // [ASSM]
 baffle_y_body    = 145;   // [ASSM] от передней грани MSI (за задними опорами, до упоров)
 
 // ---------------------------------------------------------------------------
@@ -216,7 +216,7 @@ dc_jack_inline   = true;  // [ASSM] гнездо — кабельная «мам
                           // 2026-10-12): стяжкой к площадкам на 2 отверстиях M3 в правой полосе,
                           // провода → WAGO; стойка dc_jack_bracket не нужна
 dc_jack_d        = undef; // TO_MEASURE п.15 — только для панельного гнезда (dc_jack_inline = false)
-ctrl_zone_margin = 2;
+ctrl_zone_margin = 2;  // [ASSM]
 strip_holes_pitch = [20, 30];  // [ASSM] 2×2 отверстия M3 в каждой полосе: печатный держатель WAGO /
                                // площадки стяжек (WAGO 221-500 — по месту)
 
@@ -238,14 +238,14 @@ ctrl_frame_h = undef;  // TO_MEASURE п.11d высота
 ctrl_frame_t = undef;  // TO_MEASURE п.11d толщина (выступ перед вырезом)
 ctrl_clip_t  = undef;  // TO_MEASURE п.11e толщина стенки под защёлки: задняя грань рамки ↔ зуб защёлки
 
-bezel_wall      = 3;
-bezel_back_t    = 1.5;
-bezel_clear     = 0.4;
+bezel_wall      = 3;  // [ASSM]
+bezel_back_t    = 1.5;  // [ASSM]
+bezel_clear     = 0.4;  // [ASSM]
 bezel_cut_clear = 0.3;  // [ASSM] вырез под корпус: + 0.3 к ctrl_cut_*
-bezel_lug_w     = 10;
-bezel_lug_t     = 7;
-bezel_lug_h     = 14;
-bezel_fan_clearance = 2;
+bezel_lug_w     = 10;  // [ASSM]
+bezel_lug_t     = 7;  // [ASSM]
+bezel_lug_h     = 14;  // [ASSM]
+bezel_fan_clearance = 2;  // [ASSM]
 door_margin     = 3;    // [SRC ТЗ п.8] всё перед панелью ≤ door_gap − 3
 cable_hole_d    = 12;   // [SRC ТЗ п.8]
 // Ø12 — в панели ЗА рамкой, на оси тракта: провода (12 В, вентилятор) уходят из кармана
@@ -268,12 +268,12 @@ ctrl_probe_dx   = 0;     // [ASSM] смещение втулки от центр
 // 9. КРЕПЁЖ И ПЕЧАТЬ
 // ---------------------------------------------------------------------------
 m3_insert_hole_d = 4.0;  // [ASSM] по вашим вставкам
-m3_insert_depth  = 6;
-m3_clear_d       = 3.4;
-m4_clear_d       = 4.5;
-m4_nut_af        = 7.0;
-m4_nut_h         = 3.2;
-m4_head_d        = 8.5;
+m3_insert_depth  = 6;  // [ASSM]
+m3_clear_d       = 3.4;  // [ASSM]
+m4_clear_d       = 4.5;  // [ASSM]
+m4_nut_af        = 7.0;  // [ASSM]
+m4_nut_h         = 3.2;  // [ASSM]
+m4_head_d        = 8.5;  // [ASSM]
 m4_tap_drill     = 3.3;  // [SRC ISO 2306] сверло под резьбу M4×0.7
 m3_tap_drill     = 2.5;  // [SRC ISO 2306] сверло под резьбу M3×0.5
 // Плита лежит прямо на полке: под ней ничего не должно выступать (гайка или
@@ -282,8 +282,8 @@ m3_tap_drill     = 2.5;  // [SRC ISO 2306] сверло под резьбу M3×
 plate_tapped     = use_base_plate; // [ASSM] плита — резьба; полка — сквозные отверстия, гайки снизу
 plate_m4_d       = plate_tapped ? m4_tap_drill : m4_clear_d;
 plate_m3_d       = plate_tapped ? m3_tap_drill : m3_clear_d;
-m4_lengths       = [25, 30, 35, 40, 45, 50];  // стандартный ряд DIN 912
-bolt_min_protrusion = 1.5;   // за гайкой
+m4_lengths       = [25, 30, 35, 40, 45, 50];  // [ASSM] стандартный ряд DIN 912
+bolt_min_protrusion = 1.5;   // [ASSM] за гайкой
 print_bed_x = 330;    // [MEAS] стол принтера пользователя 330 × 320 (макс.)
 print_bed_y = 320;    // [MEAS]
 print_bed_z = 250;    // [ASSM] высота печати не названа; самая высокая деталь — воздуховод 200
