@@ -7,47 +7,47 @@
 <line x1="15.00" y1="27.50" x2="15.00" y2="261.00" stroke="#06c" stroke-width="0.35" stroke-dasharray="6,1.5,1,1.5"/>
 <text x="16.50" y="26.00" font-size="3" font-family="sans-serif" fill="#06c" text-anchor="start" font-weight="bold">ОСЬ ПАНЕЛИ (241.3 от каждого края)</text>
 <line x1="113.00" y1="255.00" x2="113.00" y2="33.50" stroke="#777" stroke-width="0.15" stroke-dasharray="4,1,1,1"/>
-<line x1="15.00" y1="137.00" x2="202.00" y2="137.00" stroke="#777" stroke-width="0.15" stroke-dasharray="4,1,1,1"/>
-<circle cx="113.000" cy="137.000" r="69.000" stroke="#000" stroke-width="0.45" fill="none"/>
-<line x1="105.00" y1="137.00" x2="121.00" y2="137.00" stroke="#000" stroke-width="0.3"/>
-<line x1="113.00" y1="129.00" x2="113.00" y2="145.00" stroke="#000" stroke-width="0.3"/>
-<circle cx="113.000" cy="137.000" r="0.500" stroke="#000" stroke-width="0.2" fill="#000"/>
-<text x="113.00" y="115.00" font-size="7" font-family="sans-serif" fill="#000" text-anchor="middle" font-weight="bold">FAN2</text>
-<text x="113.00" y="122.00" font-size="3.4" font-family="sans-serif" fill="#000" text-anchor="middle">вырез Ø138 — линия реза</text>
-<text x="113.00" y="150.00" font-size="3" font-family="sans-serif" fill="#777" text-anchor="middle">центр: керн / пилот коронки</text>
-<line x1="50.750" y1="199.250" x2="50.000" y2="200.000" stroke="#000" stroke-width="4.500" stroke-linecap="round" stroke-opacity="0.12"/>
-<circle cx="50.750" cy="199.250" r="2.250" stroke="#000" stroke-width="0.2" fill="none"/>
-<line x1="47.55" y1="199.25" x2="53.95" y2="199.25" stroke="#000" stroke-width="0.15"/>
-<line x1="50.75" y1="196.05" x2="50.75" y2="202.45" stroke="#000" stroke-width="0.15"/>
-<circle cx="50.000" cy="200.000" r="2.250" stroke="#000" stroke-width="0.2" fill="none"/>
-<line x1="46.80" y1="200.00" x2="53.20" y2="200.00" stroke="#000" stroke-width="0.15"/>
-<line x1="50.00" y1="196.80" x2="50.00" y2="203.20" stroke="#000" stroke-width="0.15"/>
-<line x1="50.750" y1="74.750" x2="50.000" y2="74.000" stroke="#000" stroke-width="4.500" stroke-linecap="round" stroke-opacity="0.12"/>
-<circle cx="50.750" cy="74.750" r="2.250" stroke="#000" stroke-width="0.2" fill="none"/>
-<line x1="47.55" y1="74.75" x2="53.95" y2="74.75" stroke="#000" stroke-width="0.15"/>
-<line x1="50.75" y1="71.55" x2="50.75" y2="77.95" stroke="#000" stroke-width="0.15"/>
-<circle cx="50.000" cy="74.000" r="2.250" stroke="#000" stroke-width="0.2" fill="none"/>
-<line x1="46.80" y1="74.00" x2="53.20" y2="74.00" stroke="#000" stroke-width="0.15"/>
-<line x1="50.00" y1="70.80" x2="50.00" y2="77.20" stroke="#000" stroke-width="0.15"/>
-<line x1="175.250" y1="199.250" x2="176.000" y2="200.000" stroke="#000" stroke-width="4.500" stroke-linecap="round" stroke-opacity="0.12"/>
-<circle cx="175.250" cy="199.250" r="2.250" stroke="#000" stroke-width="0.2" fill="none"/>
-<line x1="172.05" y1="199.25" x2="178.45" y2="199.25" stroke="#000" stroke-width="0.15"/>
-<line x1="175.25" y1="196.05" x2="175.25" y2="202.45" stroke="#000" stroke-width="0.15"/>
-<circle cx="176.000" cy="200.000" r="2.250" stroke="#000" stroke-width="0.2" fill="none"/>
-<line x1="172.80" y1="200.00" x2="179.20" y2="200.00" stroke="#000" stroke-width="0.15"/>
-<line x1="176.00" y1="196.80" x2="176.00" y2="203.20" stroke="#000" stroke-width="0.15"/>
-<line x1="175.250" y1="74.750" x2="176.000" y2="74.000" stroke="#000" stroke-width="4.500" stroke-linecap="round" stroke-opacity="0.12"/>
-<circle cx="175.250" cy="74.750" r="2.250" stroke="#000" stroke-width="0.2" fill="none"/>
-<line x1="172.05" y1="74.75" x2="178.45" y2="74.75" stroke="#000" stroke-width="0.15"/>
-<line x1="175.25" y1="71.55" x2="175.25" y2="77.95" stroke="#000" stroke-width="0.15"/>
-<circle cx="176.000" cy="74.000" r="2.250" stroke="#000" stroke-width="0.2" fill="none"/>
-<line x1="172.80" y1="74.00" x2="179.20" y2="74.00" stroke="#000" stroke-width="0.15"/>
-<line x1="176.00" y1="70.80" x2="176.00" y2="77.20" stroke="#000" stroke-width="0.15"/>
-<text x="113.00" y="41.50" font-size="2.6" font-family="sans-serif" fill="#777" text-anchor="middle">над вырезом — полоса 31.5 мм под рамку контроллера (отверстия — после замера)</text>
-<line x1="190.00" y1="255.00" x2="190.00" y2="137.00" stroke="#c00" stroke-width="0.25"/>
+<line x1="15.00" y1="140.00" x2="202.00" y2="140.00" stroke="#777" stroke-width="0.15" stroke-dasharray="4,1,1,1"/>
+<circle cx="113.000" cy="140.000" r="69.000" stroke="#000" stroke-width="0.45" fill="none"/>
+<line x1="105.00" y1="140.00" x2="121.00" y2="140.00" stroke="#000" stroke-width="0.3"/>
+<line x1="113.00" y1="132.00" x2="113.00" y2="148.00" stroke="#000" stroke-width="0.3"/>
+<circle cx="113.000" cy="140.000" r="0.500" stroke="#000" stroke-width="0.2" fill="#000"/>
+<text x="113.00" y="118.00" font-size="7" font-family="sans-serif" fill="#000" text-anchor="middle" font-weight="bold">FAN2</text>
+<text x="113.00" y="125.00" font-size="3.4" font-family="sans-serif" fill="#000" text-anchor="middle">вырез Ø138 — линия реза</text>
+<text x="113.00" y="153.00" font-size="3" font-family="sans-serif" fill="#777" text-anchor="middle">центр: керн / пилот коронки</text>
+<line x1="50.750" y1="202.250" x2="50.000" y2="203.000" stroke="#000" stroke-width="4.500" stroke-linecap="round" stroke-opacity="0.12"/>
+<circle cx="50.750" cy="202.250" r="2.250" stroke="#000" stroke-width="0.2" fill="none"/>
+<line x1="47.55" y1="202.25" x2="53.95" y2="202.25" stroke="#000" stroke-width="0.15"/>
+<line x1="50.75" y1="199.05" x2="50.75" y2="205.45" stroke="#000" stroke-width="0.15"/>
+<circle cx="50.000" cy="203.000" r="2.250" stroke="#000" stroke-width="0.2" fill="none"/>
+<line x1="46.80" y1="203.00" x2="53.20" y2="203.00" stroke="#000" stroke-width="0.15"/>
+<line x1="50.00" y1="199.80" x2="50.00" y2="206.20" stroke="#000" stroke-width="0.15"/>
+<line x1="50.750" y1="77.750" x2="50.000" y2="77.000" stroke="#000" stroke-width="4.500" stroke-linecap="round" stroke-opacity="0.12"/>
+<circle cx="50.750" cy="77.750" r="2.250" stroke="#000" stroke-width="0.2" fill="none"/>
+<line x1="47.55" y1="77.75" x2="53.95" y2="77.75" stroke="#000" stroke-width="0.15"/>
+<line x1="50.75" y1="74.55" x2="50.75" y2="80.95" stroke="#000" stroke-width="0.15"/>
+<circle cx="50.000" cy="77.000" r="2.250" stroke="#000" stroke-width="0.2" fill="none"/>
+<line x1="46.80" y1="77.00" x2="53.20" y2="77.00" stroke="#000" stroke-width="0.15"/>
+<line x1="50.00" y1="73.80" x2="50.00" y2="80.20" stroke="#000" stroke-width="0.15"/>
+<line x1="175.250" y1="202.250" x2="176.000" y2="203.000" stroke="#000" stroke-width="4.500" stroke-linecap="round" stroke-opacity="0.12"/>
+<circle cx="175.250" cy="202.250" r="2.250" stroke="#000" stroke-width="0.2" fill="none"/>
+<line x1="172.05" y1="202.25" x2="178.45" y2="202.25" stroke="#000" stroke-width="0.15"/>
+<line x1="175.25" y1="199.05" x2="175.25" y2="205.45" stroke="#000" stroke-width="0.15"/>
+<circle cx="176.000" cy="203.000" r="2.250" stroke="#000" stroke-width="0.2" fill="none"/>
+<line x1="172.80" y1="203.00" x2="179.20" y2="203.00" stroke="#000" stroke-width="0.15"/>
+<line x1="176.00" y1="199.80" x2="176.00" y2="206.20" stroke="#000" stroke-width="0.15"/>
+<line x1="175.250" y1="77.750" x2="176.000" y2="77.000" stroke="#000" stroke-width="4.500" stroke-linecap="round" stroke-opacity="0.12"/>
+<circle cx="175.250" cy="77.750" r="2.250" stroke="#000" stroke-width="0.2" fill="none"/>
+<line x1="172.05" y1="77.75" x2="178.45" y2="77.75" stroke="#000" stroke-width="0.15"/>
+<line x1="175.25" y1="74.55" x2="175.25" y2="80.95" stroke="#000" stroke-width="0.15"/>
+<circle cx="176.000" cy="77.000" r="2.250" stroke="#000" stroke-width="0.2" fill="none"/>
+<line x1="172.80" y1="77.00" x2="179.20" y2="77.00" stroke="#000" stroke-width="0.15"/>
+<line x1="176.00" y1="73.80" x2="176.00" y2="80.20" stroke="#000" stroke-width="0.15"/>
+<text x="113.00" y="41.50" font-size="2.6" font-family="sans-serif" fill="#777" text-anchor="middle">над вырезом — полоса 34.5 мм под рамку контроллера (отверстия — после замера)</text>
+<line x1="190.00" y1="255.00" x2="190.00" y2="140.00" stroke="#c00" stroke-width="0.25"/>
 <line x1="188.50" y1="255.00" x2="191.50" y2="255.00" stroke="#c00" stroke-width="0.25"/>
-<line x1="188.50" y1="137.00" x2="191.50" y2="137.00" stroke="#c00" stroke-width="0.25"/>
-<text x="188.80" y="196.00" font-size="3.4" font-family="sans-serif" fill="#c00" text-anchor="middle" font-weight="bold" transform="rotate(-90 188.80 196.00)">118</text>
+<line x1="188.50" y1="140.00" x2="191.50" y2="140.00" stroke="#c00" stroke-width="0.25"/>
+<text x="188.80" y="197.50" font-size="3.4" font-family="sans-serif" fill="#c00" text-anchor="middle" font-weight="bold" transform="rotate(-90 188.80 197.50)">115</text>
 <line x1="15.00" y1="249.00" x2="113.00" y2="249.00" stroke="#c00" stroke-width="0.25"/>
 <line x1="15.00" y1="247.50" x2="15.00" y2="250.50" stroke="#c00" stroke-width="0.25"/>
 <line x1="113.00" y1="247.50" x2="113.00" y2="250.50" stroke="#c00" stroke-width="0.25"/>
@@ -55,7 +55,7 @@
 <text x="115.00" y="243.50" font-size="2.8" font-family="sans-serif" fill="#c00" text-anchor="start">до правого края панели 143.3</text>
 <text x="8.00" y="10.00" font-size="4.2" font-family="sans-serif" fill="#000" text-anchor="start" font-weight="bold">ФП-5 · разметка FAN2 (правый) · вид снаружи · МАСШТАБ 1:1</text>
 <text x="8.00" y="15.50" font-size="3" font-family="sans-serif" fill="#000" text-anchor="start">Печать A4 «Фактический размер» / 100 %, без подгонки. Проверка: линейка 100 мм внизу, между краями 221.5.</text>
-<text x="8.00" y="20.50" font-size="3" font-family="sans-serif" fill="#000" text-anchor="start">Ось выреза 118 от нижнего края, 98 от оси панели; межосевое вентиляторов 196.</text>
+<text x="8.00" y="20.50" font-size="3" font-family="sans-serif" fill="#000" text-anchor="start">Ось выреза 115 от нижнего края, 98 от оси панели; межосевое вентиляторов 196.</text>
 <line x1="15.00" y1="268.00" x2="115.00" y2="268.00" stroke="#000" stroke-width="0.4"/>
 <line x1="15.00" y1="265.50" x2="15.00" y2="268.00" stroke="#000" stroke-width="0.25"/>
 <line x1="25.00" y1="266.50" x2="25.00" y2="268.00" stroke="#000" stroke-width="0.25"/>

@@ -18,10 +18,12 @@ part = "panel_bracket"; // [panel_bracket, dc_jack_bracket, base_plate, base_pla
 
 // Сверловка плиты — списки plate_*_holes считаются в params.scad (общие с чертежом).
 
+// С плитой — контур плиты; без плиты — разметка полки (проём стоек × глубина полки).
 module base_plate_2d() {
     rack_checks();
     difference() {
-        translate([-base_plate_w / 2, base_plate_y0]) square([base_plate_w, base_plate_d]);
+        if (use_base_plate) translate([-base_plate_w / 2, base_plate_y0]) square([base_plate_w, base_plate_d]);
+        else translate([-rack_opening_w / 2, 0]) square([rack_opening_w, shelf_depth]);
         // plate_tapped: диаметры сверла под резьбу M4 / M3 (метчик по месту)
         for (h = plate_holder_holes) translate(h) circle(d = plate_m4_d, $fn = 24);
         for (h = plate_bracket_holes) translate(h) circle(d = plate_m4_d, $fn = 24);
@@ -31,7 +33,7 @@ module base_plate_2d() {
 }
 
 module base_plate() {
-    color([0.82, 0.84, 0.86]) linear_extrude(height = base_plate_t) base_plate_2d();
+    if (use_base_plate) color([0.82, 0.84, 0.86]) linear_extrude(height = base_plate_t) base_plate_2d();
 }
 
 // --- Уголок panel ↔ base_plate ---------------------------------------------

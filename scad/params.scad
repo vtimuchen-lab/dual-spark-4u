@@ -104,9 +104,15 @@ ear_hole_count = undef;  // TO_MEASURE п.5c
 rack_ear_hole_spacing = 465.1; // [SRC EIA-310] между центрами отверстий ушей по горизонтали
 
 // ---------------------------------------------------------------------------
-// 4. BASE PLATE (алюминий 3 мм) И УГОЛКИ
+// 4. ОСНОВАНИЕ: ПЕРФОРИРОВАННАЯ ПОЛКА ШКАФА (или плита Al 3 мм) И УГОЛКИ
 // ---------------------------------------------------------------------------
-base_plate_t         = 3;    // [SRC ТЗ v2]
+// Решение пользователя 2026-10-12: без плиты — holder'ы и электроника крепятся
+// прямо к перфорированной полке; единый блок = полка + модуль (полка снимается
+// со стоек вместе с модулем). Без плиты тракт ниже на 3 мм: ось вентилятора на
+// панели 115, полоса под рамку контроллера 34.5. Отверстия в полке — сквозные,
+// гайки снизу. «Плита» ниже — та же зона 444 × 443 на полке (разметка, зоны).
+use_base_plate       = false; // [ASSM] true — вернуть плиту Al 3 мм с резьбой
+base_plate_t         = use_base_plate ? 3 : 0;   // [SRC ТЗ v2] толщина плиты, если есть
 base_plate_side_gap  = 3;    // [SRC ТЗ v2] ширина = rack_opening_w − 2×3
 base_plate_depth_min = 330;  // [SRC ТЗ v2]
 base_plate_front_gap = 2;    // [ASSM] от задней плоскости панели до переднего края плиты
@@ -273,7 +279,7 @@ m3_tap_drill     = 2.5;  // [SRC ISO 2306] сверло под резьбу M3×
 // Плита лежит прямо на полке: под ней ничего не должно выступать (гайка или
 // rivnut подняли бы плиту и сбили высоту тракта). Поэтому все отверстия плиты
 // — резьба в алюминии 3 мм, винты сверху, длина — не длиннее пакета.
-plate_tapped     = true; // [ASSM]
+plate_tapped     = use_base_plate; // [ASSM] плита — резьба; полка — сквозные отверстия, гайки снизу
 plate_m4_d       = plate_tapped ? m4_tap_drill : m4_clear_d;
 plate_m3_d       = plate_tapped ? m3_tap_drill : m3_clear_d;
 m4_lengths       = [25, 30, 35, 40, 45, 50];  // стандартный ряд DIN 912
@@ -565,7 +571,7 @@ module export_derived() {
              "sandwich_stack","sandwich_bolt_l","sandwich_protrusion","strip_above_fan","ctrl_h_max",
              "bezel_z0_panel","ctrl_known","bezel_w","bezel_h","bezel_d","bezel_cz_panel","bezel_lug_dx",
              "cable_hole_dx","baffle_y_local","baffle_h","dev_y","use_panel_brackets","fan_stack_t",
-             "plate_tapped","plate_m4_d","plate_m3_d"];
+             "plate_tapped","plate_m4_d","plate_m3_d","use_base_plate","base_plate_t"];
     values = [fan_center_zl,fan_center_z,device_base_zl,foot_seat_zl,pedestal_top_zl,device_top_zl,
              t_out_zl,holder_outer_w,track_w,track_cx,dev_x,track_pitch,pair_w,in_flange_w,
              y_duct_in,duct_len,y_duct_out,y_device_front,y_device_rear,y_back_stop,y_t_out,
@@ -577,7 +583,7 @@ module export_derived() {
              sandwich_stack,sandwich_bolt_l,sandwich_protrusion,strip_above_fan,ctrl_h_max,
              bezel_z0_panel,ctrl_known,bezel_w,bezel_h,bezel_d,bezel_cz_panel,bezel_lug_dx,
              cable_hole_dx,baffle_y_local,baffle_h,dev_y,use_panel_brackets,fan_stack_t,
-             plate_tapped,plate_m4_d,plate_m3_d];
+             plate_tapped,plate_m4_d,plate_m3_d,use_base_plate,base_plate_t];
     for (i = [0 : len(names) - 1]) echo(str("DERIVED|", names[i], "|", values[i]));
     echo(str("DERIVED|foot_xs|", foot_xs));
     echo(str("DERIVED|foot_ys|", foot_ys));

@@ -88,7 +88,10 @@ python3 ../scripts/stl_to_binary.py ../stl/*.stl ../stl/kit/*.stl || fail=1
 
 echo "== 2D для резки/сверловки (DXF) =="
 export_2d ../docs/drawings/panel_fp5.dxf -D 'part="panel_2d"' front_panel.scad
-export_2d ../docs/drawings/base_plate.dxf -D 'part="base_plate_2d"' base_plate.scad
+# без плиты (use_base_plate = false) — разметка полки shelf_drill.dxf, с плитой — base_plate.dxf
+PLATE=base_plate; grep -qE '^use_base_plate *= *false' params.scad && PLATE=shelf_drill
+rm -f ../docs/drawings/base_plate.dxf ../docs/drawings/shelf_drill.dxf
+export_2d ../docs/drawings/$PLATE.dxf -D 'part="base_plate_2d"' base_plate.scad
 
 echo "== PNG =="
 rm -f ../docs/renders/*.png
